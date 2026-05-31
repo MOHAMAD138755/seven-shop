@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('profile_path');
+            $table->integer('is_admin')->default(0);
             $table->timestamps();
         });
 

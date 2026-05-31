@@ -56,7 +56,7 @@ class UserController extends Controller
             $request->session()->regenerate();
 
             \Flasher\Toastr\Prime\toastr('ورود موفقیت آمیز بود','success');
-            return redirect('/');
+            return to_route('Dashboard.َAdmin',['lang' => app()->getLocale()]);
         }
 
         RateLimiter::hit($key,200);
@@ -85,7 +85,6 @@ class UserController extends Controller
         ]);
 
         if ($user) {
-            event(new Registered($user));
             \Flasher\Toastr\Prime\toastr('ثبت نام موفقیت آمیز بود','success');
             return redirect('user.login');
         }
