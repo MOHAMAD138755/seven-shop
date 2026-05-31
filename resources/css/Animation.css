@@ -1,0 +1,96 @@
+.ring{
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    border: 5px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 3px 3px 1px #ffef25;
+}
+
+.rings{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+
+.r1{
+    border-radius: 33% 62% 63% 37% / 41% 44% 56% 59%;
+    animation: 4s RotateAnimationRed infinite linear;
+}
+
+.r2{
+    border-radius: 41% 44% 56% 55% / 38% 62% 61% 37%;
+    animation: 4s RotateAnimationGreen infinite linear;
+}
+
+.r3{
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: 4s RotateAnimationBlue infinite linear;
+}
+
+@keyframes RotateAnimationRed {
+    0%{
+        transform: rotate(0deg) translate(0,0);
+        border-color: #ffb5b8;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+    50%{
+        transform: rotate(180deg) translate(0,0);
+        border-color: #ff6753;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+    100%{
+        transform: rotate(360deg) translate(0,0);
+        border-color: #ff0b0c;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+}
+
+@keyframes RotateAnimationGreen {
+    0%{
+        transform: rotate(0deg) translate(0,0);
+        border-color: #bdffaa;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+    50%{
+        transform: rotate(180deg) translate(0,0);
+        border-color: #18ff4f;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+    100%{
+        transform: rotate(360deg) translate(0,0);
+        border-color: #00ff15;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+}
+
+@keyframes RotateAnimationBlue {
+    0%{
+        transform: rotate(0deg) translate(0,0);
+        border-color: #92a0ff;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+    50%{
+        transform: rotate(180deg) translate(0,0);
+        border-color: #2937ff;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+    100%{
+        transform: rotate(360deg) translate(0,0);
+        border-color: #060cff;
+        backface-visibility: hidden;
+        will-change: transform;
+    }
+}
