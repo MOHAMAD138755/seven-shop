@@ -6,7 +6,7 @@
     <meta name="author" content="">
     <meta name="keyword" content="">
     <meta name="description" content="">
-    @vite(['resources/js/app.js'])
+    @vite(['resources/css/LoginStyle.css','resources/css/Animation.css'])
     <title>Login</title>
 </head>
 <body style="background-image: url({{ asset('storage/photo_web/logo.webp') }})">

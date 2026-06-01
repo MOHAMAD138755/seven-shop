@@ -1,0 +1,90 @@
+
+ :root {
+     --primary: #6366f1;
+     --primary-hover: #4f46e5;
+     --bg-main: #f8fafc;
+     --bg-sidebar: #1e293b;
+     --text-main: #334155;
+     --text-light: #94a3b8;
+     --white: #ffffff;
+     --sidebar-width: 260px;
+     --header-height: 70px;
+     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; }
+
+/* Layout Structure */
+.wrapper { display: flex; min-height: 100vh; }
+
+/* Sidebar Styles */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--bg-sidebar);
+    color: white;
+    transition: var(--transition);
+    position: fixed;
+    height: 100vh;
+    z-index: 1000;
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styles */
+.header {
+    height: var(--header-height);
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+/* Sidebar Links */
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: var(--transition);
+    border-left: 4px solid transparent;
+}
+.nav-link:hover, .nav-link.active {
+    background: rgba(255,255,255,0.05);
+    color: var(--white);
+    border-left-color: var(--primary);
+}
+.nav-link i { margin-right: 12px; width: 20px; }
+
+/* Content Wrapper */
+.page-body { padding: 2rem; flex: 1; }
+
+/* Footer */
+.footer {
+    padding: 1.5rem 2rem;
+    background: var(--white);
+    text-align: center;
+    border-top: 1px solid #e2e8f0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .main-content { margin-left: 0; }
+    .sidebar.active { transform: translateX(0); }
+}

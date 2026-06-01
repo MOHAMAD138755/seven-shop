@@ -7,7 +7,7 @@
     <meta name="keyword" content="">
     <meta name="description" content="">
     <title>Register</title>
-    @vite(['resources/js/app.js'])
+    @vite(['resources/css/LoginStyle.css','resources/css/Animation.css'])
 </head>
 <body style="background-image: url('{{ asset('storage/photo_web/logo.webp') }}')">
 
