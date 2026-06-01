@@ -18,6 +18,8 @@ Route::prefix('{lang}')->group(function (){
         ->controller(DashboardController::class)
         ->middleware(['auth',LoginAdmin::class])->group(function (){
             Route::get('/','index')->name('Dashboard.َAdmin');
+            Route::get('users','users')->name('Dashboard.Users');
+            Route::get('products','products')->name('Dashboard.Products');
     });
 
     require_once __DIR__ . "/auth.php";

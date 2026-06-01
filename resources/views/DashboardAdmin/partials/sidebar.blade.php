@@ -4,13 +4,13 @@
     </div>
 
     <nav style="margin-top: 1rem;">
-        <a href="#" class="nav-link active">
+        <a href="{{ route('Dashboard.َAdmin',['lang' => app()->getLocale()]) }}" class="nav-link active">
             <i class="fas fa-th-large"></i> Dashboard
         </a>
-        <a href="#" class="nav-link">
+        <a href="{{ route('Dashboard.Users',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-users"></i> Users
         </a>
-        <a href="#" class="nav-link">
+        <a href="{{ route('Dashboard.Products',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-shopping-cart"></i> Products
         </a>
         <a href="#" class="nav-link">
