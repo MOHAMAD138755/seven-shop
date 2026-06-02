@@ -13,14 +13,4 @@ class DashboardController extends Controller
         $admin = User::where('is_admin',1)->first();
         return view('DashboardAdmin.index',compact('admin'));
     }
-
-    public function users(): View
-    {
-        return view('DashboardAdmin.users');
-    }
-
-    public function products(): View
-    {
-        return view('DashboardAdmin.products');
-    }
 }
