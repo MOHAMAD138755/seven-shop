@@ -34,6 +34,10 @@ Route::prefix('{lang}')->group(function (){
 
             Route::controller(ProductController::class)->group(function (){
                 Route::get('products','products')->name('Dashboard.Products');
+                Route::post('create','create')->name('Dashboard.AddProduct');
+                Route::delete('destroy/{product}','destroy')->name('Dashboard.DeleteProduct');
+                Route::get('edit-form/{product}','editForm')->name('Dashboard.EditFormProduct');
+                Route::put('update/{product}','update')->name('Dashboard.UpdateProduct');
             });
     });
 
