@@ -28,24 +28,24 @@ Route::prefix('{lang}')->group(function (){
                 Route::get('users','users')->name('Dashboard.Users');
                 Route::post('create-user','create')->name('Dashboard.AddUser');
                 Route::delete('destroy/{user}','destroy')->name('Dashboard.DeleteUser');
-                Route::get('edit-form/{user}','editForm')->name('Dashboard.EditForm');
-                Route::put('update/{user}','update')->name('Dashboard.UpdateUser');
+                Route::get('edit-user/{user}','editForm')->name('Dashboard.EditForm');
+                Route::put('update-user/{user}','update')->name('Dashboard.UpdateUser');
             });
 
             Route::controller(ProductController::class)->group(function (){
                 Route::get('products','products')->name('Dashboard.Products');
                 Route::post('create-product','create')->name('Dashboard.AddProduct');
-                Route::delete('destroy/{product}','destroy')->name('Dashboard.DeleteProduct');
-                Route::get('edit-form/{product}','editForm')->name('Dashboard.EditFormProduct');
-                Route::put('update/{product}','update')->name('Dashboard.UpdateProduct');
+                Route::delete('destroy-product/{product}','destroy')->name('Dashboard.DeleteProduct');
+                Route::get('edit-pro/{product}','editForm')->name('Dashboard.EditFormProduct');
+                Route::put('update-product/{product}','update')->name('Dashboard.UpdateProduct');
             });
 
             Route::controller(CategoryController::class)->group(function (){
                 Route::get('categories','categories')->name('Dashboard.categories');
                 Route::post('create-category','create')->name('Dashboard.AddCategory');
-                Route::delete('destroy/{category}','destroy')->name('Dashboard.DeleteCategory');
-                Route::get('edit-form/{category}','editForm')->name('Dashboard.EditFormCategory');
-                Route::put('update/{category}','update')->name('Dashboard.UpdateCategory');
+                Route::delete('destroy-category/{category}','destroy')->name('Dashboard.DeleteCategory');
+                Route::get('edit-cat/{category}','editForm')->name('Dashboard.EditFormCategory');
+                Route::put('update-category/{category}','update')->name('Dashboard.UpdateCategory');
             });
     });
 

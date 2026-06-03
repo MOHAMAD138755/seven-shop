@@ -13,8 +13,8 @@
         <a href="{{ route('Dashboard.Products',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-shopping-cart"></i> Products
         </a>
-        <a href="#" class="nav-link">
-            <i class="fas fa-chart-line"></i> Analytics
+        <a href="{{ route('Dashboard.categories',['lang' => app()->getLocale()]) }}" class="nav-link">
+            <i class="fas fa-chart-line"></i> Categories
         </a>
         <div style="padding: 1rem 1.5rem; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">
             Settings
