@@ -349,47 +349,47 @@
     <div class="products-page">
 
         <!-- Top Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon blue">
-                    <i class="fas fa-box"></i>
-                </div>
-                <div class="stat-info">
-                    <span>Total Products</span>
-                    <strong>248</strong>
-                </div>
-            </div>
+{{--        <div class="stats-grid">--}}
+{{--            <div class="stat-card">--}}
+{{--                <div class="stat-icon blue">--}}
+{{--                    <i class="fas fa-box"></i>--}}
+{{--                </div>--}}
+{{--                <div class="stat-info">--}}
+{{--                    <span>Total Products</span>--}}
+{{--                    <strong>248</strong>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
-            <div class="stat-card">
-                <div class="stat-icon green">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="stat-info">
-                    <span>Active Products</span>
-                    <strong>210</strong>
-                </div>
-            </div>
+{{--            <div class="stat-card">--}}
+{{--                <div class="stat-icon green">--}}
+{{--                    <i class="fas fa-check-circle"></i>--}}
+{{--                </div>--}}
+{{--                <div class="stat-info">--}}
+{{--                    <span>Active Products</span>--}}
+{{--                    <strong>210</strong>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
-            <div class="stat-card">
-                <div class="stat-icon orange">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <div class="stat-info">
-                    <span>Low Stock</span>
-                    <strong>18</strong>
-                </div>
-            </div>
+{{--            <div class="stat-card">--}}
+{{--                <div class="stat-icon orange">--}}
+{{--                    <i class="fas fa-exclamation-triangle"></i>--}}
+{{--                </div>--}}
+{{--                <div class="stat-info">--}}
+{{--                    <span>Low Stock</span>--}}
+{{--                    <strong>18</strong>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
-            <div class="stat-card">
-                <div class="stat-icon purple">
-                    <i class="fas fa-tags"></i>
-                </div>
-                <div class="stat-info">
-                    <span>Categories</span>
-                    <strong>32</strong>
-                </div>
-            </div>
-        </div>
+{{--            <div class="stat-card">--}}
+{{--                <div class="stat-icon purple">--}}
+{{--                    <i class="fas fa-tags"></i>--}}
+{{--                </div>--}}
+{{--                <div class="stat-info">--}}
+{{--                    <span>Categories</span>--}}
+{{--                    <strong>32</strong>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
         <div class="page-header">
             <div>
@@ -402,7 +402,6 @@
 {{--                Add Product--}}
 {{--            </button>--}}
         </div>
-
         <div class="products-grid">
             <!-- Product Table -->
             <div class="card products-card">
@@ -431,35 +430,41 @@
                             <th>قیمت</th>
                             <th>تعداد</th>
                             <th>اسلاگ</th>
-                            <th>آخرین ویرایش</th>
                             <th>عکس</th>
+                            <th>آخرین ویرایش</th>
                             <th>عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
-
-                        <tr>
-                            <td>
-                                <div class="product-info">
-                                    <img src="https://via.placeholder.com/80x80" alt="Product">
-                                    <div>
-                                        <strong>Nike Air Max</strong>
-                                        <span>SKU: NIKE-AMX-01</span>
+                        @foreach($products as $product)
+                            <tr>
+                                <td>
+                                    <div class="product-info">
+                                        <img src="{{ \Illuminate\Support\Facades\Storage::url($product->image) }}" alt="Product">
+                                        <div>
+                                            <strong>{{ $product->name }}</strong>
+                                            <span>{{ $product->slug }}</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>Fashion</td>
-                            <td>$180</td>
-                            <td>7</td>
-                            <td><span class="badge badge-pending">Low Stock</span></td>
-                            <td>2026-02-08</td>
-                            <td>
-                                <div class="actions">
-                                    <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->category->name }}</td>
+                                <td>{{ $product->price }}</td>
+                                <td><span class="badge badge-pending">{{ $product->count }}</span></td>
+                                <td>{{ $product->slug }}</td>
+                               <td>
+                                   <img src="{{ \Illuminate\Support\Facades\Storage::url($product->image) }}" alt="Product" width="100px" height="100px">
+                               </td>
+                                <td>{{ \Morilog\Jalali\Jalalian::fromDateTime($product->updated_at)->format('Y/m/d H:i:s') }}</td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                        <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -471,7 +476,8 @@
                     <h2>اضافه کردن محصول</h2>
                 </div>
 
-                <form>
+                <form action="{{ route('Dashboard.AddProduct',['lang' => app()->getLocale()]) }}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
                         <label>نام محصول</label>
                         <input type="text" name="name" placeholder="Enter product name">
@@ -484,12 +490,10 @@
 
                     <div class="form-group">
                         <label>انتخاب دسته بندی</label>
-                        <select>
-                            <option>Select category</option>
-                            <option>Electronics</option>
-                            <option>Fashion</option>
-                            <option>Home & Kitchen</option>
-                            <option>Books</option>
+                        <select name="category">
+                            @foreach($categories as $category)
+                                <option>{{ $category->name }}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -505,15 +509,16 @@
 
                     <div class="form-group">
                         <label>عکس محصول</label>
-                        <input type="file" placeholder="Image link">
+                        <input type="file" name="image" placeholder="Image link">
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save Product</button>
-                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-primary">ذخیره محصولات</button>
+                        <button type="reset" class="btn btn-secondary">ریست</button>
                     </div>
                 </form>
             </div>
         </div>
+        @include('Errors.error')
     </div>
 @endsection
