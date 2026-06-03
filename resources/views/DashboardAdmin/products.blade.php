@@ -393,21 +393,21 @@
 
         <div class="page-header">
             <div>
-                <h1>Products</h1>
-                <p>Manage your product catalog, pricing, inventory, and visibility.</p>
+                <h1>محصولات</h1>
+                <p>ادمین وبسایت میتواند محصولات را اضافه و حذف و ویرایش کند</p>
             </div>
 
-            <button class="btn btn-primary" id="openProductForm">
-                <i class="fas fa-plus"></i>
-                Add Product
-            </button>
+{{--            <button class="btn btn-primary" id="openProductForm">--}}
+{{--                <i class="fas fa-plus"></i>--}}
+{{--                Add Product--}}
+{{--            </button>--}}
         </div>
 
         <div class="products-grid">
             <!-- Product Table -->
             <div class="card products-card">
                 <div class="card-header">
-                    <h2>All Products</h2>
+                    <h2>همه محصولات</h2>
 
                     <div class="toolbar">
                         <div class="search-box">
@@ -416,10 +416,7 @@
                         </div>
 
                         <select class="filter-select">
-                            <option>All Categories</option>
-                            <option>Electronics</option>
-                            <option>Fashion</option>
-                            <option>Home & Kitchen</option>
+                            <option>همه ی دسته بندی ها</option>
                         </select>
                     </div>
                 </div>
@@ -428,38 +425,18 @@
                     <table class="products-table">
                         <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Status</th>
-                            <th>Updated</th>
-                            <th>Actions</th>
+                            <th>محصولات</th>
+                            <th>نام محصول</th>
+                            <th>دسته بندی</th>
+                            <th>قیمت</th>
+                            <th>تعداد</th>
+                            <th>اسلاگ</th>
+                            <th>آخرین ویرایش</th>
+                            <th>عکس</th>
+                            <th>عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <div class="product-info">
-                                    <img src="https://via.placeholder.com/80x80" alt="Product">
-                                    <div>
-                                        <strong>Apple iPhone 15 Pro</strong>
-                                        <span>SKU: IP15PRO-128</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Electronics</td>
-                            <td>$999</td>
-                            <td>24</td>
-                            <td><span class="badge badge-active">Published</span></td>
-                            <td>2026-02-10</td>
-                            <td>
-                                <div class="actions">
-                                    <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
 
                         <tr>
                             <td>
@@ -491,23 +468,22 @@
             <!-- Product Form -->
             <div class="card form-card" id="productFormCard">
                 <div class="card-header">
-                    <h2>Add / Edit Product</h2>
-                    <span class="form-note">Create a new item or update existing one</span>
+                    <h2>اضافه کردن محصول</h2>
                 </div>
 
                 <form>
                     <div class="form-group">
-                        <label>Product Name</label>
-                        <input type="text" placeholder="Enter product name">
+                        <label>نام محصول</label>
+                        <input type="text" name="name" placeholder="Enter product name">
                     </div>
 
                     <div class="form-group">
-                        <label>SKU</label>
-                        <input type="text" placeholder="Enter SKU">
+                        <label>توضیحات</label>
+                        <textarea rows="4" name="description" placeholder="Write product description..."></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Category</label>
+                        <label>انتخاب دسته بندی</label>
                         <select>
                             <option>Select category</option>
                             <option>Electronics</option>
@@ -518,33 +494,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Price</label>
-                        <input type="number" placeholder="Enter price">
+                        <label>قیمت</label>
+                        <input type="number" name="price" placeholder="Enter price">
                     </div>
 
                     <div class="form-group">
-                        <label>Stock Quantity</label>
-                        <input type="number" placeholder="Enter stock">
+                        <label>count</label>
+                        <input type="number" name="count" placeholder="Enter count">
                     </div>
 
                     <div class="form-group">
-                        <label>Status</label>
-                        <select>
-                            <option>Published</option>
-                            <option>Draft</option>
-                            <option>Low Stock</option>
-                            <option>Hidden</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Product Image URL</label>
-                        <input type="text" placeholder="Image link">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea rows="4" placeholder="Write product description..."></textarea>
+                        <label>عکس محصول</label>
+                        <input type="file" placeholder="Image link">
                     </div>
 
                     <div class="form-actions">
