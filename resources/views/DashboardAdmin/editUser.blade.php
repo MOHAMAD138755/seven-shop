@@ -278,28 +278,22 @@
     <div class="users-page">
 
         <div class="page-header">
-            <div>
-                <h1>کابران</h1>
-                <p>ادمین وبسایت میتواند کاربران را اضافه و حذف و ویرایش کند</p>
-            </div>
 
-{{--            <button class="btn btn-primary" id="openUserForm">--}}
-{{--                <i class="fas fa-plus"></i>--}}
-{{--                Add User--}}
-{{--            </button>--}}
+
+                        <button class="btn btn-primary" id="openUserForm">
+                            <i class="fas fa-plus"></i>
+                            <a style="text-decoration: none" href="{{ route('Dashboard.Users',['lang' => app()->getLocale()]) }}">
+                            نمایش لیست کل کاربران
+                            </a>
+                        </button>
         </div>
 
         <div class="users-grid">
             <!-- Users List -->
             <div class="card users-card">
                 <div class="card-header">
-                    <h2>همه کاربران</h2>
+                    <h2>این کاربر</h2>
                     <form action="" method="post">
-
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search users...">
-                    </div>
 
                     </form>
                 </div>
@@ -316,37 +310,32 @@
                         </thead>
                         <tbody>
 
-                        @foreach($users as $user)
-
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($user->profile_path) }}" alt="John Doe">
-                                    <div>
-                                        <strong>{{ $user->name }}</strong>
-                                        <span>{{ $user->email }}</span>
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <img src="{{ \Illuminate\Support\Facades\Storage::url($user->profile_path) }}" alt="John Doe">
+                                        <div>
+                                            <strong>{{ $user->name }}</strong>
+                                            <span>{{ $user->email }}</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>{{ $user->email }}</td>
-{{--                            <td><span class="badge badge-admin">Admin</span></td>--}}
-{{--                            <td><span class="badge badge-active">Active</span></td>--}}
-                            <td><img src="{{ \Illuminate\Support\Facades\Storage::url($user->profile_path) }}" width="100px" height="100px"></td>
-                            <td>
-                                <div class="actions">
-                                    <a href="{{ route('Dashboard.EditForm',['user' => $user->id , 'lang' => app()->getLocale()]) }}">
-                                        <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                    </a>
-                                    <form action="{{ route('Dashboard.DeleteUser',['user' => $user->id , 'lang' => app()->getLocale()]) }}" method="post">
-                                        @method('DELETE') @csrf
-                                        <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-
-                        @endforeach
-
+                                </td>
+                                <td>{{ $user->email }}</td>
+                                {{--                            <td><span class="badge badge-admin">Admin</span></td>--}}
+                                {{--                            <td><span class="badge badge-active">Active</span></td>--}}
+                                <td><img src="{{ \Illuminate\Support\Facades\Storage::url($user->profile_path) }}" width="100px" height="100px"></td>
+                                <td>
+                                    <div class="actions">
+                                        <a href="{{ route('Dashboard.EditForm',['user' => $user->id , 'lang' => app()->getLocale()]) }}">
+                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                        </a>
+                                        <form action="{{ route('Dashboard.DeleteUser',['user' => $user->id , 'lang' => app()->getLocale()]) }}" method="post">
+                                            @method('DELETE') @csrf
+                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -355,25 +344,20 @@
             <!-- Form -->
             <div class="card form-card" id="userFormCard">
                 <div class="card-header">
-                    <h2>افزودن کاربر</h2>
-{{--                    <span class="form-note">Fill the details below</span>--}}
+                    <h2>ویرایش کاربر</h2>
+                    {{--                    <span class="form-note">Fill the details below</span>--}}
                 </div>
 
-                <form action="{{ route('Dashboard.AddUser',['lang' => app()->getLocale()]) }}" method="post" enctype="multipart/form-data">
-                    @csrf
+                <form action="{{ route('Dashboard.UpdateUser',['user' => $user->id,'lang' => app()->getLocale()]) }}" method="post" enctype="multipart/form-data">
+                    @csrf @method('PUT')
                     <div class="form-group">
                         <label>نام کاربر</label>
-                        <input type="text" name="username" placeholder="Enter full name">
+                        <input type="text" name="name" value="{{ $user->name }}" placeholder="Enter full name">
                     </div>
 
                     <div class="form-group">
                         <label>ایمیل</label>
-                        <input type="email" name="email" placeholder="Enter email">
-                    </div>
-
-                    <div class="form-group">
-                        <label>گذرواژه</label>
-                        <input type="password" name="password" placeholder="Enter password">
+                        <input type="email" name="email" value="{{ $user->email }}" placeholder="Enter email">
                     </div>
 
                     <div class="form-group">
@@ -382,7 +366,7 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">ذخیره کاربر</button>
+                        <button type="submit" class="btn btn-primary">ویرایش</button>
                         <button type="reset" class="btn btn-secondary">ریست</button>
                     </div>
                 </form>

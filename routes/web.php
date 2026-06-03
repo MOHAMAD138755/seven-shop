@@ -25,6 +25,10 @@ Route::prefix('{lang}')->group(function (){
 
             Route::controller(UserController::class)->group(function (){
                 Route::get('users','users')->name('Dashboard.Users');
+                Route::post('create','create')->name('Dashboard.AddUser');
+                Route::delete('destroy/{user}','destroy')->name('Dashboard.DeleteUser');
+                Route::get('edit-form/{user}','editForm')->name('Dashboard.EditForm');
+                Route::put('update/{user}','update')->name('Dashboard.UpdateUser');
             });
 
 
