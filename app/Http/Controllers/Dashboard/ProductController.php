@@ -57,4 +57,49 @@ class ProductController extends Controller
         \Flasher\Toastr\Prime\toastr('محصول با موفقیت حذف شد','success');
         return back();
     }
+
+    public function editForm(string $lang, Product $product): View
+    {
+        $categories = Category::all();
+        return view('DashboardAdmin.editProduct',['product' => $product , 'categories' => $categories]);
+    }
+
+    public function update(string $lang, Product $product , Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|min:5|max:15',
+            'description' => 'required|min:5|max:50',
+            'image' => 'file|image|mimes:jpeg,png,jpg|max:1024',
+            'price' => 'required|numeric|min:1000|regex:/^\d*(\.\d{1,2})?$/',
+            'category' => 'required',
+            'count' => 'required|numeric|min:1',
+        ]);
+
+        if($request->file('image')){
+            Storage::disk('public')->delete($product->image);
+
+            $storage = Storage::disk('public')->putFile('products_images', $request->file('image'));
+
+            $product->update([
+                'name' => $request['name'],
+                'description' => $request['description'],
+                'price' => $request['price'],
+                'count' => $request['count'],
+                'category_id' => $request['category'],
+                'image' => $storage,
+            ]);
+
+        }
+        $product->update([
+            'name' => $request['name'],
+            'description' => $request['description'],
+            'price' => $request['price'],
+            'count' => $request['count'],
+            'category_id' => $request['category'],
+        ]);
+
+        \Flasher\Toastr\Prime\toastr('محصول با موفقیت ویرایش شد','success');
+        return back();
+
+    }
 }

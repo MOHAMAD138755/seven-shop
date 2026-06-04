@@ -348,76 +348,23 @@
 @section('content')
     <div class="products-page">
 
-        <!-- Top Stats -->
-{{--        <div class="stats-grid">--}}
-{{--            <div class="stat-card">--}}
-{{--                <div class="stat-icon blue">--}}
-{{--                    <i class="fas fa-box"></i>--}}
-{{--                </div>--}}
-{{--                <div class="stat-info">--}}
-{{--                    <span>Total Products</span>--}}
-{{--                    <strong>248</strong>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="stat-card">--}}
-{{--                <div class="stat-icon green">--}}
-{{--                    <i class="fas fa-check-circle"></i>--}}
-{{--                </div>--}}
-{{--                <div class="stat-info">--}}
-{{--                    <span>Active Products</span>--}}
-{{--                    <strong>210</strong>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="stat-card">--}}
-{{--                <div class="stat-icon orange">--}}
-{{--                    <i class="fas fa-exclamation-triangle"></i>--}}
-{{--                </div>--}}
-{{--                <div class="stat-info">--}}
-{{--                    <span>Low Stock</span>--}}
-{{--                    <strong>18</strong>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="stat-card">--}}
-{{--                <div class="stat-icon purple">--}}
-{{--                    <i class="fas fa-tags"></i>--}}
-{{--                </div>--}}
-{{--                <div class="stat-info">--}}
-{{--                    <span>Categories</span>--}}
-{{--                    <strong>32</strong>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
 
         <div class="page-header">
             <div>
                 <h1>محصولات</h1>
-                <p>ادمین وبسایت میتواند محصولات را اضافه و حذف و ویرایش کند</p>
             </div>
-
-{{--            <button class="btn btn-primary" id="openProductForm">--}}
-{{--                <i class="fas fa-plus"></i>--}}
-{{--                Add Product--}}
-{{--            </button>--}}
+                    <a href="{{ route('Dashboard.Products',['lang'=> app()->getLocale()]) }}">
+                        <button class="btn btn-primary" id="openProductForm">
+                            <i class="fas fa-plus"></i>
+                             همه محصولات
+                        </button>
+                    </a>
         </div>
         <div class="products-grid">
             <!-- Product Table -->
             <div class="card products-card">
                 <div class="card-header">
-                    <h2>همه محصولات</h2>
-
-                    <div class="toolbar">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search products...">
-                        </div>
-
-                        <select class="filter-select">
-                            <option>همه ی دسته بندی ها</option>
-                        </select>
-                    </div>
+                    <h2>این محصول</h2>
                 </div>
 
                 <div class="table-responsive">
@@ -436,7 +383,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($products as $product)
+
                             <tr>
                                 <td>
                                     <div class="product-info">
@@ -452,15 +399,15 @@
                                 <td>تومان{{ number_format($product->price) }}</td>
                                 <td><span class="badge badge-pending">{{ $product->count }}</span></td>
                                 <td>{{ $product->slug }}</td>
-                               <td>
-                                   <img src="{{ \Illuminate\Support\Facades\Storage::url($product->image) }}" alt="Product" width="100px" height="100px">
-                               </td>
+                                <td>
+                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($product->image) }}" alt="Product" width="100px" height="100px">
+                                </td>
                                 <td>{{ \Morilog\Jalali\Jalalian::fromDateTime($product->updated_at)->format('Y/m/d H:i:s') }}</td>
                                 <td>
                                     <div class="actions">
 
                                         <a href="{{ route('Dashboard.EditFormProduct',['lang' => app()->getLocale(), 'product' => $product->id]) }}">
-                                        <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
                                         </a>
 
                                         <form action="{{ route('Dashboard.DeleteProduct',['lang' => app()->getLocale(), 'product' => $product->id]) }}" method="post">
@@ -471,7 +418,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
 
                         </tbody>
                     </table>
@@ -481,38 +427,40 @@
             <!-- Product Form -->
             <div class="card form-card" id="productFormCard">
                 <div class="card-header">
-                    <h2>اضافه کردن محصول</h2>
+                    <h2>ویرایش محصول</h2>
                 </div>
 
-                <form action="{{ route('Dashboard.AddProduct',['lang' => app()->getLocale()]) }}" method="post" enctype="multipart/form-data">
-                    @csrf
+                <form action="{{ route('Dashboard.UpdateProduct',['lang' => app()->getLocale() , 'product' => $product->id]) }}" method="post" enctype="multipart/form-data">
+                    @csrf @method('PUT')
                     <div class="form-group">
                         <label>نام محصول</label>
-                        <input type="text" name="name" placeholder="Enter product name">
+                        <input type="text" name="name" value="{{ $product->name }}" placeholder="Enter product name">
                     </div>
 
                     <div class="form-group">
                         <label>توضیحات</label>
-                        <textarea rows="4" name="description" placeholder="Write product description..."></textarea>
+                        <input name="description"  value="{{ $product->description }}">
                     </div>
 
                     <div class="form-group">
                         <label>انتخاب دسته بندی</label>
                         <select name="category">
                             @foreach($categories as $category)
-                                <option>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ $category->id == $product->category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>قیمت</label>
-                        <input type="number" name="price" placeholder="Enter price">
+                        <input type="number" value="{{ $product->price }}" name="price" placeholder="Enter price">
                     </div>
 
                     <div class="form-group">
                         <label>count</label>
-                        <input type="number" name="count" placeholder="Enter count">
+                        <input type="number" value="{{ $product->count }}" name="count" placeholder="Enter count">
                     </div>
 
                     <div class="form-group">
@@ -521,7 +469,7 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">ذخیره محصولات</button>
+                        <button type="submit" class="btn btn-primary">ویرایش محصول</button>
                         <button type="reset" class="btn btn-secondary">ریست</button>
                     </div>
                 </form>
