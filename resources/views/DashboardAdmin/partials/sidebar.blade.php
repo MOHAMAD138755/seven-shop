@@ -22,8 +22,10 @@
         <a href="#" class="nav-link">
             <i class="fas fa-cog"></i> Configuration
         </a>
-        <a href="#" class="nav-link">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
+        <form action="{{ route('Dashboard.logout',['lang' => app()->getLocale()]) }}" class="nav-link" method="post">
+            @csrf
+            <i class="fas fa-sign-out-alt"></i>
+            <button style="width: 100px;height: 30px;border-radius: 5px;border: none;background-color: red;color: white;cursor: pointer" type="submit">Logout</button>
+        </form>
     </nav>
 </aside>
