@@ -341,6 +341,10 @@
             grid-template-columns: 1fr;
         }
     }
+    #productFormCard{
+        position: relative;
+        right: 20px;
+    }
 </style>
 
 @section('title', 'Products Management')
