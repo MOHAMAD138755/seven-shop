@@ -449,7 +449,7 @@
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->category->name }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>تومان{{ number_format($product->price) }}</td>
                                 <td><span class="badge badge-pending">{{ $product->count }}</span></td>
                                 <td>{{ $product->slug }}</td>
                                <td>
@@ -459,7 +459,12 @@
                                 <td>
                                     <div class="actions">
                                         <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                        <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+
+                                        <form action="{{ route('Dashboard.DeleteProduct',['lang' => app()->getLocale(), 'product' => $product->id]) }}" method="post">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+                                        </form>
+
                                     </div>
                                 </td>
                             </tr>

@@ -48,4 +48,13 @@ class ProductController extends Controller
         \Flasher\Toastr\Prime\toastr('محصول با موفقیت اضافه شد','success');
         return back();
     }
+
+    public function destroy(string $lang, Product $product): RedirectResponse
+    {
+        Storage::disk('public')->delete($product->image);
+        $product->delete();
+
+        \Flasher\Toastr\Prime\toastr('محصول با موفقیت حذف شد','success');
+        return back();
+    }
 }
