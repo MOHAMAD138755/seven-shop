@@ -1,0 +1,353 @@
+@extends('DashboardAdmin.layout.layout')
+
+@section('title','Config Management')
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+
+    :root {
+        --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        --bg-soft: #f8fafc;
+        --glass-bg: rgba(255, 255, 255, 0.8);
+        --accent-color: #6366f1;
+        --text-dark: #1e293b;
+        --text-light: #64748b;
+        --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        --input-focus: rgba(99, 102, 241, 0.1);
+    }
+
+    .configuration-container {
+        font-family: 'Vazirmatn', sans-serif;
+        background-color: var(--bg-soft);
+        padding: 32px;
+        direction: rtl;
+        color: var(--text-dark);
+    }
+
+    /* --- Page Header --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+        font-size: 32px;
+        font-weight: 800;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+    }
+
+    .page-header p {
+        color: var(--text-light);
+        font-size: 16px;
+    }
+
+    /* --- Layout Grid --- */
+    .config-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 32px;
+    }
+
+    /* --- Sidebar (Modern Glass Look) --- */
+    .config-sidebar {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 24px;
+        padding: 20px;
+        height: fit-content;
+        position: sticky;
+        top: 32px;
+        box-shadow: var(--card-shadow);
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 18px;
+        text-decoration: none;
+        color: var(--text-light);
+        font-weight: 500;
+        border-radius: 16px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 4px;
+    }
+
+    .nav-item i {
+        font-size: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .nav-item:hover {
+        color: var(--accent-color);
+        background: rgba(99, 102, 241, 0.05);
+        transform: translateX(-5px); /* حرکت ملایم به سمت راست در RTL */
+    }
+
+    .nav-item.active {
+        background: var(--primary-gradient);
+        color: white !important;
+        box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
+    }
+
+    .nav-item.active i {
+        transform: scale(1.1);
+    }
+
+    /* --- Content & Cards --- */
+    .config-section .card {
+        background: white;
+        border-radius: 28px;
+        padding: 32px;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: var(--card-shadow);
+        transition: transform 0.3s ease;
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 32px;
+        border-bottom: 1px solid #f1f5f9;
+        padding-bottom: 20px;
+    }
+
+    .card-header h2 {
+        font-size: 22px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .card-header h2 i {
+        color: var(--accent-color);
+    }
+
+    /* --- Form Elements (Premium Input Style) --- */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-right: 4px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 14px 18px;
+        border-radius: 16px;
+        border: 1.5px solid #e2e8f0;
+        background: #fcfdfe;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: var(--accent-color);
+        background: white;
+        box-shadow: 0 0 0 4px var(--input-focus);
+    }
+
+    .full-width {
+        grid-column: span 2;
+    }
+
+    /* --- Buttons (Gradient & Interaction) --- */
+    .btn {
+        padding: 14px 28px;
+        border-radius: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+    }
+
+    .btn-primary {
+        background: var(--primary-gradient);
+        color: white;
+        box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-secondary {
+        background: white;
+        color: var(--text-dark);
+        border: 1.5px solid #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+    }
+
+    /* --- Badges & Accents --- */
+    .badge {
+        padding: 4px 12px;
+        border-radius: 99px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-blue {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--accent-color);
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 1024px) {
+        .config-grid { grid-template-columns: 1fr; }
+        .config-sidebar { position: static; }
+        .config-nav { flex-direction: row; overflow-x: auto; }
+        .nav-item { white-space: nowrap; }
+    }
+
+    @media (max-width: 768px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .full-width { grid-column: span 1; }
+        .page-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+        .configuration-container { padding: 16px; }
+    }
+</style>
+
+@section('content')
+    <main class="configuration-container">
+        <!-- Header Section -->
+        <div class="page-header">
+            <div>
+                <h1>تنظیمات سیستم</h1>
+                <p>مدیریت پیکربندی‌های اصلی وب‌سایت و تنظیمات پنل مدیریت</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary"><i class="fas fa-save"></i> ذخیره تغییرات کلی</button>
+            </div>
+        </div>
+
+        <div class="config-grid">
+            <!-- Sidebar Inside Main (Tabs Navigation) -->
+            <aside class="config-sidebar">
+                <nav class="config-nav">
+                    <a href="#general" class="nav-item active"><i class="fas fa-cog"></i> تنظیمات عمومی</a>
+                    <a href="#site-info" class="nav-item"><i class="fas fa-globe"></i> اطلاعات سایت</a>
+                    <a href="#email" class="nav-item"><i class="fas fa-envelope"></i> تنظیمات ایمیل (SMTP)</a>
+                    <a href="#payment" class="nav-item"><i class="fas fa-credit-card"></i> درگاه‌های پرداخت</a>
+                    <a href="#security" class="nav-item"><i class="fas fa-shield-alt"></i> امنیت و دسترسی</a>
+                    <a href="#maintenance" class="nav-item"><i class="fas fa-tools"></i> حالت تعمیرات</a>
+                </nav>
+            </aside>
+
+            <!-- Content Area (Where forms will change) -->
+            <section class="config-content">
+
+                <!-- Section: General Settings -->
+                <div id="general" class="config-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-cog"></i> تنظیمات عمومی</h2>
+                            <span class="badge badge-blue">اصلی</span>
+                        </div>
+
+                        <form action="#" method="POST">
+                            @csrf
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>نام وب‌سایت</label>
+                                    <input type="text" name="site_name" value="فروشگاه من">
+                                </div>
+                                <div class="form-group">
+                                    <label>نام دامنه (URL)</label>
+                                    <input type="text" name="site_url" value="https://myshop.com">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>توضیحات متای سایت (SEO)</label>
+                                    <textarea name="meta_description" rows="3">توضیحات کوتاه درباره فروشگاه شما...</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>زبان پیش‌فرض</label>
+                                    <select name="language">
+                                        <option value="fa">فارسی</option>
+                                        <option value="en">انگلیسی</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>واحد پولی</label>
+                                    <select name="currency">
+                                        <option value="toman">تومان</option>
+                                        <option value=" Rial">ریال</option>
+                                        <option value="usd">دلار</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">بروزرسانی تنظیمات عمومی</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Section: Email Settings (Example of another section) -->
+                <div id="email" class="config-section" style="display: none;"> <!-- در حالت واقعی با JS نمایش داده می‌شود -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-envelope"></i> تنظیمات سرویس ایمیل (SMTP)</h2>
+                        </div>
+                        <form action="#" method="POST">
+                            @csrf
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Host</label>
+                                    <input type="text" name="smtp_host" placeholder="smtp.mailtrap.io">
+                                </div>
+                                <div class="form-group">
+                                    <label>Port</label>
+                                    <input type="number" name="smtp_port" placeholder="587">
+                                </div>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" name="smtp_user">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" name="smtp_pass">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">تست اتصال و ذخیره</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+@endsection

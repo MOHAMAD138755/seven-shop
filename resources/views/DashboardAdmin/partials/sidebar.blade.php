@@ -19,7 +19,7 @@
         <div style="padding: 1rem 1.5rem; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">
             Settings
         </div>
-        <a href="#" class="nav-link">
+        <a href="{{ route('Dashboard.config',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-cog"></i> Configuration
         </a>
         <form action="{{ route('Dashboard.logout',['lang' => app()->getLocale()]) }}" class="nav-link" method="post">

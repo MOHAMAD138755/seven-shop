@@ -25,4 +25,9 @@ class DashboardController extends Controller
 
         return redirect('/');
     }
+
+    public function config(): View
+    {
+        return view('DashboardAdmin.config');
+    }
 }
