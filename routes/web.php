@@ -20,6 +20,7 @@ Route::prefix('{lang}')->group(function (){
                 Route::get('/','index')->name('Dashboard.َAdmin');
                 Route::post('logout','logout')->name('Dashboard.logout');
                 Route::get('config','config')->name('Dashboard.config');
+                Route::post('update-config','update_config')->name('Dashboard.update-config');
             });
 
             Route::controller(UserController::class)->group(function (){

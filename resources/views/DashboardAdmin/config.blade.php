@@ -248,7 +248,7 @@
                 <p>مدیریت پیکربندی‌های اصلی وب‌سایت و تنظیمات پنل مدیریت</p>
             </div>
             <div class="header-actions">
-                <button class="btn btn-secondary"><i class="fas fa-save"></i> ذخیره تغییرات کلی</button>
+{{--                <button class="btn btn-secondary"><i class="fas fa-save"></i> ذخیره تغییرات کلی</button>--}}
             </div>
         </div>
 
@@ -264,7 +264,6 @@
                     <a href="#maintenance" class="nav-item"><i class="fas fa-tools"></i> حالت تعمیرات</a>
                 </nav>
             </aside>
-
             <!-- Content Area (Where forms will change) -->
             <section class="config-content">
 
@@ -276,34 +275,34 @@
                             <span class="badge badge-blue">اصلی</span>
                         </div>
 
-                        <form action="#" method="POST">
+                        <form action="{{ route('Dashboard.update-config',['lang' => app()->getLocale()]) }}" method="POST">
                             @csrf
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label>نام وب‌سایت</label>
-                                    <input type="text" name="site_name" value="فروشگاه من">
+                                    <input type="text" name="site_name" value="{{ $settings['site_name'] }}">
                                 </div>
                                 <div class="form-group">
                                     <label>نام دامنه (URL)</label>
-                                    <input type="text" name="site_url" value="https://myshop.com">
+                                    <input type="text" name="site_url" value="{{ $settings['site_url'] }}">
                                 </div>
                                 <div class="form-group full-width">
                                     <label>توضیحات متای سایت (SEO)</label>
-                                    <textarea name="meta_description" rows="3">توضیحات کوتاه درباره فروشگاه شما...</textarea>
+                                    <input name="meta_description"  value="{{ $settings['meta_description'] }}"></input>
                                 </div>
                                 <div class="form-group">
                                     <label>زبان پیش‌فرض</label>
                                     <select name="language">
-                                        <option value="fa">فارسی</option>
-                                        <option value="en">انگلیسی</option>
+                                        <option value="fa" @selected(($settings['language'] ?? '') == 'fa') >فارسی</option>
+                                        <option value="en" @selected(($settings['language'] ?? '') == 'en') >انگلیسی</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>واحد پولی</label>
                                     <select name="currency">
-                                        <option value="toman">تومان</option>
-                                        <option value=" Rial">ریال</option>
-                                        <option value="usd">دلار</option>
+                                        <option value="toman" @selected(($settings['currency'] ?? '') == 'toman') >تومان</option>
+                                        <option value="Rial" @selected(($settings['currency'] ?? '') == 'Rial') >ریال</option>
+                                        <option value="usd" @selected(($settings['currency'] ?? '') == 'usd') >دلار</option>
                                     </select>
                                 </div>
                             </div>
