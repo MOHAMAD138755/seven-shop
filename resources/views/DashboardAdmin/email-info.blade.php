@@ -257,8 +257,8 @@
             <aside class="config-sidebar">
                 <nav class="config-nav">
                     <a href="{{ route('Dashboard.general',['lang' => app()->getLocale()]) }}" class="nav-item"><i class="fas fa-cog"></i> تنظیمات عمومی</a>
-                    <a href="{{ route('Dashboard.info',['lang' => app()->getLocale()]) }}" class="nav-item active"><i class="fas fa-globe"></i> اطلاعات سایت</a>
-                    <a href="{{ route('Dashboard.email',['lang' => app()->getLocale()]) }}" class="nav-item"><i class="fas fa-envelope"></i> تنظیمات ایمیل (SMTP)</a>
+                    <a href="{{ route('Dashboard.info',['lang' => app()->getLocale()]) }}" class="nav-item"><i class="fas fa-globe"></i> اطلاعات سایت</a>
+                    <a href="{{ route('Dashboard.email',['lang' => app()->getLocale()]) }}" class="nav-item active"><i class="fas fa-envelope"></i> تنظیمات ایمیل (SMTP)</a>
                     <a href="#payment" class="nav-item"><i class="fas fa-credit-card"></i> درگاه‌های پرداخت</a>
                     <a href="#security" class="nav-item"><i class="fas fa-shield-alt"></i> امنیت و دسترسی</a>
                     <a href="#maintenance" class="nav-item"><i class="fas fa-tools"></i> حالت تعمیرات</a>
@@ -271,70 +271,41 @@
                 <div id="general" class="config-section">
                     <div class="card">
                         <div class="card-header">
-                            <h2><i class="fas fa-cog"></i> اطلاعات وب سایت</h2>
+                            <h2><i class="fas fa-cog"></i> اطلاعات ایمیل سایت</h2>
                         </div>
 
-                        <form action="{{ route('Dashboard.update-config',['lang' => app()->getLocale()]) }}" method="POST">
-                            @csrf
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label>اینستاگرام</label>
-                                    <input type="text" name="instagram" value="{{ $settings['instagram'] }}">
-                                </div>
-                                <div class="form-group">
-                                    <label>تلگرام</label>
-                                    <input type="text" name="telegram" value="{{ $settings['telegram'] }}">
-                                </div>
-                                <div class="form-group full-width">
-                                    <label>یوتیوب</label>
-                                    <input name="youtube"  value="{{ $settings['youtube'] }}">
-                                </div>
-                                <div class="form-group">
-                                    <label>شماره تلفن</label>
-                                    <input name="phone" value="{{ $settings['phone'] }}">
-                                </div>
-                                <div class="form-group">
-                                    <label>ایمیل</label>
-                                    <input name="email" type="email" value="{{ $settings['email'] }}">
-                                </div>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">بروزرسانی تنظیمات عمومی</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Section: Email Settings (Example of another section) -->
-                <div id="email" class="config-section" style="display: none;"> <!-- در حالت واقعی با JS نمایش داده می‌شود -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-envelope"></i> تنظیمات سرویس ایمیل (SMTP)</h2>
-                        </div>
                         <form action="#" method="POST">
                             @csrf
                             <div class="form-grid">
                                 <div class="form-group">
-                                    <label>Host</label>
-                                    <input type="text" name="smtp_host" placeholder="smtp.mailtrap.io">
+                                    <label>آدرس هاست</label>
+                                    <input type="text" readonly value="{{ config('mail.mailers.smtp.host') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Port</label>
-                                    <input type="number" name="smtp_port" placeholder="587">
+                                    <label>پورت</label>
+                                    <input type="text" readonly value="{{ config('mail.mailers.smtp.port') }}">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>نام کاربری</label>
+                                    <input readonly value="{{ config('mail.mailers.smtp.username')}}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Username</label>
-                                    <input type="text" name="smtp_user">
+                                    <label>نام ارسال کننده</label>
+                                    <input type="text" readonly value="{{ config('mail.from.name') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" name="smtp_pass">
+                                    <label>ایمیل ارسال کننده</label>
+                                    <input readonly type="email" value="{{ config('mail.from.address') }}">
                                 </div>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">تست اتصال و ذخیره</button>
                             </div>
                         </form>
+
+                        <form action="{{ route('Dashboard.email-test',['lang' => app()->getLocale()]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="email" value="{{ $settings['email'] }}">
+                            <button type="submit" class="btn btn-primary">تست ارسال</button>
+                        </form>
+
                     </div>
                 </div>
 

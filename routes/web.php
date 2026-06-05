@@ -23,6 +23,8 @@ Route::prefix('{lang}')->group(function (){
                 Route::post('update-config','update_config')->name('Dashboard.update-config');
                 Route::get('general','general')->name('Dashboard.general');
                 Route::get('info','info')->name('Dashboard.info');
+                Route::get('email','email')->name('Dashboard.email');
+                Route::post('email/test','email_test')->name('Dashboard.email-test');
             });
 
             Route::controller(UserController::class)->group(function (){

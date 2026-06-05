@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -57,5 +58,22 @@ class DashboardController extends Controller
     public function info(): View
     {
         return view('DashboardAdmin.info-site');
+    }
+
+    public function email(): View
+    {
+        return view('DashboardAdmin.email-info');
+    }
+
+    public function email_test(Request $request): RedirectResponse
+    {
+        Mail::raw('Email settings are working correctly.', function ($message) use ($request) {
+            $message->to($request->email)
+            ->subject('Test email');
+        });
+
+        \Flasher\Toastr\Prime\toastr('ایمیل موفقیت ارسال شد','success');
+        return back();
+
     }
 }

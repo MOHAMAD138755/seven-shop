@@ -258,7 +258,7 @@
                 <nav class="config-nav">
                     <a href="{{ route('Dashboard.general',['lang' => app()->getLocale()]) }}" class="nav-item active"><i class="fas fa-cog"></i> تنظیمات عمومی</a>
                     <a href="{{ route('Dashboard.info',['lang' => app()->getLocale()]) }}" class="nav-item"><i class="fas fa-globe"></i> اطلاعات سایت</a>
-                    <a href="#email" class="nav-item"><i class="fas fa-envelope"></i> تنظیمات ایمیل (SMTP)</a>
+                    <a href="{{ route('Dashboard.email',['lang' => app()->getLocale()]) }}" class="nav-item"><i class="fas fa-envelope"></i> تنظیمات ایمیل (SMTP)</a>
                     <a href="#payment" class="nav-item"><i class="fas fa-credit-card"></i> درگاه‌های پرداخت</a>
                     <a href="#security" class="nav-item"><i class="fas fa-shield-alt"></i> امنیت و دسترسی</a>
                     <a href="#maintenance" class="nav-item"><i class="fas fa-tools"></i> حالت تعمیرات</a>
