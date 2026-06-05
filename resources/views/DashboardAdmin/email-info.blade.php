@@ -261,7 +261,7 @@
                     <a href="{{ route('Dashboard.email',['lang' => app()->getLocale()]) }}" class="nav-item active"><i class="fas fa-envelope"></i> تنظیمات ایمیل (SMTP)</a>
                     <a href="#payment" class="nav-item"><i class="fas fa-credit-card"></i> درگاه‌های پرداخت</a>
                     <a href="#security" class="nav-item"><i class="fas fa-shield-alt"></i> امنیت و دسترسی</a>
-                    <a href="#maintenance" class="nav-item"><i class="fas fa-tools"></i> حالت تعمیرات</a>
+                    <a href="{{ route('Dashboard.maintenance',['lang' => app()->getLocale()]) }}" class="nav-item"><i class="fas fa-tools"></i> حالت تعمیرات</a>
                 </nav>
             </aside>
             <!-- Content Area (Where forms will change) -->
