@@ -21,6 +21,8 @@ Route::prefix('{lang}')->group(function (){
                 Route::post('logout','logout')->name('Dashboard.logout');
                 Route::get('config','config')->name('Dashboard.config');
                 Route::post('update-config','update_config')->name('Dashboard.update-config');
+                Route::get('general','general')->name('Dashboard.general');
+                Route::get('info','info')->name('Dashboard.info');
             });
 
             Route::controller(UserController::class)->group(function (){

@@ -248,7 +248,7 @@
                 <p>مدیریت پیکربندی‌های اصلی وب‌سایت و تنظیمات پنل مدیریت</p>
             </div>
             <div class="header-actions">
-{{--                <button class="btn btn-secondary"><i class="fas fa-save"></i> ذخیره تغییرات کلی</button>--}}
+                {{--                <button class="btn btn-secondary"><i class="fas fa-save"></i> ذخیره تغییرات کلی</button>--}}
             </div>
         </div>
 
@@ -256,8 +256,8 @@
             <!-- Sidebar Inside Main (Tabs Navigation) -->
             <aside class="config-sidebar">
                 <nav class="config-nav">
-                    <a href="{{ route('Dashboard.general',['lang' => app()->getLocale()]) }}" class="nav-item active"><i class="fas fa-cog"></i> تنظیمات عمومی</a>
-                    <a href="{{ route('Dashboard.info',['lang' => app()->getLocale()]) }}" class="nav-item"><i class="fas fa-globe"></i> اطلاعات سایت</a>
+                    <a href="{{ route('Dashboard.general',['lang' => app()->getLocale()]) }}" class="nav-item"><i class="fas fa-cog"></i> تنظیمات عمومی</a>
+                    <a href="{{ route('Dashboard.info',['lang' => app()->getLocale()]) }}" class="nav-item active"><i class="fas fa-globe"></i> اطلاعات سایت</a>
                     <a href="#email" class="nav-item"><i class="fas fa-envelope"></i> تنظیمات ایمیل (SMTP)</a>
                     <a href="#payment" class="nav-item"><i class="fas fa-credit-card"></i> درگاه‌های پرداخت</a>
                     <a href="#security" class="nav-item"><i class="fas fa-shield-alt"></i> امنیت و دسترسی</a>
@@ -271,39 +271,31 @@
                 <div id="general" class="config-section">
                     <div class="card">
                         <div class="card-header">
-                            <h2><i class="fas fa-cog"></i> تنظیمات عمومی</h2>
-                            <span class="badge badge-blue">اصلی</span>
+                            <h2><i class="fas fa-cog"></i> اطلاعات وب سایت</h2>
                         </div>
 
                         <form action="{{ route('Dashboard.update-config',['lang' => app()->getLocale()]) }}" method="POST">
                             @csrf
                             <div class="form-grid">
                                 <div class="form-group">
-                                    <label>نام وب‌سایت</label>
-                                    <input type="text" name="site_name" value="{{ $settings['site_name'] }}">
+                                    <label>اینستاگرام</label>
+                                    <input type="text" name="instagram" value="{{ $settings['instagram'] }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>نام دامنه (URL)</label>
-                                    <input type="text" name="site_url" value="{{ $settings['site_url'] }}">
+                                    <label>تلگرام</label>
+                                    <input type="text" name="telegram" value="{{ $settings['telegram'] }}">
                                 </div>
                                 <div class="form-group full-width">
-                                    <label>توضیحات متای سایت (SEO)</label>
-                                    <input name="meta_description"  value="{{ $settings['meta_description'] }}"></input>
+                                    <label>یوتیوب</label>
+                                    <input name="youtube"  value="{{ $settings['youtube'] }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>زبان پیش‌فرض</label>
-                                    <select name="language">
-                                        <option value="fa" @selected(($settings['language'] ?? '') == 'fa') >فارسی</option>
-                                        <option value="en" @selected(($settings['language'] ?? '') == 'en') >انگلیسی</option>
-                                    </select>
+                                    <label>شماره تلفن</label>
+                                    <input name="phone" value="{{ $settings['phone'] }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>واحد پولی</label>
-                                    <select name="currency">
-                                        <option value="toman" @selected(($settings['currency'] ?? '') == 'toman') >تومان</option>
-                                        <option value="Rial" @selected(($settings['currency'] ?? '') == 'Rial') >ریال</option>
-                                        <option value="usd" @selected(($settings['currency'] ?? '') == 'usd') >دلار</option>
-                                    </select>
+                                    <label>ایمیل</label>
+                                    <input name="email" type="email" value="{{ $settings['email'] }}">
                                 </div>
                             </div>
                             <div class="form-actions">

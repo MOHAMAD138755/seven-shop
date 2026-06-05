@@ -48,4 +48,14 @@ class DashboardController extends Controller
         return back();
 
     }
+
+
+    public function general(): View
+    {
+        return view('DashboardAdmin.config');
+    }
+    public function info(): View
+    {
+        return view('DashboardAdmin.info-site');
+    }
 }
