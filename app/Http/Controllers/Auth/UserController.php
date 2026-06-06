@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -15,13 +16,21 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function register(): View
+    public function register(): View|RedirectResponse
     {
+        if(Setting::where('enable_register') != 'on'){
+            \Flasher\Toastr\Prime\toastr('این صفحه موقتا در دسترس نمی باشد','error');
+            return redirect('/');
+        }
         return view('Auth.register');
     }
 
-    public function login(): View
+    public function login(): View|RedirectResponse
     {
+        if(Setting::where('enable_login') != 'on'){
+            \Flasher\Toastr\Prime\toastr('این صفحه موقتا در دسترس نمی باشد','error');
+            return redirect('/');
+        }
         return view('Auth.login');
     }
 
