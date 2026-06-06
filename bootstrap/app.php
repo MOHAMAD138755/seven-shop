@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(\App\Http\Middleware\EnsureSessionCookieSecurity::class);
 //        $middleware->append(\App\Http\Middleware\IpCheck::class);
         $middleware->append(\App\Http\Middleware\ChangeLang::class);
+        $middleware->append(\App\Http\Middleware\Maintanance::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
