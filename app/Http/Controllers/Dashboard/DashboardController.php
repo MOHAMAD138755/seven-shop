@@ -88,4 +88,9 @@ class DashboardController extends Controller
     {
         return view('DashboardAdmin.maintenance');
     }
+
+    public function security(): View
+    {
+        return view('DashboardAdmin.security');
+    }
 }

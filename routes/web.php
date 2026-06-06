@@ -26,6 +26,7 @@ Route::prefix('{lang}')->group(function (){
                 Route::get('email','email')->name('Dashboard.email');
                 Route::post('email/test','email_test')->name('Dashboard.email-test');
                 Route::get('maintenance','maintenance')->name('Dashboard.maintenance');
+                Route::get('security','security')->name('Dashboard.security');
             });
 
             Route::controller(UserController::class)->group(function (){
