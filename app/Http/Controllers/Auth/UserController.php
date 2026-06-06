@@ -18,7 +18,7 @@ class UserController extends Controller
 {
     public function register(): View|RedirectResponse
     {
-        if(Setting::where('enable_register') != 'on'){
+        if(Setting::where('enable_register') == 'off'){
             \Flasher\Toastr\Prime\toastr('این صفحه موقتا در دسترس نمی باشد','error');
             return redirect('/');
         }
@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function login(): View|RedirectResponse
     {
-        if(Setting::where('enable_login') != 'on'){
+        if(Setting::where('enable_login') == 'off'){
             \Flasher\Toastr\Prime\toastr('این صفحه موقتا در دسترس نمی باشد','error');
             return redirect('/');
         }

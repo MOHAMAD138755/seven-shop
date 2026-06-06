@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -92,5 +93,25 @@ class DashboardController extends Controller
     public function security(): View
     {
         return view('DashboardAdmin.security');
+    }
+
+    public function update_password(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|string|min:6|max:10|confirmed',
+        ]);
+
+        $user = Auth::user();
+        if(!Hash::check($request->current_password,$user->password)){
+            \Flasher\Toastr\Prime\toastr('رمز فعلی نادرست است','error');
+            return back();
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+        \Flasher\Toastr\Prime\toastr('با موفقیت اپدیت شد','success');
+        return back();
     }
 }

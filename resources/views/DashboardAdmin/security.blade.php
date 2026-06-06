@@ -293,43 +293,45 @@
                                     </select>
                                     <p>وضعیت:{{ ($settings['enable_register'] == 'on' ? 'فعال است' : 'فعال نیست') }}</p>
                                 </div>
+                            <br>
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-primary">بروزرسانی تنظیمات امنیتی</button>
                             </div>
                         </form>
                     </div>
                 </div>
-
+                <br>
+                <h2>تنظیم رمز ورود</h2>
+                <form action="{{ route('Dashboard.update-password',['lang' => app()->getLocale()]) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label>وارد کردن رمز فعلی </label>
+                        <input type="password" name="current_password">
+                    </div>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <label>وارد کردن رمز عبور جدید</label>
+                        <input type="password" name="password">
+                    </div>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <label>وارد کردن تکرار رمز عبور جدید</label>
+                        <input type="password" name="password_confirmation">
+                    </div>
+                    <br>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">بروزرسانی</button>
+                    </div>
+                    @include('Errors.error')
+                </form>
                 <!-- Section: Email Settings (Example of another section) -->
                 <div id="email" class="config-section" style="display: none;"> <!-- در حالت واقعی با JS نمایش داده می‌شود -->
                     <div class="card">
                         <div class="card-header">
                             <h2><i class="fas fa-envelope"></i> تنظیمات سرویس ایمیل (SMTP)</h2>
                         </div>
-                        <form action="#" method="POST">
-                            @csrf
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label>Host</label>
-                                    <input type="text" name="smtp_host" placeholder="smtp.mailtrap.io">
-                                </div>
-                                <div class="form-group">
-                                    <label>Port</label>
-                                    <input type="number" name="smtp_port" placeholder="587">
-                                </div>
-                                <div class="form-group">
-                                    <label>Username</label>
-                                    <input type="text" name="smtp_user">
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" name="smtp_pass">
-                                </div>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">تست اتصال و ذخیره</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
 
