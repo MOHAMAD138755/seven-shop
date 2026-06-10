@@ -16,6 +16,9 @@
         <a href="{{ route('Dashboard.categories',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-chart-line"></i> Categories
         </a>
+        <a href="{{ route('Dashboard.comments',['lang' => app()->getLocale()]) }}" class="nav-link">
+            <i class="fas fa-message"></i> Comments
+        </a>
         <div style="padding: 1rem 1.5rem; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">
             Settings
         </div>
