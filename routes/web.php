@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\CommentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -52,6 +53,10 @@ Route::prefix('{lang}')->group(function (){
                 Route::delete('destroy-category/{category}','destroy')->name('Dashboard.DeleteCategory');
                 Route::get('edit-cat/{category}','editForm')->name('Dashboard.EditFormCategory');
                 Route::put('update-category/{category}','update')->name('Dashboard.UpdateCategory');
+            });
+
+            Route::controller(CommentController::class)->group(function (){
+                Route::get('comments','comments')->name('Dashboard.comments');
             });
     });
 
