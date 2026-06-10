@@ -1,6 +1,15 @@
 @extends('DashboardAdmin.layout.layout')
 
 <style>
+
+    .inline-form{
+        display: flex;
+    }
+
+    .inline-form form{
+        margin-left: 10px;
+    }
+
     .products-page {
         display: flex;
         flex-direction: column;
@@ -387,9 +396,18 @@
                                 <td style="color: {{ ($comment->status) == 0 ? 'red' : 'green'}}">{{ $comment->status == 0 ? 'تایید نشده': 'تایید شده' }}</td>
                                 <td>{{ $comment->created_at }}</td>
                                 <td>
-                                    <button class="icon-btn edit-btn"><i class="fas fa-check"></i></button>
+                                    <div class="inline-form">
+                                        <form action="{{ route('Dashboard.ApproveComments',['lang' => app()->getLocale(),'comment' => $comment->id]) }}" method="post">
+                                            @csrf @method('PUT')
+                                    <button class="icon-btn edit-btn" type="submit"><i class="fas fa-check"></i></button>
+                                        </form>
 
-                                    <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+                                    <form action="{{ route('Dashboard.DeleteComments',['lang' => app()->getLocale(),'comment' => $comment->id]) }}" method="post">
+                                    @csrf @method('DELETE')
+                                        <button class="icon-btn delete-btn" type="submit"><i class="fas fa-trash"></i></button>
+                                    </form>
+
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

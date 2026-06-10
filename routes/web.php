@@ -57,6 +57,8 @@ Route::prefix('{lang}')->group(function (){
 
             Route::controller(CommentController::class)->group(function (){
                 Route::get('comments','comments')->name('Dashboard.comments');
+                Route::delete('delete-comment/{comment}','delete')->name('Dashboard.DeleteComments');
+                Route::put('approve-comment/{comment}','approve_comment')->name('Dashboard.ApproveComments');
             });
     });
 
