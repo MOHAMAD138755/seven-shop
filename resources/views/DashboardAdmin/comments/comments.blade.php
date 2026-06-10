@@ -372,15 +372,27 @@
                             <th>متن نظر</th>
                             <th>نام نویسنده</th>
                             <th>برای کدام محصول</th>
-                            <th>تعداد ریپلای ها</th>
-                            <th>اسلاگ</th>
                             <th>وضعیت نظر</th>
-                            <th>زمان ساخته شدن</th>
-                            <th>زمان ویرایش شدن</th>
+                            <th>زمان گذاشته شدن</th>
+                            <th>عملیات حذف و تایید</th>
                         </tr>
                         </thead>
                         <tbody>
 
+                        @foreach($comments as $comment)
+                            <tr>
+                                <td>{{ $comment->content }}</td>
+                                <td>{{ $comment->user->name }}</td>
+                                <td>{{ $comment->product->name }}</td>
+                                <td style="color: {{ ($comment->status) == 0 ? 'red' : 'green'}}">{{ $comment->status == 0 ? 'تایید نشده': 'تایید شده' }}</td>
+                                <td>{{ $comment->created_at }}</td>
+                                <td>
+                                    <button class="icon-btn edit-btn"><i class="fas fa-check"></i></button>
+
+                                    <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                     </table>
