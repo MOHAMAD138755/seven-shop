@@ -315,7 +315,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach($categories as $category)
+                        @forelse($categories as $category)
 
                             <tr>
                                 <td>
@@ -341,8 +341,9 @@
                                     </div>
                                 </td>
                             </tr>
-
-                        @endforeach
+                            @empty
+                                <p style="text-align: center;color: red">دسته بندی یافت نشد</p>
+                            @endforelse
                         {{ $categories->links() }}
                         </tbody>
                     </table>

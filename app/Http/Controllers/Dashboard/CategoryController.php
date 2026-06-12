@@ -64,7 +64,7 @@ class CategoryController extends Controller
     public function search(Request $request): View
     {
         $request->validate([
-            'cat_name' => 'nullable|string|min:4|max:15',
+            'cat_name' => 'nullable|string|min:3|max:15',
             'english_name' => 'nullable|string|max:20',
         ]);
 

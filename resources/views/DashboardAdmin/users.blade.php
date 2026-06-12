@@ -316,7 +316,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach($users as $user)
+                        @forelse($users as $user)
 
                         <tr>
                             <td>
@@ -344,8 +344,9 @@
                                 </div>
                             </td>
                         </tr>
-
-                        @endforeach
+                        @empty
+                            <p style="text-align: center;color: red">کاربری یافت نشد</p>
+                        @endforelse
                         {{ $users->links() }}
                         </tbody>
                     </table>
