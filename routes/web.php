@@ -54,6 +54,7 @@ Route::prefix('{lang}')->group(function (){
                 Route::delete('destroy-category/{category}','destroy')->name('Dashboard.DeleteCategory');
                 Route::get('edit-cat/{category}','editForm')->name('Dashboard.EditFormCategory');
                 Route::put('update-category/{category}','update')->name('Dashboard.UpdateCategory');
+                Route::get('search-category','search')->name('Dashboard.SearchCategory');
             });
 
             Route::controller(CommentController::class)->group(function (){

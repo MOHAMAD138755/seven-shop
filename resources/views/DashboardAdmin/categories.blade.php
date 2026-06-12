@@ -294,13 +294,13 @@
             <div class="card users-card">
                 <div class="card-header">
                     <h2>همه دسته بندی ها</h2>
-                    <form action="" method="post">
-
+                    <form action="{{ route('Dashboard.SearchCategory',['lang' => app()->getLocale()])}}" method="get">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search category...">
+                            <input type="text" name="cat_name" value="{{ request('cat_name') }}" placeholder="enter name">
+                            <input type="text" name="english_name" value="{{ request('english_name') }}" placeholder="enter english_name">
+                            <button type="submit" class="btn">جستجو</button>
                         </div>
-
                     </form>
                 </div>
 
@@ -343,7 +343,7 @@
                             </tr>
 
                         @endforeach
-
+                        {{ $categories->links() }}
                         </tbody>
                     </table>
                 </div>

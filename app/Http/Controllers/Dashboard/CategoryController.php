@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function categories(): View
     {
-        $categories = Category::orderBy('id', 'desc')->get();
+        $categories = Category::orderBy('id', 'desc')->paginate(5);
         return view('DashboardAdmin.categories', compact('categories'));
     }
 
@@ -59,5 +59,26 @@ class CategoryController extends Controller
 
         \Flasher\Toastr\Prime\toastr('دسته بندی با موفقیت ویرایش شد','success');
         return back();
+    }
+
+    public function search(Request $request): View
+    {
+        $request->validate([
+            'cat_name' => 'nullable|string|min:4|max:15',
+            'english_name' => 'nullable|string|max:20',
+        ]);
+
+        $query = Category::query();
+
+        if($request->filled('cat_name')) {
+            $query->where('name', 'LIKE', "%{$request->cat_name}%");
+        }
+        if($request->filled('english_name')) {
+            $query->where('english_name', 'LIKE', "%{$request->english_name}%");
+        }
+        $categories = $query->paginate(5);
+
+        return view('DashboardAdmin.categories',compact('categories'));
+
     }
 }
