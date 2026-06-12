@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function users(): View
     {
-        $users = User::where('is_admin',0)->get();
+        $users = User::where('is_admin',0)->paginate(5);
         return view('DashboardAdmin.users',compact('users'));
     }
 
@@ -95,5 +95,26 @@ class UserController extends Controller
 
         \Flasher\Toastr\Prime\toastr('کاربر با موفقیت ویرایش شد','success');
         return back();
+    }
+
+    public function search(Request $request): View
+    {
+        $request->validate([
+            'name' => 'nullable|string|min:4|max:15',
+            'email' => 'nullable|string|email|max:20',
+        ]);
+
+        $query = User::query();
+
+        if($request->filled('name')) {
+            $query->where('name', 'LIKE', "%{$request->name}%");
+        }
+        if($request->filled('email')) {
+            $query->where('email', 'LIKE', "%{$request->email}%");
+        }
+        $users = $query->where('is_admin',0)->paginate(5);
+
+        return view('DashboardAdmin.users',compact('users'));
+
     }
 }

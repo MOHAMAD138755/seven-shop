@@ -37,6 +37,7 @@ Route::prefix('{lang}')->group(function (){
                 Route::delete('destroy/{user}','destroy')->name('Dashboard.DeleteUser');
                 Route::get('edit-user/{user}','editForm')->name('Dashboard.EditForm');
                 Route::put('update-user/{user}','update')->name('Dashboard.UpdateUser');
+                Route::get('search-user','search')->name('Dashboard.SearchUser');
             });
 
             Route::controller(ProductController::class)->group(function (){

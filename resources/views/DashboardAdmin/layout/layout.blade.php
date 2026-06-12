@@ -9,7 +9,7 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    @vite(['resources/css/dashboard.css'])
+    @vite(['resources/css/dashboard.css','resources/css/app.css'])
     <title>@yield('title','Admin Dashboard')</title>
 </head>
 <body>

@@ -294,13 +294,13 @@
             <div class="card users-card">
                 <div class="card-header">
                     <h2>همه کاربران</h2>
-                    <form action="" method="post">
-
+                    <form action="{{ route('Dashboard.SearchUser',['lang' => app()->getLocale()])}}" method="get">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search users...">
+                        <input type="text" name="name" value="{{ request('name') }}" placeholder="enter name">
+                        <input type="email" name="email" value="{{ request('email') }}" placeholder="enter email">
+                        <button type="submit" class="btn">جستجو</button>
                     </div>
-
                     </form>
                 </div>
 
@@ -346,7 +346,7 @@
                         </tr>
 
                         @endforeach
-
+                        {{ $users->links() }}
                         </tbody>
                     </table>
                 </div>
