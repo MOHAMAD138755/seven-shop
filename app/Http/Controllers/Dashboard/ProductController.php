@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function products(): View
     {
-        $products = Product::with('category')->get();
+        $products = Product::with('category')->paginate(5);
         $categories = Category::all();
         return view('DashboardAdmin.products',['products' => $products,'categories' => $categories ]);
     }
@@ -100,6 +100,28 @@ class ProductController extends Controller
 
         \Flasher\Toastr\Prime\toastr('محصول با موفقیت ویرایش شد','success');
         return back();
+
+    }
+
+    public function search(Request $request): View
+    {
+        $request->validate([
+            'name' => 'nullable|string|min:3|max:15',
+            'price' => 'nullable|string|max:10',
+        ]);
+
+        $query = Product::query();
+
+        if($request->filled('name')) {
+            $query->where('name', 'LIKE', "%{$request->name}%");
+        }
+        if($request->filled('price')) {
+            $query->where('price', 'LIKE', "%{$request->price}%");
+        }
+        $products = $query->paginate(5);
+        $categories = Category::all();
+
+        return view('DashboardAdmin.products',['products' => $products,'categories' => $categories ]);
 
     }
 }

@@ -46,6 +46,7 @@ Route::prefix('{lang}')->group(function (){
                 Route::delete('destroy-product/{product}','destroy')->name('Dashboard.DeleteProduct');
                 Route::get('edit-pro/{product}','editForm')->name('Dashboard.EditFormProduct');
                 Route::put('update-product/{product}','update')->name('Dashboard.UpdateProduct');
+                Route::get('search-product','search')->name('Dashboard.SearchProduct');
             });
 
             Route::controller(CategoryController::class)->group(function (){

@@ -413,10 +413,14 @@
                     <h2>همه محصولات</h2>
 
                     <div class="toolbar">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search products...">
-                        </div>
+                            <form action="{{ route('Dashboard.SearchProduct',['lang' => app()->getLocale()])}}" method="get">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" name="name" value="{{ request('name') }}" placeholder="enter name">
+                                    <input type="text" name="price" value="{{ request('price') }}" placeholder="enter price">
+                                    <button type="submit" class="btn">جستجو</button>
+                                </div>
+                            </form>
 
                         <select class="filter-select">
                             <option>همه ی دسته بندی ها</option>
@@ -440,7 +444,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($products as $product)
+                        @forelse($products as $product)
                             <tr>
                                 <td>
                                     <div class="product-info">
@@ -475,7 +479,10 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <p style="text-align: center;color: red">محصولی یافت نشد</p>
+                        @endforelse
+                        {{ $products->links() }}
 
                         </tbody>
                     </table>
