@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\CommentController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\LikeController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Middleware\LoginAdmin;
@@ -62,6 +63,10 @@ Route::prefix('{lang}')->group(function (){
                 Route::get('comments','comments')->name('Dashboard.comments');
                 Route::delete('delete-comment/{comment}','delete')->name('Dashboard.DeleteComments');
                 Route::put('approve-comment/{comment}','approve_comment')->name('Dashboard.ApproveComments');
+            });
+
+            Route::controller(LikeController::class)->group(function (){
+                Route::get('likes','likes')->name('Dashboard.likes');
             });
     });
 
