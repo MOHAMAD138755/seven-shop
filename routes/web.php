@@ -67,6 +67,7 @@ Route::prefix('{lang}')->group(function (){
 
             Route::controller(LikeController::class)->group(function (){
                 Route::get('likes','likes')->name('Dashboard.likes');
+                Route::delete('delete-like/{like}','delete_like')->name('Dashboard.DeleteLike');
             });
     });
 

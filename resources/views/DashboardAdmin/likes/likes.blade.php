@@ -382,10 +382,40 @@
                             <th>محصول</th>
                             <th>امتیاز</th>
                             <th>زمان گذاشته شدن</th>
-                            <th>عملیات حذف و تایید</th>
+                            <th>عملیات حذف </th>
                         </tr>
                         </thead>
                         <tbody>
+                        @forelse($likes as $like)
+
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div>
+                                            <strong>{{ $like->user->name }}</strong>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span>{{ $like->product->name }}</span>
+                                </td>
+
+                                <td><i style="color: {{ $like->is_like == 1 ? 'green' : 'red' }}" class="{{ $like->is_like == 1 ? 'fa-solid fa-thumbs-up' : 'fa-solid fa-thumbs-down' }}"></i></td>
+                                <td><span class="badge badge-admin">{{ $like-> 	created_at  }}</span></td>
+                                <td>
+                                    <div class="actions">
+                                        <form action="{{ route('Dashboard.DeleteLike',['like' => $like->id , 'lang' => app()->getLocale()]) }}" method="post">
+                                            @method('DELETE') @csrf
+                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <p style="text-align: center;color: red">لایک و دیسلایکی  یافت نشد</p>
+                        @endforelse
+                        {{ $likes->links() }}
                         </tbody>
                     </table>
                 </div>
