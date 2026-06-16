@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "anhskohbo/no-captcha": "^3.8",
+        "arielmejiadev/larapex-charts": "^9.0",
         "artesaos/seotools": "^1.4",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^12.0",
