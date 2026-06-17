@@ -402,7 +402,7 @@
                                 </td>
 
                                 <td><i style="color: {{ $like->is_like == 1 ? 'green' : 'red' }}" class="{{ $like->is_like == 1 ? 'fa-solid fa-thumbs-up' : 'fa-solid fa-thumbs-down' }}"></i></td>
-                                <td><span class="badge badge-admin">{{ $like-> 	created_at  }}</span></td>
+                                <td><span class="badge badge-admin">{{ \Morilog\Jalali\Jalalian::fromDateTime($like->created_at)->format('Y-m-d H:i:s')  }}</span></td>
                                 <td>
                                     <div class="actions">
                                         <form action="{{ route('Dashboard.DeleteLike',['like' => $like->id , 'lang' => app()->getLocale()]) }}" method="post">
