@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Charts\ProductLikeChart;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Morilog\Jalali\Jalalian;
 
 class ProductController extends Controller
 {
@@ -122,6 +126,36 @@ class ProductController extends Controller
         $categories = Category::all();
 
         return view('DashboardAdmin.products',['products' => $products,'categories' => $categories ]);
+
+    }
+
+    public function state(string $lang, Product $product, LarapexChart $chart): RedirectResponse|View
+    {
+        $dailyState = $product->likes()
+            ->selectRaw("
+        DATE(created_at) as date,
+        SUM(is_like = 1) as liked_count,
+        SUM(is_like = 0) as disliked_count
+    ")
+            ->groupByRaw('DATE(created_at)')
+            ->orderByRaw('DATE(created_at)')
+            ->get();
+
+        $dates = $dailyState->pluck('date')
+            ->map(fn ($date) => Jalalian::fromDateTime($date)->format('Y-m-d'))
+            ->toArray();
+
+        $liked = $dailyState->pluck('liked_count')->toArray();
+        $disliked = $dailyState->pluck('disliked_count')->toArray();
+
+        if($dailyState->isEmpty()){
+            \Flasher\Toastr\Prime\toastr('هنور آماری برای این محصول نیست','warning');
+            return back();
+        }
+
+        $my_chart = (new ProductLikeChart($chart))
+            ->build($liked, $disliked, $dates);
+            return view('DashboardAdmin.chart', compact('my_chart'));
 
     }
 }

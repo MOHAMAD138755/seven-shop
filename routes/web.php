@@ -48,6 +48,7 @@ Route::prefix('{lang}')->group(function (){
                 Route::get('edit-pro/{product}','editForm')->name('Dashboard.EditFormProduct');
                 Route::put('update-product/{product}','update')->name('Dashboard.UpdateProduct');
                 Route::get('search-product','search')->name('Dashboard.SearchProduct');
+                Route::post('product/state/{product}','state')->name('Dashboard.State');
             });
 
             Route::controller(CategoryController::class)->group(function (){

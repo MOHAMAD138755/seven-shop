@@ -13,13 +13,13 @@ class ProductLikeChart
         $this->chart = $chart;
     }
 
-    public function build($likes,$dislikes,$date): \ArielMejiaDev\LarapexCharts\LineChart
+    public function build($likes,$dislikes,$dates): \ArielMejiaDev\LarapexCharts\BarChart
     {
-        return $this->chart->lineChart()
-            ->setTitle(' لایک ها و دیسلایک')
-            ->setSubtitle('بررسی لایک ها و دیسلایک ها در نمودار')
+        return $this->chart->barChart()
+            ->setTitle('لایک و دیسلایک')
+            ->setSubtitle('نمایش تعداد لایک و دیسلایک')
             ->addData($likes, 'لایک ها')
-            ->addData($dislikes,'دیسلایک ها')
-            ->setXAxis($date);
+            ->addData($dislikes, 'دیسلایک ها')
+            ->setXAxis($dates);
     }
 }

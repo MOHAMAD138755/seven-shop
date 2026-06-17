@@ -449,10 +449,6 @@
                                 <td>
                                     <div class="product-info">
                                         <img src="{{ \Illuminate\Support\Facades\Storage::url($product->image) }}" alt="Product">
-                                        <div>
-                                            <strong>{{ $product->name }}</strong>
-                                            <span>{{ $product->slug }}</span>
-                                        </div>
                                     </div>
                                 </td>
                                 <td>{{ $product->name }}</td>
@@ -475,7 +471,10 @@
                                             @csrf @method('DELETE')
                                             <button type="submit" class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
                                         </form>
-
+                                        <form action="{{ route('Dashboard.State',['lang' => app()->getLocale(), 'product' => $product->id]) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="icon-btn delete-btn"><i class="fas fa-chart-line"></i></button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
