@@ -388,7 +388,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach($comments as $comment)
+                        @forelse($comments as $comment)
                             <tr>
                                 <td>{{ $comment->content }}</td>
                                 <td>{{ $comment->user->name }}</td>
@@ -410,7 +410,9 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <p style="text-align: center;color: red">نظری یافت نشد</p>
+                        @endforelse
 
                         </tbody>
                     </table>
