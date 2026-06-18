@@ -35,6 +35,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Like::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
