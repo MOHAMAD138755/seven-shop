@@ -2,6 +2,16 @@
 
 <style>
 
+    .select-style{
+        width: 130px;
+        height: 35px;
+        text-align: center;
+        font-weight: bolder;
+        cursor: pointer;
+       background-color: #b6b6b6;
+        border-radius: 5px;
+    }
+
     .inline-form{
         display: flex;
     }
@@ -378,44 +388,69 @@
                     <table class="products-table">
                         <thead>
                         <tr>
+                            <th>شماره سفارش</th>
                             <th>کاربر</th>
                             <th>مبلغ کل</th>
+                            <th>آدرس</th>
+                            <th>وضعیت</th>
                             <th>زمان گذاشته شدن</th>
-                            <th>عملیات </th>
+                            <th>دیدن سفارش </th>
                         </tr>
                         </thead>
-{{--                        <tbody>--}}
-{{--                        @forelse($likes as $like)--}}
+                        <tbody>
+                        @forelse($orders as $order)
 
-{{--                            <tr>--}}
-{{--                                <td>--}}
-{{--                                    <div class="user-info">--}}
-{{--                                        <div>--}}
-{{--                                            <strong>{{ $like->user->name }}</strong>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div>
+                                            <strong>{{ $order->id }}</strong>
+                                        </div>
+                                    </div>
+                                </td>
 
-{{--                                <td>--}}
-{{--                                    <span>{{ $like->product->name }}</span>--}}
-{{--                                </td>--}}
+                                <td>
+                                    <span>{{ $order->user->name }}</span>
+                                </td>
 
-{{--                                <td><i style="color: {{ $like->is_like == 1 ? 'green' : 'red' }}" class="{{ $like->is_like == 1 ? 'fa-solid fa-thumbs-up' : 'fa-solid fa-thumbs-down' }}"></i></td>--}}
-{{--                                <td><span class="badge badge-admin">{{ \Morilog\Jalali\Jalalian::fromDateTime($like->created_at)->format('Y-m-d H:i:s')  }}</span></td>--}}
-{{--                                <td>--}}
-{{--                                    <div class="actions">--}}
-{{--                                        <form action="{{ route('Dashboard.DeleteLike',['like' => $like->id , 'lang' => app()->getLocale()]) }}" method="post">--}}
-{{--                                            @method('DELETE') @csrf--}}
-{{--                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>--}}
-{{--                                        </form>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
-{{--                        @empty--}}
-{{--                            <p style="text-align: center;color: red">لایک و دیسلایکی  یافت نشد</p>--}}
-{{--                        @endforelse--}}
-{{--                        {{ $likes->links() }}--}}
-{{--                        </tbody>--}}
+                                <td>
+                                    <span>تومان{{ number_format($order->total_price) }}</span>
+                                </td>
+
+                                <td>
+                                    <span>{{ $order->address }}</span>
+                                </td>
+                                <td>
+                                    <span style="color: #00ff15">{{ $order->status }}: وضعیت فعلی</span>
+                                    <form action="" method="post">
+                                        @csrf @method('PUT')
+                                        <select name="status" class="select-style">
+                                            <option value="pending" {{ $order->status == 'pending' ? 'selected' : ''}}>در انتظار</option>
+                                            <option value="paid" {{ $order->status == 'paid' ? 'selected' : ''}}>پرداخت شده</option>
+                                            <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : ''}}>ارسال شده</option>
+                                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : ''}}>در حال پردازش</option>
+                                            <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : ''}}>تحویل داده شده</option>
+                                            <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : ''}}>لغو شده</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-primary">تغییر وضعیت</button>
+                                    </form>
+                                </td>
+                                <td>
+                                   <p>{{ \Morilog\Jalali\Jalalian::fromDateTime($order->created_at)->format('Y-m-d H:i:s') }}</p>
+                                </td>
+
+                                <td>
+                                    <form action="" method="post">
+                                        @csrf
+                                        <button type="submit" class="icon-btn delete-btn"><i class="fas fa-eye"></i></button>
+                                    </form>
+                                </td>
+
+                        @empty
+                            <p style="text-align: center;color: red"> سفارشی یافت نشد</p>
+                        @endforelse
+                        {{ $orders->links() }}
+                        </tbody>
                     </table>
                 </div>
             </div>
