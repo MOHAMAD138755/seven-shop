@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\CommentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\LikeController;
+use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Middleware\LoginAdmin;
@@ -69,6 +70,10 @@ Route::prefix('{lang}')->group(function (){
             Route::controller(LikeController::class)->group(function (){
                 Route::get('likes','likes')->name('Dashboard.likes');
                 Route::delete('delete-like/{like}','delete_like')->name('Dashboard.DeleteLike');
+            });
+
+            Route::controller(OrderController::class)->group(function (){
+                Route::get('orders','orders')->name('Dashboard.orders');
             });
     });
 
