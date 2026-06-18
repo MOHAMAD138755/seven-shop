@@ -356,22 +356,22 @@
     }
 </style>
 
-@section('title', 'Likes Dislikes Management')
+@section('title', 'Order Management')
 
 @section('content')
     <div class="products-page">
 
         <div class="page-header">
             <div>
-                <h1>لایک ها و دیسلایک ها</h1>
-                <p>ادمین وبسایت میتواند این موارد را مدیریت کند</p>
+                <h1>مدیریت سفارشات</h1>
+                <p>ادمین وبسایت میتواند سفارشات را مدیریت کند</p>
             </div>
         </div>
         <div class="products-grid">
             <!-- Product Table -->
             <div class="card products-card">
                 <div class="card-header">
-                    <h2>همه موارد</h2>
+                    <h2>همه سفارشات</h2>
                 </div>
 
                 <div class="table-responsive">
@@ -379,44 +379,43 @@
                         <thead>
                         <tr>
                             <th>کاربر</th>
-                            <th>محصول</th>
-                            <th>امتیاز</th>
+                            <th>مبلغ کل</th>
                             <th>زمان گذاشته شدن</th>
-                            <th>عملیات حذف </th>
+                            <th>عملیات </th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @forelse($likes as $like)
+{{--                        <tbody>--}}
+{{--                        @forelse($likes as $like)--}}
 
-                            <tr>
-                                <td>
-                                    <div class="user-info">
-                                        <div>
-                                            <strong>{{ $like->user->name }}</strong>
-                                        </div>
-                                    </div>
-                                </td>
+{{--                            <tr>--}}
+{{--                                <td>--}}
+{{--                                    <div class="user-info">--}}
+{{--                                        <div>--}}
+{{--                                            <strong>{{ $like->user->name }}</strong>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
 
-                                <td>
-                                    <span>{{ $like->product->name }}</span>
-                                </td>
+{{--                                <td>--}}
+{{--                                    <span>{{ $like->product->name }}</span>--}}
+{{--                                </td>--}}
 
-                                <td><i style="color: {{ $like->is_like == 1 ? 'green' : 'red' }}" class="{{ $like->is_like == 1 ? 'fa-solid fa-thumbs-up' : 'fa-solid fa-thumbs-down' }}"></i></td>
-                                <td><span class="badge badge-admin">{{ \Morilog\Jalali\Jalalian::fromDateTime($like->created_at)->format('Y-m-d H:i:s')  }}</span></td>
-                                <td>
-                                    <div class="actions">
-                                        <form action="{{ route('Dashboard.DeleteLike',['like' => $like->id , 'lang' => app()->getLocale()]) }}" method="post">
-                                            @method('DELETE') @csrf
-                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <p style="text-align: center;color: red">لایک و دیسلایکی  یافت نشد</p>
-                        @endforelse
-                        {{ $likes->links() }}
-                        </tbody>
+{{--                                <td><i style="color: {{ $like->is_like == 1 ? 'green' : 'red' }}" class="{{ $like->is_like == 1 ? 'fa-solid fa-thumbs-up' : 'fa-solid fa-thumbs-down' }}"></i></td>--}}
+{{--                                <td><span class="badge badge-admin">{{ \Morilog\Jalali\Jalalian::fromDateTime($like->created_at)->format('Y-m-d H:i:s')  }}</span></td>--}}
+{{--                                <td>--}}
+{{--                                    <div class="actions">--}}
+{{--                                        <form action="{{ route('Dashboard.DeleteLike',['like' => $like->id , 'lang' => app()->getLocale()]) }}" method="post">--}}
+{{--                                            @method('DELETE') @csrf--}}
+{{--                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>--}}
+{{--                                        </form>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                        @empty--}}
+{{--                            <p style="text-align: center;color: red">لایک و دیسلایکی  یافت نشد</p>--}}
+{{--                        @endforelse--}}
+{{--                        {{ $likes->links() }}--}}
+{{--                        </tbody>--}}
                     </table>
                 </div>
             </div>

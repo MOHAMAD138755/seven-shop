@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-    public function orders()
+    public function orders(): View
     {
-        dd('ok');
+        return view('DashboardAdmin.orders.orders');
     }
 }

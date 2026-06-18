@@ -22,6 +22,9 @@
         <a href="{{ route('Dashboard.likes',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-heart"></i> Likes
         </a>
+        <a href="{{ route('Dashboard.orders',['lang' => app()->getLocale()]) }}" class="nav-link">
+            <i class="fas fa-clipboard-list"></i> Orders
+        </a>
         <div style="padding: 1rem 1.5rem; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">
             Settings
         </div>
