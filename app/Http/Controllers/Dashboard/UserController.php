@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function users(): View
     {
-        $users = User::where('is_admin',0)->paginate(5);
+        $users = User::paginate(5);
         return view('DashboardAdmin.users',compact('users'));
     }
 

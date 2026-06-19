@@ -94,8 +94,9 @@ class UserController extends Controller
         ]);
 
         if ($user) {
+            $user->assignRole('user');
             \Flasher\Toastr\Prime\toastr('ثبت نام موفقیت آمیز بود','success');
-            return redirect('user.login');
+            return to_route('user.login',['lang' => app()->getLocale()]);
         }
 
         \Flasher\Toastr\Prime\toastr('ثبت نام موفقیت آمیز نبود','success');

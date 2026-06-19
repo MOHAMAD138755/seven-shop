@@ -17,8 +17,7 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        $admin = User::where('is_admin',1)->first();
-        return view('DashboardAdmin.index',compact('admin'));
+        return view('DashboardAdmin.index');
     }
 
     public function logout(): RedirectResponse

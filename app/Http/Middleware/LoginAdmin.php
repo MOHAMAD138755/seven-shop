@@ -15,7 +15,7 @@ class LoginAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!auth()->check() || auth()->user()->is_admin === 0){
+        if(!auth()->check() || auth()->user()->hasRole('user')){
               return redirect('/');
         }
 
