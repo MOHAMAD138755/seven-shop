@@ -74,6 +74,7 @@ Route::prefix('{lang}')->group(function (){
 
             Route::controller(OrderController::class)->group(function (){
                 Route::get('orders','orders')->name('Dashboard.orders');
+                Route::put('orders/{order}','update')->name('Dashboard.OrdersUpdate');
             });
     });
 

@@ -422,7 +422,7 @@
                                 </td>
                                 <td>
                                     <span style="color: #00ff15">{{ $order->status }}: وضعیت فعلی</span>
-                                    <form action="" method="post">
+                                    <form action="{{ route('Dashboard.OrdersUpdate',['lang' => app()->getLocale() , 'order' => $order->id]) }}" method="post">
                                         @csrf @method('PUT')
                                         <select name="status" class="select-style">
                                             <option value="pending" {{ $order->status == 'pending' ? 'selected' : ''}}>در انتظار</option>
