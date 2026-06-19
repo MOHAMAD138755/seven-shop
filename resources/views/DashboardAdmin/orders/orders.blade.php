@@ -364,6 +364,63 @@
         position: relative;
         right: 20px;
     }
+
+    #order-details {
+
+        width: 90%;
+        max-width: 500px;
+        padding: 0;
+        border: none;
+        border-radius: 16px;margin: auto;
+        max-height: 85%;
+        overflow-y: auto;
+        background-color: #ffffff;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+
+        transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s allow-discrete;
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+
+    #order-details:popover-open {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+
+    #order-details::backdrop {
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+    }
+
+    #order-details h2{
+        margin: 0;
+        padding: 20px;
+        font-size: 1.25rem;
+        color: #1f2937;
+        border-bottom: 1px solid #f3f4f6;
+        text-align: right;
+    }
+
+    #order-details h4{
+        margin: 0;
+        padding: 20px;
+        color: #00ff15;
+        border-bottom: 1px solid #f3f4f6;
+        text-align: right;
+    }
+
+
+    .order-content {
+        padding: 20px;
+        direction: rtl;
+        text-align: right;
+        color: #4b5563;
+    }
+
 </style>
 
 @section('title', 'Order Management')
@@ -440,10 +497,31 @@
                                 </td>
 
                                 <td>
-                                    <form action="" method="post">
-                                        @csrf
-                                        <button type="submit" class="icon-btn delete-btn"><i class="fas fa-eye"></i></button>
-                                    </form>
+                                    <button popovertarget="order-details" type="button" class="icon-btn delete-btn"><i class="fas fa-eye"></i></button>
+
+                                    <div id="order-details" class="modal" popover>
+                                        <h2>جزئیات سفارش</h2>
+                                        <h2>{{ $order->user->name }}<strong>:مشتری</strong></h2>
+                                        <h4>{{ $order->status }}<strong>:وضعیت</strong></h4>
+                                        @foreach($order->items as $item)
+
+                                        <div class="order-content">
+                                            <p><strong>شماره سفارش آیتم:</strong>{{ $item->id }}</p>
+                                            <p><strong>نام محصول سفارش داده شده:</strong>{{ $item->product->name }}</p>
+                                            <p><strong>تعداد مصحول سفارش داده شده:</strong>{{ $item->quantity }}</p>
+                                            <p><strong>قیمت محصول:</strong>{{ $item->price }}</p>
+                                            <p><strong>زمان سفارش آیتم:</strong></p><p>{{ \Morilog\Jalali\Jalalian::fromDateTime($item->created_at)}}</p>
+                                        </div>
+
+                                        @endforeach
+
+                                        <div style="padding: 15px; border-top: 1px solid #f3f4f6; text-align: left;">
+                                            <button onclick="document.getElementById('order-details').hidePopover()"
+                                                    style="padding: 8px 16px; border-radius: 8px; border: none; background: #f3f4f6; cursor: pointer;">
+                                                بستن
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
 
                         @empty

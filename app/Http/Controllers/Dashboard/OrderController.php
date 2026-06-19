@@ -12,7 +12,7 @@ class OrderController extends Controller
 {
     public function orders(): View
     {
-        $orders = Order::with('user')->latest()->paginate(7);
+        $orders = Order::with('user','items.product')->latest()->paginate(7);
         return view('DashboardAdmin.orders.orders',compact('orders'));
     }
 
