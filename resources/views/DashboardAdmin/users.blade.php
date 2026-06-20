@@ -333,7 +333,7 @@
 {{--                            <td><span class="badge badge-admin">Admin</span></td>--}}
 {{--                            <td><span class="badge badge-active">Active</span></td>--}}
                             <td><img src="{{ \Illuminate\Support\Facades\Storage::url($user->profile_path) }}" width="100px" height="100px"></td>
-                            <td>{{ $user->roles[0]->name }}</td>
+                            <td>{{ $user->roles[0]->name ?? 'نقشی ندارد' }}</td>
                             <td>
                                 <div class="actions">
                                     <a href="{{ route('Dashboard.EditForm',['user' => $user->id , 'lang' => app()->getLocale()]) }}">
@@ -387,9 +387,11 @@
                     <div class="form-group">
                         <label>نقش کاربر</label>
                         <select name="role">
-                            @foreach($roles as $role)
+                            @forelse($roles as $role)
                             <option value="{{ $role->name }}" @selected($user->hasRole($role->name))>{{ $role->name }}</option>
-                            @endforeach
+                            @empty
+                                <p style="text-align: center;color: red">نقشی یافت نشد</p>
+                            @endforelse
                         </select>
                     </div>
 
