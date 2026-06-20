@@ -29,6 +29,11 @@
             <i class="fas fa-clipboard-list"></i> Orders
         </a>
         @endrole
+        @role('administrator')
+        <a href="{{ route('Dashboard.permissions',['lang' => app()->getLocale()]) }}" class="nav-link">
+            <i class="fas fa-id-card"></i> Permission
+        </a>
+        @endrole
         <div style="padding: 1rem 1.5rem; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">
             Settings
         </div>

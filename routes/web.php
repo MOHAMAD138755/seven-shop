@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\CommentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\LikeController;
 use App\Http\Controllers\Dashboard\OrderController;
+use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Middleware\LoginAdmin;
@@ -79,6 +80,10 @@ Route::prefix('{lang}')->group(function (){
             Route::middleware(['role:administrator'])->controller(OrderController::class)->group(function (){
                 Route::get('orders','orders')->name('Dashboard.orders');
                 Route::put('orders/{order}','update')->name('Dashboard.OrdersUpdate');
+            });
+
+            Route::middleware(['role:administrator'])->controller(PermissionController::class)->group(function (){
+                Route::get('permissions','permissions')->name('Dashboard.permissions');
             });
     });
 
