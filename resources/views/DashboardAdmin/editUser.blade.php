@@ -305,6 +305,7 @@
                             <th>نام کاربر</th>
                             <th>ایمیل</th>
                             <th>پروفایل</th>
+                            <th>نقش کاربر</th>
                             <th>عملیات</th>
                         </tr>
                         </thead>
@@ -324,6 +325,7 @@
                                 {{--                            <td><span class="badge badge-admin">Admin</span></td>--}}
                                 {{--                            <td><span class="badge badge-active">Active</span></td>--}}
                                 <td><img src="{{ \Illuminate\Support\Facades\Storage::url($user->profile_path) }}" width="100px" height="100px"></td>
+                                <td>{{ $user->roles[0]->name }}</td>
                                 <td>
                                     <div class="actions">
                                         <a href="{{ route('Dashboard.EditForm',['user' => $user->id , 'lang' => app()->getLocale()]) }}">
@@ -363,6 +365,15 @@
                     <div class="form-group">
                         <label>پروفایل</label>
                         <input type="file" name="img" placeholder="Avatar image link">
+                    </div>
+
+                    <div class="form-group">
+                        <label>نقش کاربر</label>
+                        <select name="role">
+                            @foreach($roles as $role)
+                            <option value="{{ $role->name }}" @selected($user->hasRole($role->name))>{{ $role->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-actions">

@@ -9,13 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function users(): View
     {
+        $roles = Role::all();
         $users = User::paginate(5);
-        return view('DashboardAdmin.users',compact('users'));
+        return view('DashboardAdmin.users',compact('users','roles'));
     }
 
     public function create(Request $request): RedirectResponse
@@ -25,6 +27,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email',
             'password'=> 'required|string|min:6|max:10',
             'img' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+            'role' => 'required|string'
         ]);
 
         $storage = Storage::disk('public')->putFile('profile_images', $request->file('img'));
@@ -37,6 +40,7 @@ class UserController extends Controller
         ]);
 
         if ($user) {
+            $user->assignRole($request->role);
             \Flasher\Toastr\Prime\toastr('کاربر با موفقیت اضاقه شد','success');
             return back();
         }
@@ -52,6 +56,7 @@ class UserController extends Controller
 
         $delete_user = $user->delete();
         if ($delete_user) {
+            $user->roles()->detach();
             \Flasher\Toastr\Prime\toastr('کاربر با موفقیت حذف شد','success');
             return back();
         }
@@ -62,7 +67,8 @@ class UserController extends Controller
 
     public function editForm(string $lang,User $user): View
     {
-        return view('DashboardAdmin.editUser',compact('user'));
+        $roles = Role::all();
+        return view('DashboardAdmin.editUser',compact('user','roles'));
     }
 
     public function update(string $lang,User $user,Request $request): RedirectResponse
@@ -71,6 +77,7 @@ class UserController extends Controller
             'name' => 'string|min:4|max:15|regex:/^[A-Za-z\p{Arabic}\s]+$/u',
             'email' => 'email',
             'img' => 'file|image|mimes:jpeg,png,jpg|max:1024',
+            'role' => 'required|string'
         ]);
 
         if ($request->hasFile('img')) {
@@ -86,11 +93,19 @@ class UserController extends Controller
                 'email' => $request['email'],
                 'profile_path' => $path
             ]);
+
+             $user->syncRoles([
+                 'name' => $request['role']
+             ]);
         }
 
         $user->update([
             'name' => $request['name'],
             'email' => $request['email'],
+        ]);
+
+        $user->syncRoles([
+            'name' => $request['role']
         ]);
 
         \Flasher\Toastr\Prime\toastr('کاربر با موفقیت ویرایش شد','success');
@@ -112,9 +127,10 @@ class UserController extends Controller
         if($request->filled('email')) {
             $query->where('email', 'LIKE', "%{$request->email}%");
         }
-        $users = $query->where('is_admin',0)->paginate(5);
+        $roles = Role::all();
+        $users = $query->paginate(5);
 
-        return view('DashboardAdmin.users',compact('users'));
+        return view('DashboardAdmin.users',compact('users','roles'));
 
     }
 }
