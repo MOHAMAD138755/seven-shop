@@ -85,6 +85,9 @@ Route::prefix('{lang}')->group(function (){
             Route::middleware(['role:administrator'])->controller(PermissionController::class)->group(function (){
                 Route::get('permissions','permissions')->name('Dashboard.permissions');
                 Route::post('permissions/create','create')->name('Dashboard.AddPermission');
+                Route::delete('permission/destroy/{permission}','destroy')->name('Dashboard.DeletePermission');
+                Route::get('permission/edit/{permission}','editForm')->name('Dashboard.EditPermission');
+                Route::put('permission/update/{permission}','update')->name('Dashboard.UpdatePermission');
             });
     });
 

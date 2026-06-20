@@ -278,10 +278,6 @@
     <div class="users-page">
 
         <div class="page-header">
-            <div>
-                <h1>دسترسی ها</h1>
-                <p>ادمین وبسایت میتواند دسترسی ها را اضافه و حذف و ویرایش کند</p>
-            </div>
 
             {{--            <button class="btn btn-primary" id="openUserForm">--}}
             {{--                <i class="fas fa-plus"></i>--}}
@@ -293,7 +289,7 @@
             <!-- Users List -->
             <div class="card users-card">
                 <div class="card-header">
-                    <h2>همه دسترسی ها</h2>
+                    <h2>ویرایش دسترسی ها</h2>
                 </div>
 
                 <div class="table-responsive">
@@ -308,8 +304,6 @@
                         </thead>
                         <tbody>
 
-                        @forelse($permissions as $permission)
-
                             <tr>
                                 <td>
                                     <div class="user-info">
@@ -320,23 +314,7 @@
                                 </td>
                                 <td><span>{{ \Morilog\Jalali\Jalalian::fromDateTime($permission->created_at)->format('Y-m-d H:i:s') }}</span></td>
                                 <td><span>{{ \Morilog\Jalali\Jalalian::fromDateTime($permission->updated_at)->format('Y-m-d H:i:s') }}</span></td>
-
-                                <td>
-                                    <div class="actions">
-                                        <a href="{{ route('Dashboard.EditPermission',['permission' => $permission->id , 'lang' => app()->getLocale()]) }}">
-                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                        </a>
-                                        <form action="{{ route('Dashboard.DeletePermission',['permission' => $permission->id , 'lang' => app()->getLocale()]) }}" method="post">
-                                            @method('DELETE') @csrf
-                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </div>
-                                </td>
-
                             </tr>
-                        @empty
-                            <p style="text-align: center;color: red">دسترسی یافت یافت نشد</p>
-                        @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -345,15 +323,15 @@
             <!-- Form -->
             <div class="card form-card" id="userFormCard">
                 <div class="card-header">
-                    <h2>افزودن دسترسی</h2>
+                    <h2>ویرایش دسترسی</h2>
                     {{--                    <span class="form-note">Fill the details below</span>--}}
                 </div>
 
-                <form action="{{ route('Dashboard.AddPermission',['lang' => app()->getLocale()]) }}" method="post">
-                    @csrf
+                <form action="{{ route('Dashboard.UpdatePermission',['lang' => app()->getLocale(), 'permission' => $permission->id]) }}" method="post">
+                    @csrf @method('PUT')
                     <div class="form-group">
                         <label>نام دسترسی</label>
-                        <input type="text" name="permission" placeholder="Enter name">
+                        <input type="text" name="permission" value="{{ $permission->name }}" placeholder="Enter name">
                     </div>
 
                     <div class="form-actions">
