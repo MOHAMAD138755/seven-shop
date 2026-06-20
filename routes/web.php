@@ -17,23 +17,27 @@ Route::prefix('{lang}')->group(function (){
     });
 
     Route::prefix('Dashboard')
-        ->middleware(['auth',LoginAdmin::class])->group(function (){
+        ->middleware(['auth',LoginAdmin::class,'role:administrator|writer'])->group(function (){
 
             Route::controller(DashboardController::class)->group(function (){
                 Route::get('/','index')->name('Dashboard.َAdmin');
                 Route::post('logout','logout')->name('Dashboard.logout');
-                Route::get('config','config')->name('Dashboard.config');
-                Route::post('update-config','update_config')->name('Dashboard.update-config');
-                Route::get('general','general')->name('Dashboard.general');
-                Route::get('info','info')->name('Dashboard.info');
-                Route::get('email','email')->name('Dashboard.email');
-                Route::post('email/test','email_test')->name('Dashboard.email-test');
-                Route::get('maintenance','maintenance')->name('Dashboard.maintenance');
-                Route::get('security','security')->name('Dashboard.security');
-                Route::post('update-password','update_password')->name('Dashboard.update-password');
+
+                Route::middleware('role:administrator')->group(function (){
+                    Route::get('config','config')->name('Dashboard.config');
+                    Route::post('update-config','update_config')->name('Dashboard.update-config');
+                    Route::get('general','general')->name('Dashboard.general');
+                    Route::get('info','info')->name('Dashboard.info');
+                    Route::get('email','email')->name('Dashboard.email');
+                    Route::post('email/test','email_test')->name('Dashboard.email-test');
+                    Route::get('maintenance','maintenance')->name('Dashboard.maintenance');
+                    Route::get('security','security')->name('Dashboard.security');
+                    Route::post('update-password','update_password')->name('Dashboard.update-password');
+                });
+
             });
 
-            Route::controller(UserController::class)->group(function (){
+            Route::middleware(['role:administrator'])->controller(UserController::class)->group(function (){
                 Route::get('users','users')->name('Dashboard.Users');
                 Route::post('create-user','create')->name('Dashboard.AddUser');
                 Route::delete('destroy/{user}','destroy')->name('Dashboard.DeleteUser');
@@ -72,7 +76,7 @@ Route::prefix('{lang}')->group(function (){
                 Route::delete('delete-like/{like}','delete_like')->name('Dashboard.DeleteLike');
             });
 
-            Route::controller(OrderController::class)->group(function (){
+            Route::middleware(['role:administrator'])->controller(OrderController::class)->group(function (){
                 Route::get('orders','orders')->name('Dashboard.orders');
                 Route::put('orders/{order}','update')->name('Dashboard.OrdersUpdate');
             });

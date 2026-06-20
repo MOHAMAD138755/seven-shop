@@ -7,9 +7,11 @@
         <a href="{{ route('Dashboard.َAdmin',['lang' => app()->getLocale()]) }}" class="nav-link active">
             <i class="fas fa-th-large"></i> Dashboard
         </a>
+        @role('administrator')
         <a href="{{ route('Dashboard.Users',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-users"></i> Users
         </a>
+        @endrole
         <a href="{{ route('Dashboard.Products',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-shopping-cart"></i> Products
         </a>
@@ -22,15 +24,19 @@
         <a href="{{ route('Dashboard.likes',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-heart"></i> Likes
         </a>
+        @role('administrator')
         <a href="{{ route('Dashboard.orders',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-clipboard-list"></i> Orders
         </a>
+        @endrole
         <div style="padding: 1rem 1.5rem; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">
             Settings
         </div>
+        @role('administrator')
         <a href="{{ route('Dashboard.config',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-cog"></i> Configuration
         </a>
+        @endrole
         <form action="{{ route('Dashboard.logout',['lang' => app()->getLocale()]) }}" class="nav-link" method="post">
             @csrf
             <i class="fas fa-sign-out-alt"></i>
