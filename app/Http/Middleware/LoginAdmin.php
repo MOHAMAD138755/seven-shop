@@ -15,6 +15,10 @@ class LoginAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(!auth()->check()){
+            return to_route('user.login',['lang' => app()->getLocale()]);
+        }
+
         if(!auth()->check() || auth()->user()->hasRole('user')){
               return redirect('/');
         }

@@ -17,7 +17,7 @@ Route::prefix('{lang}')->group(function (){
     });
 
     Route::prefix('Dashboard')
-        ->middleware(['auth',LoginAdmin::class,'role:administrator|writer'])->group(function (){
+        ->middleware([LoginAdmin::class,'role:administrator|writer'])->group(function (){
 
             Route::controller(DashboardController::class)->group(function (){
                 Route::get('/','index')->name('Dashboard.َAdmin');
