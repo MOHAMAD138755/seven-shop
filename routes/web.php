@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\LikeController;
 use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Middleware\LoginAdmin;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +89,10 @@ Route::prefix('{lang}')->group(function (){
                 Route::delete('permission/destroy/{permission}','destroy')->name('Dashboard.DeletePermission');
                 Route::get('permission/edit/{permission}','editForm')->name('Dashboard.EditPermission');
                 Route::put('permission/update/{permission}','update')->name('Dashboard.UpdatePermission');
+            });
+
+            Route::middleware(['role:administrator'])->controller(RoleController::class)->group(function (){
+                Route::get('roles','roles')->name('Dashboard.roles');
             });
     });
 
