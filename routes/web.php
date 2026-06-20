@@ -84,6 +84,7 @@ Route::prefix('{lang}')->group(function (){
 
             Route::middleware(['role:administrator'])->controller(PermissionController::class)->group(function (){
                 Route::get('permissions','permissions')->name('Dashboard.permissions');
+                Route::post('permissions/create','create')->name('Dashboard.AddPermission');
             });
     });
 
