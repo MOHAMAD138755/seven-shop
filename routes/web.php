@@ -94,6 +94,9 @@ Route::prefix('{lang}')->group(function (){
             Route::middleware(['role:administrator'])->controller(RoleController::class)->group(function (){
                 Route::get('roles','roles')->name('Dashboard.roles');
                 Route::post('roles/create','create')->name('Dashboard.AddRole');
+                Route::delete('roles/destroy/{role}','destroy')->name('Dashboard.DeleteRole');
+                Route::get('roles/edit/{role}','editForm')->name('Dashboard.EditRole');
+                Route::put('roles/update/{role}','update')->name('Dashboard.UpdateRole');
             });
     });
 

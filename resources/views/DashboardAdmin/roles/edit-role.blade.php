@@ -278,10 +278,6 @@
     <div class="users-page">
 
         <div class="page-header">
-            <div>
-                <h1>نقش ها</h1>
-                <p>ادمین وبسایت میتواند نقش ها را اضافه و حذف و ویرایش کند</p>
-            </div>
 
             {{--            <button class="btn btn-primary" id="openUserForm">--}}
             {{--                <i class="fas fa-plus"></i>--}}
@@ -293,7 +289,7 @@
             <!-- Users List -->
             <div class="card users-card">
                 <div class="card-header">
-                    <h2>همه نقش ها</h2>
+                    <h2>ویرایش نقش</h2>
                 </div>
 
                 <div class="table-responsive">
@@ -304,12 +300,9 @@
                             <th>زمان ایجاد شدن</th>
                             <th>زمان ویرایش شدن</th>
                             <th>دسترسی های این نقش</th>
-                            <th>عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
-
-                        @forelse($roles as $role)
 
                             <tr>
                                 <td>
@@ -323,28 +316,15 @@
                                 <td><span>{{ \Morilog\Jalali\Jalalian::fromDateTime($role->updated_at)->format('Y-m-d H:i:s') }}</span></td>
 
                                 <td>
-                                @forelse($role->permissions as $item)
-                                    <p>{{$item->name . '---' }}</p>
-                                @empty
-                                    <p style="text-align: center;color: red">دسترسی  یافت نشد</p>
-                                @endforelse
-                                </td>
-                                <td>
-                                    <div class="actions">
-                                        <a href="{{ route('Dashboard.EditRole',['role' => $role->id , 'lang' => app()->getLocale()]) }}">
-                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                        </a>
-                                        <form action="{{ route('Dashboard.DeleteRole',['role' => $role->id , 'lang' => app()->getLocale()]) }}" method="post">
-                                            @method('DELETE') @csrf
-                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </div>
+                                    @forelse($role->permissions as $item)
+                                        <p>{{$item->name . '---' }}</p>
+                                    @empty
+                                        <p style="text-align: center;color: red">دسترسی  یافت نشد</p>
+                                    @endforelse
                                 </td>
 
                             </tr>
-                        @empty
-                            <td><p style="text-align: center;color: red">نقش  یافت نشد</p></td>
-                        @endforelse
+
                         </tbody>
                     </table>
                 </div>
@@ -353,21 +333,21 @@
             <!-- Form -->
             <div class="card form-card" id="userFormCard">
                 <div class="card-header">
-                    <h2>افزودن نقش</h2>
+                    <h2>ویرایش نقش</h2>
                     {{--                    <span class="form-note">Fill the details below</span>--}}
                 </div>
 
-                <form action="{{ route('Dashboard.AddRole',['lang' => app()->getLocale()]) }}" method="post">
-                    @csrf
+                <form action="{{ route('Dashboard.UpdateRole',['lang' => app()->getLocale(), 'role' => $role->id]) }}" method="post">
+                    @csrf @method('PUT')
                     <div class="form-group">
                         <label>نام نقش</label>
-                        <input type="text" name="role" placeholder="Enter name">
+                        <input type="text" name="role" value="{{ $role->name }}" placeholder="Enter name">
                     </div>
 
                     <div class="form-group">
                         <label>دسترسی این نقش</label>
                         @forelse($permissions as $permission)
-                        <input type="checkbox" value="{{ $permission->name }}" name="permission[]">{{ $permission->name }}
+                            <input type="checkbox" value="{{ $permission->name }}" name="permission[]" @checked($role->hasPermissionTo($permission))>{{ $permission->name }}
                         @empty
                             <p style="text-align: center;color: red">دسترسی یافت نشد</p>
                         @endforelse
