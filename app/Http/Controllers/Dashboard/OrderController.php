@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Notifications\OrderStatusChanged;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -21,6 +22,13 @@ class OrderController extends Controller
         $request->validate([
             'status' => 'required|in:pending,paid,delivered,cancelled,shipped,processing',
         ]);
+
+        $orderStatus = $order->status;
+        $newStatus = $request->status;
+
+        if(in_array($newStatus,['paid','shipped']) && $orderStatus !== $newStatus){
+            $order->user->notify(new OrderStatusChanged($order,$newStatus));
+        }
 
         $order->update([
             'status' => $request->status
