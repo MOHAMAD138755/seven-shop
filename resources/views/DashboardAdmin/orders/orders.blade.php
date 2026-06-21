@@ -471,9 +471,7 @@
                                     <span>{{ $order->user->name }}</span>
                                 </td>
 
-                                <td>
-                                    <span>تومان{{ number_format($order->total_price) }}</span>
-                                </td>
+                                <td>{{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($order->total_price / 10) : number_format($order->total_price)}}</td>
 
                                 <td>
                                     <span>{{ $order->address }}</span>
