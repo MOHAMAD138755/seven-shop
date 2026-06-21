@@ -379,7 +379,6 @@
                             <th>اسلاگ</th>
                             <th>عکس</th>
                             <th>آخرین ویرایش</th>
-                            <th>عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -388,10 +387,6 @@
                                 <td>
                                     <div class="product-info">
                                         <img src="{{ \Illuminate\Support\Facades\Storage::url($product->image) }}" alt="Product">
-                                        <div>
-                                            <strong>{{ $product->name }}</strong>
-                                            <span>{{ $product->slug }}</span>
-                                        </div>
                                     </div>
                                 </td>
                                 <td>{{ $product->name }}</td>
@@ -403,20 +398,6 @@
                                     <img src="{{ \Illuminate\Support\Facades\Storage::url($product->image) }}" alt="Product" width="100px" height="100px">
                                 </td>
                                 <td>{{ \Morilog\Jalali\Jalalian::fromDateTime($product->updated_at)->format('Y/m/d H:i:s') }}</td>
-                                <td>
-                                    <div class="actions">
-
-                                        <a href="{{ route('Dashboard.EditFormProduct',['lang' => app()->getLocale(), 'product' => $product->id]) }}">
-                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                        </a>
-
-                                        <form action="{{ route('Dashboard.DeleteProduct',['lang' => app()->getLocale(), 'product' => $product->id]) }}" method="post">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                        </form>
-
-                                    </div>
-                                </td>
                             </tr>
 
                         </tbody>

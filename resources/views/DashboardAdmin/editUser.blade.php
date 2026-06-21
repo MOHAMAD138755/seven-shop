@@ -306,7 +306,6 @@
                             <th>ایمیل</th>
                             <th>پروفایل</th>
                             <th>نقش کاربر</th>
-                            <th>عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -326,17 +325,6 @@
                                 {{--                            <td><span class="badge badge-active">Active</span></td>--}}
                                 <td><img src="{{ \Illuminate\Support\Facades\Storage::url($user->profile_path) }}" width="100px" height="100px"></td>
                                 <td>{{ $user->roles[0]->name ?? 'نقشی ندارد' }}</td>
-                                <td>
-                                    <div class="actions">
-                                        <a href="{{ route('Dashboard.EditForm',['user' => $user->id , 'lang' => app()->getLocale()]) }}">
-                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                        </a>
-                                        <form action="{{ route('Dashboard.DeleteUser',['user' => $user->id , 'lang' => app()->getLocale()]) }}" method="post">
-                                            @method('DELETE') @csrf
-                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </div>
-                                </td>
                             </tr>
                         </tbody>
                     </table>

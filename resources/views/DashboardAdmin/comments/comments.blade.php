@@ -382,6 +382,7 @@
                             <th>نام نویسنده</th>
                             <th>برای کدام محصول</th>
                             <th>وضعیت نظر</th>
+                            <th>نوع کامنت</th>
                             <th>زمان گذاشته شدن</th>
                             <th>عملیات حذف و تایید</th>
                         </tr>
@@ -394,6 +395,7 @@
                                 <td>{{ $comment->user->name }}</td>
                                 <td>{{ $comment->product->name }}</td>
                                 <td style="color: {{ ($comment->status) == 0 ? 'red' : 'green'}}">{{ $comment->status == 0 ? 'تایید نشده': 'تایید شده' }}</td>
+                                <td style="color: {{ ($comment->parent_id) == null ? 'green' : 'blue'}}">{{ ($comment->parent_id) == null ? 'کامنت اصلی' : 'پاسخ کامنت' }}</td>
                                 <td>{{ $comment->created_at }}</td>
                                 <td>
                                     <div class="inline-form">

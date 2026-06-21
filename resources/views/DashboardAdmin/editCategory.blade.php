@@ -292,14 +292,6 @@
             <div class="card users-card">
                 <div class="card-header">
                     <h2>این دسته بندی </h2>
-                    <form action="" method="post">
-
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search category...">
-                        </div>
-
-                    </form>
                 </div>
 
                 <div class="table-responsive">
@@ -308,7 +300,6 @@
                         <tr>
                             <th>نام دسته بندی</th>
                             <th>نام انگلیسی دسته بندی</th>
-                            <th>عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -324,17 +315,6 @@
 
                                 <td>
                                     <span>{{ $category->english_name }}</span>
-                                </td>
-                                <td>
-                                    <div class="actions">
-                                        <a href="{{ route('Dashboard.EditFormCategory',['category' => $category->id , 'lang' => app()->getLocale()]) }}">
-                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                        </a>
-                                        <form action="{{ route('Dashboard.DeleteCategory',['category' => $category->id , 'lang' => app()->getLocale()]) }}" method="post">
-                                            @method('DELETE') @csrf
-                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </div>
                                 </td>
                             </tr>
 

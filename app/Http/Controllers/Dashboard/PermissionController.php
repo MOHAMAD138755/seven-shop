@@ -33,6 +33,13 @@ class PermissionController extends Controller
 
     public function destroy(string $lang, Permission $permission): RedirectResponse
     {
+        if($permission->name == 'manage all' || $permission->name == 'manage products'
+            || $permission->name == 'manage users' || $permission->name == 'manage categories'
+            || $permission->name == 'manage orders') {
+            \Flasher\Toastr\Prime\toastr('دسترسی های سیستمی قابل حذف شدن نیست','error');
+            return back();
+        }
+
         $permission->delete();
 
         \Flasher\Toastr\Prime\toastr('با موفقیت حذف شد','success');

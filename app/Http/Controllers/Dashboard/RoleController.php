@@ -55,7 +55,7 @@ class RoleController extends Controller
         return view('DashboardAdmin.roles.edit-role',compact('role','permissions'));
     }
 
-    public function update(string $lang,Role $role, Request $request)
+    public function update(string $lang,Role $role, Request $request): RedirectResponse
     {
         $request->validate([
             'role' => 'required|string|max:20',
