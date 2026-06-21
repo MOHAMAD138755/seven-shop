@@ -449,6 +449,7 @@
                             <th>کاربر</th>
                             <th>مبلغ کل</th>
                             <th>آدرس</th>
+                            <th>شماره تماس</th>
                             <th>وضعیت</th>
                             <th>زمان گذاشته شدن</th>
                             <th>دیدن سفارش </th>
@@ -476,6 +477,9 @@
 
                                 <td>
                                     <span>{{ $order->address }}</span>
+                                </td>
+                                <td>
+                                    <span>{{ $order->phone_number }}</span>
                                 </td>
                                 <td>
                                     <span style="color: #00ff15">{{ $order->status }}: وضعیت فعلی</span>
