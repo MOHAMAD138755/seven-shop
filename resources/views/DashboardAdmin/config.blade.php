@@ -301,7 +301,6 @@
                                     <select name="currency">
                                         <option value="toman" @selected(($settings['currency'] ?? '') == 'toman') >تومان</option>
                                         <option value="Rial" @selected(($settings['currency'] ?? '') == 'Rial') >ریال</option>
-                                        <option value="usd" @selected(($settings['currency'] ?? '') == 'usd') >دلار</option>
                                     </select>
                                 </div>
                             </div>

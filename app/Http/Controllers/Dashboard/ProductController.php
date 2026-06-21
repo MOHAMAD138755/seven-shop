@@ -6,6 +6,7 @@ use App\Charts\ProductLikeChart;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Setting;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,7 +22,8 @@ class ProductController extends Controller
     {
         $products = Product::with('category')->paginate(5);
         $categories = Category::all();
-        return view('DashboardAdmin.products',['products' => $products,'categories' => $categories ]);
+        $settings = Setting::all();
+        return view('DashboardAdmin.products',['products' => $products,'categories' => $categories,'settings' => $settings ]);
     }
 
     public function create(Request $request): RedirectResponse

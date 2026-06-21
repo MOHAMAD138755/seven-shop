@@ -453,7 +453,7 @@
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->category->name }}</td>
-                                <td>تومان{{ number_format($product->price) }}</td>
+                                <td>{{ $settings[4]->value == 'toman' ? 'تومان' : 'ریال' }}{{ $settings[4]->value == 'toman' ? number_format($product->price / 10) : number_format($product->price)}}</td>
                                 <td><span class="badge badge-pending">{{ $product->count }}</span></td>
                                 <td>{{ $product->slug }}</td>
                                <td>
@@ -517,7 +517,7 @@
 
                     <div class="form-group">
                         <label>قیمت</label>
-                        <input type="number" name="price" placeholder="Enter price">
+                        <input type="number" name="price" placeholder="Enter price Rial">
                     </div>
 
                     <div class="form-group">
