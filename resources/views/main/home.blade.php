@@ -21,17 +21,37 @@
         <div class="logo">سون شاپ</div>
 
         <nav class="nav" id="nav">
-            <a href="#">خانه</a>
-            <a href="#">محصولات</a>
-            <a href="#">دسته‌بندی</a>
-            <a href="#">تخفیف‌ها</a>
-            <a href="#">تماس</a>
+            <a href="{{ route('home',['lang' => app()->getLocale()]) }}">خانه</a>
+            <a href="#product">محصولات</a>
+            <a href="#category">دسته‌بندی</a>
+
+            @guest
+            <a href="{{ route('user.register',['lang' => app()->getLocale()]) }}">ثبت نام</a>
+            <a href="{{ route('user.login',['lang' => app()->getLocale()]) }}">ورود</a>
+            @endguest
+
+            @auth
+                <a href="#">🛒سبد خرید</a>
+                <form method="POST" action="{{ route('home.logout',['lang' => app()->getLocale()]) }}">
+                    @csrf
+                    <button style="width: 70px;cursor: pointer;border: none;border-radius: 5px;height: 25px;color: white;background-color: red" type="submit">خروج</button>
+                </form>
+                <a href="#">پروفایل شما</a>
+            @endauth
+
+            <a href="#footer">درباره ما</a>
+
+           @if(auth()->check() &&
+                (auth()->user()->hasRole('administrator') || auth()->user()->hasRole('writer')))
+                <a href="{{ route('Dashboard.َAdmin',['lang' => app()->getLocale()]) }}">پنل ادمین</a>
+            @endif
+
         </nav>
 
         <div class="actions">
             <button class="icon-btn" id="menuBtn">☰</button>
             <button class="icon-btn cart-btn" id="cartBtn">
-                🛒 <span id="cartCount">0</span>
+                 <span id="cartCount">0</span>
             </button>
         </div>
 
@@ -49,7 +69,7 @@
     </div>
 </section>
 
-<section class="container categories">
+<section id="category" class="container categories">
 
     <div class="category">
         <div class="icon">📱</div>
@@ -122,7 +142,7 @@
 </div>
 
 <!-- FOOTER -->
-<footer class="footer">
+<footer id="footer" class="footer">
     <div class="footer-grid">
 
         <div>
