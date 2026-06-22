@@ -9,13 +9,14 @@ use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Main\HomeController;
 use App\Http\Middleware\LoginAdmin;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('{lang}')->group(function (){
 
-    Route::get('/', function () {
-        return view('welcome');
+    Route::controller(HomeController::class)->group(function (){
+        Route::get('/', 'index')->name('home');
     });
 
     Route::prefix('Dashboard')
