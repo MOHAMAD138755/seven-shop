@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ $settings['meta_description'] ?? '' }}">
     <meta name="keywords" content="سون شاپ,فروشگاه اینترنتی,فروشگاه,seven shop">
-    <link rel="icon" href="">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     <title>{{ $settings['site_name'] ?? '' }}</title>
 
     @vite(['resources/css/main.css','resources/js/main.js'])
