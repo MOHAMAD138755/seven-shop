@@ -21,6 +21,7 @@ Route::prefix('{lang}')->group(function (){
         Route::get('category/{category:name}', 'category')->name('home.category');
         Route::get('product/{product:slug}', 'product')->name('home.product');
         Route::post('comment/create', 'create_comment')->name('home.comment');
+        Route::post('comment/reply', 'reply_comment')->name('home.reply');
     });
 
     Route::prefix('Dashboard')

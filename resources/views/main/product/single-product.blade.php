@@ -5,6 +5,9 @@
 @section('description',$settings['meta_description'])
 
 @section('content')
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
     <div class="container">
 
         <div class="product-card">
@@ -141,9 +144,11 @@
 
                 <div class="reply-form">
 
-                    <form>
-
-                        <textarea placeholder="پاسخ خود را بنویسید..."></textarea>
+                    <form action="{{ route('home.reply',['lang' => app()->getLocale()]) }}" method="post">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                        <textarea name="reply_content" placeholder="پاسخ خود را بنویسید..."></textarea>
 
                         <button type="submit">
                             ثبت پاسخ

@@ -58,4 +58,32 @@ class HomeController extends Controller
         return back();
     }
 
+    public function reply_comment(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'reply_content'=>'required|max:200|string',
+            'parent_id' => 'nullable|exists:comments,id',
+        ]);
+
+        if($request->has('parent_id'))
+        {
+            $parentComment = Comment::find($request->parent_id);
+            if($parentComment && $parentComment->user->id == Auth::id()){
+                \Flasher\Toastr\Prime\toastr('شما نمی توانید به کامنت خود پاسخ دهید','error');
+                return back();
+            }
+        }
+
+        Comment::create([
+            'user_id' => Auth::id(),
+            'product_id' => $request->product_id,
+            'parent_id' => $request->parent_id,
+            'content' => $request->reply_content
+        ]);
+
+        \Flasher\Toastr\Prime\toastr('پاسخ به کامنت با موفقیت ایجاد شد','success');
+        return back();
+
+    }
+
 }
