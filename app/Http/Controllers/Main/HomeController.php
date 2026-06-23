@@ -33,4 +33,9 @@ class HomeController extends Controller
         return view('main.category.category',compact('category'));
     }
 
+    public function product(string $lang , Product $product): View
+    {
+        return view('main.product.single-product',['product'=>$product]);
+    }
+
 }

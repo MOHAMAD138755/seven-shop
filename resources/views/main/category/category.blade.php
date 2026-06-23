@@ -21,7 +21,12 @@
                 <h3 style="text-align: center;padding: 5px;color: red">نام محصول: {{ $item->name }}</h3>
                 <p style="color: #00ff15">قیمت: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($item->price / 10) : number_format($item->price)}}</p>
                 <p style="color: blue">تعداد موحود: {{ $item->count }}</p>
-                <button style="background-color: green;cursor: pointer;margin-right: 70px;color: white;margin-top: 20px" class="card button">افزودن به سبد</button>
+                <div>
+                <button style="background-color: green;cursor: pointer;color: white;margin-top: 20px;width: 100%" class="card button">افزودن به سبد</button>
+                <a href="{{ route('home.product',['lang' => app()->getLocale(),'product' => $item->slug]) }}">
+                    <button style="background-color: red;cursor: pointer;color: white;margin-top: 20px;width: 100%" class="card button">اطلاعات بیشتر...</button>
+                </a>
+                </div>
             </div>
             @empty
                 <p>محصولی یافت نشد</p>

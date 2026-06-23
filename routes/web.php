@@ -19,6 +19,7 @@ Route::prefix('{lang}')->group(function (){
         Route::get('/', 'index')->name('home');
         Route::post('logout', 'logout')->name('home.logout');
         Route::get('category/{category:name}', 'category')->name('home.category');
+        Route::get('product/{product:slug}', 'product')->name('home.product');
     });
 
     Route::prefix('Dashboard')
