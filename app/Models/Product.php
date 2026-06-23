@@ -16,6 +16,16 @@ class Product extends Model
         'category_id',
         'updated_at',
     ];
+    public static function getBestSellers($limit = 4)
+    {
+        return self::select('products.*')
+            ->join('order_items','products.id','=','order_items.product_id')
+            ->selectRaw('sum(order_items.quantity ) as total_sold')
+            ->groupBy('products.id')
+            ->orderBy('total_sold','desc')
+            ->limit($limit)
+            ->get();
+    }
 
     public function category()
     {

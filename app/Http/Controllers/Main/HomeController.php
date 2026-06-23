@@ -9,6 +9,7 @@ use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -17,7 +18,10 @@ class HomeController extends Controller
     {
         $newProducts = Product::where('count','!=',0)->latest()->take(8)->get();
         $categories = Category::with('products')->simplepaginate(5);
-        return view('main.home',compact('categories','newProducts'));
+        $BestSellers = Cache::remember('BestSellers', 86400, function () {
+            return Product::getBestSellers();
+        });
+        return view('main.home',compact('categories','newProducts','BestSellers'));
     }
 
     public function logout(): RedirectResponse
