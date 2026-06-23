@@ -72,6 +72,7 @@
         <h2 class="section-title">
             نظرات کاربران
         </h2>
+        <p style="color: red;margin: 30px;text-align: center">(نظر شما وقتی قابل نمایش است که مدیر فروشگاه آن را تایید کند)</p>
 
         <!-- Add Comment -->
         @auth
@@ -104,25 +105,29 @@
             <!-- Comment -->
 
             <div class="comment-item">
-
                 <div class="comment-header">
 
-                    <div class="avatar">
-                        ع
+                    @forelse($comments as $comment)
+                    <div style="width: 50px;height: 50px;border-radius: 50%">
+                        <img src="{{ \Illuminate\Support\Facades\Storage::url($comment->user->profile_path) }}" alt="پروفایل کاربر">
                     </div>
 
                     <div class="user-info">
-                        <h4>علی رضایی</h4>
-                        <span>۲ ساعت پیش</span>
+                        <h4>{{ $comment->user->name }}</h4>
+                        <span>{{ $comment->created_at->locale('fa')->diffForHumans() }}</span>
                     </div>
 
                 </div>
 
                 <div class="comment-body">
 
-                    محصول خیلی خوبی بود و کیفیت ساخت بالایی داشت.
+                    {{ $comment->content }}
 
                 </div>
+                @include('Errors.error')
+                @empty
+                    <p>کامنتی موجود نیست</p>
+                @endforelse
 
                 <div class="comment-actions">
 
@@ -150,83 +155,35 @@
 
                 <!-- Replies -->
 
-                <div class="replies">
+{{--                <div class="replies">--}}
 
-                    <div class="reply-item">
+{{--                    <div class="reply-item">--}}
 
-                        <div class="comment-header">
+{{--                        <div class="comment-header">--}}
 
-                            <div class="avatar admin">
-                                م
-                            </div>
+{{--                            <div class="avatar admin">--}}
+{{--                                م--}}
+{{--                            </div>--}}
 
-                            <div class="user-info">
-                                <h4>مدیر فروشگاه</h4>
-                                <span>۱ ساعت پیش</span>
-                            </div>
+{{--                            <div class="user-info">--}}
+{{--                                <h4>مدیر فروشگاه</h4>--}}
+{{--                                <span>۱ ساعت پیش</span>--}}
+{{--                            </div>--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                        <div class="comment-body">
+{{--                        <div class="comment-body">--}}
 
-                            ممنون از اینکه نظرتون رو ثبت کردید ❤️
+{{--                            ممنون از اینکه نظرتون رو ثبت کردید ❤️--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Comment -->
-
-            <div class="comment-item">
-
-                <div class="comment-header">
-
-                    <div class="avatar">
-                        م
-                    </div>
-
-                    <div class="user-info">
-                        <h4>محمد کریمی</h4>
-                        <span>۱ روز پیش</span>
-                    </div>
-
-                </div>
-
-                <div class="comment-body">
-
-                    آیا این محصول گارانتی دارد؟
-
-                </div>
-
-                <div class="comment-actions">
-
-                    <button class="reply-toggle">
-                        پاسخ
-                    </button>
-
-                </div>
-
-                <div class="reply-form">
-
-                    <form>
-
-                        <textarea placeholder="پاسخ خود را بنویسید..."></textarea>
-
-                        <button type="submit">
-                            ثبت پاسخ
-                        </button>
-
-                    </form>
+{{--                    </div>--}}
 
                 </div>
 
             </div>
 
-        </div>
 
     </section>
 

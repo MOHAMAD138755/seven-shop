@@ -37,7 +37,8 @@ class HomeController extends Controller
 
     public function product(string $lang , Product $product): View
     {
-        return view('main.product.single-product',['product'=>$product]);
+        $comments = Comment::where('status',1)->where('product_id',$product->id)->get();
+        return view('main.product.single-product',['product'=>$product,'comments'=>$comments]);
     }
 
     public function create_comment(Request $request): RedirectResponse
