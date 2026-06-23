@@ -66,6 +66,7 @@
 
     </div>
 
+
     <section class="comments-section">
 
         <h2 class="section-title">
@@ -73,19 +74,16 @@
         </h2>
 
         <!-- Add Comment -->
-
+        @auth
         <div class="comment-box">
 
             <h3>ثبت نظر</h3>
 
-            <form>
-
+            <form action="{{ route('home.comment',['lang' => app()->getLocale()]) }}" method="post">
+            @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <div class="form-group">
-                    <input type="text" placeholder="نام شما">
-                </div>
-
-                <div class="form-group">
-                    <textarea placeholder="نظر خود را بنویسید..."></textarea>
+                    <textarea name="content" placeholder="نظر خود را بنویسید..."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -95,7 +93,10 @@
             </form>
 
         </div>
-
+        @endauth
+        @guest
+            <p style="text-align: center;font-size: 20px;color: red">برای ارسال نظر ورود کنید</p>
+        @endguest
         <!-- Comments List -->
 
         <div class="comments-list">
@@ -228,6 +229,7 @@
         </div>
 
     </section>
+
     <script>
 
         document.querySelectorAll('.reply-toggle').forEach(button => {
