@@ -18,6 +18,7 @@ Route::prefix('{lang}')->group(function (){
     Route::controller(HomeController::class)->group(function (){
         Route::get('/', 'index')->name('home');
         Route::post('logout', 'logout')->name('home.logout');
+        Route::get('category/{category:name}', 'category')->name('home.category');
     });
 
     Route::prefix('Dashboard')

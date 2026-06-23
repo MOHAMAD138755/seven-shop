@@ -34,6 +34,10 @@ class CategoryController extends Controller
 
     public function destroy(string $lang,Category $category): RedirectResponse
     {
+        if($category->products()->exists()){
+            \Flasher\Toastr\Prime\toastr('ابتدا محصولات این دسته بندی را حذف کنید','error');
+            return back();
+        }
         $category->delete();
 
         \Flasher\Toastr\Prime\toastr('دسته بندی با موفقیت حذف شد','success');

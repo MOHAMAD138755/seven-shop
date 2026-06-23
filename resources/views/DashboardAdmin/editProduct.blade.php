@@ -427,7 +427,7 @@
                         <label>انتخاب دسته بندی</label>
                         <select name="category">
                             @foreach($categories as $category)
-                                <option value="{{ $category->id ?? ''}}" {{ $category->id ?? '' == $product->category->id ? 'selected' : '' }}>
+                                <option value="{{ $category->id }}" {{ $category->id == $product->category->id ? 'selected' : '' }}>
                                     {{ $category->name }}
                                 </option>
                             @endforeach
