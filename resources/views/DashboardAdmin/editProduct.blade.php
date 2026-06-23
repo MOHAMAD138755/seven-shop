@@ -390,7 +390,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $product->name }}</td>
-                                <td>{{ $product->category->name }}</td>
+                                <td>{{ $product->category->name ?? 'دسته بندی ندارد' }}</td>
                                 <td>تومان{{ number_format($product->price) }}</td>
                                 <td><span class="badge badge-pending">{{ $product->count }}</span></td>
                                 <td>{{ $product->slug }}</td>
@@ -427,7 +427,7 @@
                         <label>انتخاب دسته بندی</label>
                         <select name="category">
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ $category->id == $product->category->id ? 'selected' : '' }}>
+                                <option value="{{ $category->id ?? ''}}" {{ $category->id ?? '' == $product->category->id ? 'selected' : '' }}>
                                     {{ $category->name }}
                                 </option>
                             @endforeach

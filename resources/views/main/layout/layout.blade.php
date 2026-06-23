@@ -6,6 +6,8 @@
     <meta name="description" content="@yield('description', $settings['meta_description'] ?? '' )">
     <meta name="keywords" content="سون شاپ,فروشگاه اینترنتی,فروشگاه,seven shop">
     <link rel="icon" href="{{ asset('favicon.ico') }}">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     @vite(['resources/css/main.css','resources/js/main.js'])
     <title>@yield('title',$settings['site_name'] ?? '')</title>

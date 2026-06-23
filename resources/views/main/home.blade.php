@@ -24,32 +24,18 @@
         </div>
     </section>
 
+    <h2 class="cat-title">دسته بندی ها</h2>
     <section id="category" class="container categories">
-
+        @forelse($categories as $category)
         <div class="category">
-            <div class="icon">📱</div>
-            <span>موبایل</span>
+            <i class="fa-solid fa-layer-group"></i>
+            <span>{{ $category->name }}</span><br>
+            <span>{{ $category->english_name }}</span>
         </div>
-
-        <div class="category">
-            <div class="icon">💻</div>
-            <span>لپ‌تاپ</span>
-        </div>
-
-        <div class="category">
-            <div class="icon">🎧</div>
-            <span>هدفون</span>
-        </div>
-
-        <div class="category">
-            <div class="icon">⌚</div>
-            <span>ساعت هوشمند</span>
-        </div>
-
-        <div class="category">
-            <div class="icon">🎮</div>
-            <span>گیمینگ</span>
-        </div>
+        @empty
+            <p>هیچ دسته بندی یافت نشد</p>
+        @endforelse
+        {{ $categories->links() }}
 
     </section>
 

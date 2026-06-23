@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -11,7 +12,8 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        return view('main.home');
+        $categories = Category::simplepaginate(5);
+        return view('main.home',compact('categories'));
     }
 
     public function logout(): RedirectResponse

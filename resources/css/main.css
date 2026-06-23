@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap');
-
+@import 'tailwindcss';
 *{
     margin:0;
     padding:0;
@@ -296,6 +296,10 @@ body{
 
 .category:hover .icon{
     transform:scale(1.2);
+}
+
+.cat-title{
+    margin: 30px;
 }
 
 /* responsive */
