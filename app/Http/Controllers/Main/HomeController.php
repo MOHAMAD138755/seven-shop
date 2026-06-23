@@ -37,7 +37,10 @@ class HomeController extends Controller
 
     public function product(string $lang , Product $product): View
     {
-        $comments = Comment::where('status',1)->where('product_id',$product->id)->get();
+        $comments = Comment::where('status',1)->where('product_id',$product->id)
+            ->whereNull('parent_id')->with(['replies' => function ($query) {
+                $query->where('status',1);
+            }])->get();
         return view('main.product.single-product',['product'=>$product,'comments'=>$comments]);
     }
 
@@ -48,8 +51,8 @@ class HomeController extends Controller
         ]);
 
         Comment::create([
-            'content' => $request->content,
-            'product_id' => $request->product_id,
+            'content' => $request['content'],
+            'product_id' => $request['product_id'],
             'user_id' => Auth::id(),
             'status' => 0,
         ]);

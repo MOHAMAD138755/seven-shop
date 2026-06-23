@@ -17,6 +17,7 @@ class CommentController extends Controller
 
     public function delete(string $lang ,Comment $comment): RedirectResponse
     {
+        $comment->replies()->delete();
         $comment->delete();
 
         \Flasher\Toastr\Prime\toastr("کامنت با موفقیت حذف شد", "success");

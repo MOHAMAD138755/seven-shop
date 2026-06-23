@@ -107,12 +107,12 @@
 
             <!-- Comment -->
 
-            <div class="comment-item">
-                <div class="comment-header">
-
                     @forelse($comments as $comment)
-                    <div style="width: 50px;height: 50px;border-radius: 50%">
-                        <img src="{{ \Illuminate\Support\Facades\Storage::url($comment->user->profile_path) }}" alt="پروفایل کاربر">
+                <div class="comment-item">
+                    <div class="comment-header">
+                    <div style="width: 50px;height: 50px;">
+                        <img src="{{ \Illuminate\Support\Facades\Storage::url($comment->user->profile_path) }}" alt="پروفایل کاربر"
+                        style="border-radius: 50%">
                     </div>
 
                     <div class="user-info">
@@ -128,9 +128,7 @@
 
                 </div>
                 @include('Errors.error')
-                @empty
-                    <p>کامنتی موجود نیست</p>
-                @endforelse
+
 
                 <div class="comment-actions">
 
@@ -141,7 +139,6 @@
                 </div>
 
                 <!-- Reply Form -->
-
                 <div class="reply-form">
 
                     <form action="{{ route('home.reply',['lang' => app()->getLocale()]) }}" method="post">
@@ -155,41 +152,49 @@
                         </button>
 
                     </form>
-
+                    @include('Errors.error')
                 </div>
 
                 <!-- Replies -->
+                @forelse($comment->replies as $reply)
+                <div class="replies">
 
-{{--                <div class="replies">--}}
+                    <div class="reply-item">
 
-{{--                    <div class="reply-item">--}}
+                        <div class="comment-header">
 
-{{--                        <div class="comment-header">--}}
+                            <div style="width: 50px;height: 50px;">
+                                <img src="{{ \Illuminate\Support\Facades\Storage::url($reply->user->profile_path) }}" alt="پروفایل کاربر"
+                                style="border-radius: 50%">
+                            </div>
 
-{{--                            <div class="avatar admin">--}}
-{{--                                م--}}
-{{--                            </div>--}}
+                            <div class="user-info">
+                                <h4>{{ $reply->user->name }}</h4>
+                                <span>{{ $reply->created_at->locale('fa')->diffForHumans() }}</span>
+                            </div>
 
-{{--                            <div class="user-info">--}}
-{{--                                <h4>مدیر فروشگاه</h4>--}}
-{{--                                <span>۱ ساعت پیش</span>--}}
-{{--                            </div>--}}
+                        </div>
 
-{{--                        </div>--}}
+                        <div class="comment-body">
 
-{{--                        <div class="comment-body">--}}
+                            {{ $reply->content }}
 
-{{--                            ممنون از اینکه نظرتون رو ثبت کردید ❤️--}}
+                        </div>
 
-{{--                        </div>--}}
-
-{{--                    </div>--}}
+                    </div>
 
                 </div>
+                @empty
+                    <p>ریپلای موجود نیست</p>
+                @endforelse
 
             </div>
 
+            @empty
+                <p>کامنتی موجود نیست</p>
+            @endforelse
 
+        </div>
     </section>
 
     <script>
