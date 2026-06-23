@@ -65,4 +65,183 @@
         </div>
 
     </div>
+
+    <section class="comments-section">
+
+        <h2 class="section-title">
+            نظرات کاربران
+        </h2>
+
+        <!-- Add Comment -->
+
+        <div class="comment-box">
+
+            <h3>ثبت نظر</h3>
+
+            <form>
+
+                <div class="form-group">
+                    <input type="text" placeholder="نام شما">
+                </div>
+
+                <div class="form-group">
+                    <textarea placeholder="نظر خود را بنویسید..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    ثبت نظر
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- Comments List -->
+
+        <div class="comments-list">
+
+            <!-- Comment -->
+
+            <div class="comment-item">
+
+                <div class="comment-header">
+
+                    <div class="avatar">
+                        ع
+                    </div>
+
+                    <div class="user-info">
+                        <h4>علی رضایی</h4>
+                        <span>۲ ساعت پیش</span>
+                    </div>
+
+                </div>
+
+                <div class="comment-body">
+
+                    محصول خیلی خوبی بود و کیفیت ساخت بالایی داشت.
+
+                </div>
+
+                <div class="comment-actions">
+
+                    <button class="reply-toggle">
+                        پاسخ
+                    </button>
+
+                </div>
+
+                <!-- Reply Form -->
+
+                <div class="reply-form">
+
+                    <form>
+
+                        <textarea placeholder="پاسخ خود را بنویسید..."></textarea>
+
+                        <button type="submit">
+                            ثبت پاسخ
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <!-- Replies -->
+
+                <div class="replies">
+
+                    <div class="reply-item">
+
+                        <div class="comment-header">
+
+                            <div class="avatar admin">
+                                م
+                            </div>
+
+                            <div class="user-info">
+                                <h4>مدیر فروشگاه</h4>
+                                <span>۱ ساعت پیش</span>
+                            </div>
+
+                        </div>
+
+                        <div class="comment-body">
+
+                            ممنون از اینکه نظرتون رو ثبت کردید ❤️
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Comment -->
+
+            <div class="comment-item">
+
+                <div class="comment-header">
+
+                    <div class="avatar">
+                        م
+                    </div>
+
+                    <div class="user-info">
+                        <h4>محمد کریمی</h4>
+                        <span>۱ روز پیش</span>
+                    </div>
+
+                </div>
+
+                <div class="comment-body">
+
+                    آیا این محصول گارانتی دارد؟
+
+                </div>
+
+                <div class="comment-actions">
+
+                    <button class="reply-toggle">
+                        پاسخ
+                    </button>
+
+                </div>
+
+                <div class="reply-form">
+
+                    <form>
+
+                        <textarea placeholder="پاسخ خود را بنویسید..."></textarea>
+
+                        <button type="submit">
+                            ثبت پاسخ
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <script>
+
+        document.querySelectorAll('.reply-toggle').forEach(button => {
+
+            button.addEventListener('click', function(){
+
+                const form =
+                    this.parentElement.nextElementSibling;
+
+                form.classList.toggle('active');
+
+            });
+
+        });
+
+    </script>
 @endsection
