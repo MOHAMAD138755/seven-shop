@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -12,8 +13,9 @@ class HomeController extends Controller
 {
     public function index(): View
     {
+        $newProducts = Product::where('count','!=',0)->latest()->take(8)->get();
         $categories = Category::with('products')->simplepaginate(5);
-        return view('main.home',compact('categories'));
+        return view('main.home',compact('categories','newProducts'));
     }
 
     public function logout(): RedirectResponse

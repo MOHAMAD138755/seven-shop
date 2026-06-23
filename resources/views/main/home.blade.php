@@ -43,37 +43,15 @@
 
     <!-- PRODUCTS -->
     <section id="product" class="container">
-        <h2 class="title">🔥 محصولات ویژه</h2>
+        <h2 class="title">🔥 جدید ترین محصولات</h2>
 
         <div class="grid">
 
-            <div class="card reveal">
-                <div class="img"></div>
-                <h3>گوشی سامسونگ</h3>
-                <p>12,000,000 تومان</p>
-                <button onclick="addToCart(this)">افزودن به سبد</button>
-            </div>
-
-            <div class="card reveal">
-                <div class="img"></div>
-                <h3>هدفون سونی</h3>
-                <p>2,500,000 تومان</p>
-                <button onclick="addToCart(this)">افزودن به سبد</button>
-            </div>
-
-            <div class="card reveal">
-                <div class="img"></div>
-                <h3>لپ تاپ ایسوس</h3>
-                <p>35,000,000 تومان</p>
-                <button onclick="addToCart(this)">افزودن به سبد</button>
-            </div>
-
-            <div class="card reveal">
-                <div class="img"></div>
-                <h3>ساعت هوشمند</h3>
-                <p>3,200,000 تومان</p>
-                <button onclick="addToCart(this)">افزودن به سبد</button>
-            </div>
+            @forelse($newProducts as $newProduct)
+                @include('main.partials.new-product',['newProduct' => $newProduct])
+            @empty
+                <p>محصولی وجود ندارد</p>
+            @endforelse
 
         </div>
     </section>
