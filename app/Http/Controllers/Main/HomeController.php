@@ -17,7 +17,7 @@ class HomeController extends Controller
     public function index(): View
     {
         $newProducts = Product::where('count','!=',0)->latest()->take(8)->get();
-        $categories = Category::with('products')->simplepaginate(5);
+        $categories = Category::getAllCached(5);
         $BestSellers = Cache::remember('BestSellers', 86400, function () {
             return Product::getBestSellers();
         });
