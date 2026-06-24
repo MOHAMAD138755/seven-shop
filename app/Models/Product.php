@@ -27,6 +27,18 @@ class Product extends Model
             ->get();
     }
 
+    public static function GetLikeOrDislike($product_id)
+    {
+         return Product::where('id',$product_id)->withCount([
+            'likes as like_count' => function ($query) {
+            $query->where('is_like', 1);
+        },
+            'likes as dislike_count' => function ($query) {
+            $query->where('is_like', 0);
+        }
+        ])->get();
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

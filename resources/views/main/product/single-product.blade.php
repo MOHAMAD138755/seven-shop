@@ -51,6 +51,16 @@
                         <strong>{{ \Morilog\Jalali\Jalalian::fromDateTime($product->created_at)->format('Y-m-d') }}</strong>
                     </div>
 
+                    <div class="feature">
+                        <span>تعداد لایک ها</span>
+                        <strong>{{ $reactionCount[0]->like_count }}</strong>
+                    </div>
+
+                    <div class="feature">
+                        <span>تعداد دیسلایک ها</span>
+                        <strong>{{ $reactionCount[0]->dislike_count }}</strong>
+                    </div>
+
                 </div>
                 <h3>واکنش شما: </h3>
 

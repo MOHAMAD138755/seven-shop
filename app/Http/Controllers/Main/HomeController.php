@@ -48,7 +48,8 @@ class HomeController extends Controller
             ->whereNull('parent_id')->with(['replies' => function ($query) {
                 $query->where('status',1);
             }])->get();
-        return view('main.product.single-product',['product'=>$product,'comments'=>$comments]);
+        $reactionCount = Product::GetLikeOrDislike($product->id);
+        return view('main.product.single-product',['product'=>$product,'comments'=>$comments,'reactionCount'=>$reactionCount]);
     }
 
     public function create_comment(Request $request): RedirectResponse
