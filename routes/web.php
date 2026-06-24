@@ -34,6 +34,7 @@ Route::prefix('{lang}')->group(function (){
 
     Route::controller(CartController::class)->group(function (){
         Route::post('cart/create', 'create')->name('cart.create');
+        Route::get('cart/show', 'show')->name('cart.show');
     });
 
     Route::prefix('Dashboard')

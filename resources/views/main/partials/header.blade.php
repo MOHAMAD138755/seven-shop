@@ -14,7 +14,7 @@
             @endguest
 
             @auth
-                <a href="#">🛒سبد خرید</a>
+                <a href="{{ route('cart.show',['lang' => app()->getLocale()]) }}">🛒سبد خرید</a>
                 <form method="POST" action="{{ route('home.logout',['lang' => app()->getLocale()]) }}">
                     @csrf
                     <button style="width: 70px;cursor: pointer;border: none;border-radius: 5px;height: 25px;color: white;background-color: red" type="submit">خروج</button>

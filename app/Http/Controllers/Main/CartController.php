@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
@@ -37,5 +38,11 @@ class CartController extends Controller
 
         \Flasher\Toastr\Prime\toastr('باید ابتدا لاگین کنید', 'error');
         return back();
+    }
+
+    public function show(): View
+    {
+        $carts = Cart::with('product')->where('user_id', auth()->id())->get();
+        return view('main.cart.carts',compact('carts'));
     }
 }
