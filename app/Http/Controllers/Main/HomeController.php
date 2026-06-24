@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -104,7 +105,9 @@ class HomeController extends Controller
     public function profile_update(string $lang,Request $request,User $user): RedirectResponse
     {
         $request->validate([
-            'name' => 'string|min:4|max:15|regex:/^[A-Za-z\p{Arabic}\s]+$/u|unique:users,name',
+            'name' => ['string','min:5','max:20','regex:/^[A-Za-z\p{Arabic}\s]+$/u',
+            Rule::unique('users')->ignore(auth()->id())
+            ],
             'email' => 'email',
             'profile' => 'file|image|mimes:jpeg,png,jpg|max:1024',
         ]);
