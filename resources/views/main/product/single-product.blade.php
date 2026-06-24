@@ -24,7 +24,7 @@
 
 
                 <h1 class="product-title">
-                    {{ $product->name }}
+                    نام محصول: {{ $product->name }}
                 </h1>
 
 {{--                <div class="rating">--}}
@@ -63,8 +63,8 @@
 
                 </div>
                 <h3>واکنش شما: </h3>
-
                 <div style="display: flex;">
+                @if(!$checkUserReaction)
                 <form action="{{ route('reaction.create',['lang' => app()->getLocale()]) }}" method="post">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -78,8 +78,21 @@
                     <input type="hidden" name="is_like" value="0">
                     <button type="submit" class="fa-solid fa-thumbs-down wishlist" style="margin: 20px;color: red"></button>
                 </form>
-                </div>
 
+                    @elseif($checkUserReaction->is_like == 1)
+                        <form action="{{ route('reaction.delete',['lang' => app()->getLocale()]) }}" method="post">
+                            @csrf @method('DELETE')
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">لغو لایک
+                            <button type="submit" class="fa-solid fa-thumbs-up wishlist" style="margin: 20px;color: green"></button>
+                        </form>
+                    @elseif($checkUserReaction->is_like == 0)
+                        <form action="{{ route('reaction.delete',['lang' => app()->getLocale()]) }}" method="post">
+                            @csrf @method('DELETE')
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">لغو دیسلایک
+                            <button type="submit" class="fa-solid fa-thumbs-down wishlist" style="margin: 20px;color: red"></button>
+                        </form>
+                    @endif
+                </div>
                 <div class="actions">
                     <button class="buy-btn">
                         افزودن به سبد خرید

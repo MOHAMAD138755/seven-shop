@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -48,8 +49,12 @@ class HomeController extends Controller
             ->whereNull('parent_id')->with(['replies' => function ($query) {
                 $query->where('status',1);
             }])->get();
+
         $reactionCount = Product::GetLikeOrDislike($product->id);
-        return view('main.product.single-product',['product'=>$product,'comments'=>$comments,'reactionCount'=>$reactionCount]);
+        $checkUserReaction = Like::where('product_id',$product->id)->where('user_id',Auth::id())->first();
+
+        return view('main.product.single-product',['product'=>$product,'comments'=>$comments,
+            'reactionCount'=>$reactionCount,'checkUserReaction'=>$checkUserReaction]);
     }
 
     public function create_comment(Request $request): RedirectResponse

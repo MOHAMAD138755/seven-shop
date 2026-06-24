@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
+use App\Models\Like;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,6 +43,14 @@ class ReactionController extends Controller
         }
 
         \Flasher\Toastr\Prime\toastr('لطفا در سایت لاگین کنید','error');
+        return back();
+    }
+
+    public function delete(Request $request): RedirectResponse
+    {
+        Like::where('product_id',$request->product_id)->where('user_id',auth()->id())->delete();
+
+        \Flasher\Toastr\Prime\toastr('واکنش شما با موفقیت حذف شد','success');
         return back();
     }
 }

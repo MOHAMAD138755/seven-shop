@@ -28,6 +28,7 @@ Route::prefix('{lang}')->group(function (){
     });
     Route::controller(ReactionController::class)->group(function (){
         Route::post('reaction/create', 'create_reaction')->name('reaction.create');
+        Route::delete('reaction/delete', 'delete')->name('reaction.delete');
     });
 
     Route::prefix('Dashboard')
