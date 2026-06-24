@@ -50,6 +50,13 @@
         <a href="{{ route('home.product',['lang' => app()->getLocale(),'product' => $cart->product->slug]) }}">
             <button style="background-color: red;cursor: pointer">اطلاعات بیشتر...</button>
         </a>
+
+        <form action="{{ route('cart.delete',['lang' => app()->getLocale()]) }}" method="post">
+            @csrf @method('DELETE')
+            <input type="hidden" name="cart_id" value="{{ $cart->id }}">
+            <button style="background-color: blue;cursor: pointer" type="submit">حذف محصول</button>
+        </form>
+
         @empty
             <p style="text-align: center;margin: 30px;color: red">سبد خرید خالی است</p>
         @endforelse

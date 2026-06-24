@@ -51,4 +51,12 @@ class CartController extends Controller
         $carts = Cart::with('product')->where('user_id', auth()->id())->get();
         return view('main.cart.carts',compact('carts'));
     }
+
+    public function delete(Request $request): RedirectResponse
+    {
+        Cart::where('id',$request->cart_id)->delete();
+
+        \Flasher\Toastr\Prime\toastr('از سبد خرید حذف شد', 'success');
+        return back();
+    }
 }
