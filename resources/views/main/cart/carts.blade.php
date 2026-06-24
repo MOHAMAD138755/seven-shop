@@ -21,19 +21,19 @@
                 <span>تعداد موجود: {{ $cart->product->count }}</span>
             </div>
 
-{{--            <div class="qty">--}}
-{{--                <button>−</button>--}}
-{{--                <span>1</span>--}}
-{{--                <button>+</button>--}}
-{{--            </div>--}}
+            <div class="qty">
+                <form action="{{ route('cart.update',['lang' => app()->getLocale(),'cart' => $cart->id]) }}" method="post">
+                    @csrf @method('PUT')
+                    <label>ویرایش تعداد: </label>
+                    <input type="number" name="count" value="{{ $cart->quantity }}">
+                    <button type="submit" style="background-color: blueviolet;width: 100%;color: white">ویرایش</button>
+                </form>
+            </div>
 
             <div class="price">
                 <p style="color: #00ff15">قیمت: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($cart->product->price / 10) : number_format($cart->product->price)}}</p>
             </div>
 
-{{--            <button class="delete">--}}
-{{--                ✕--}}
-{{--            </button>--}}
         </div>
 
 

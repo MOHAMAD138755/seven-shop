@@ -59,4 +59,23 @@ class CartController extends Controller
         \Flasher\Toastr\Prime\toastr('از سبد خرید حذف شد', 'success');
         return back();
     }
+
+    public function update(string $lang,Cart $cart, Request $request): RedirectResponse
+    {
+        $request->validate([
+            'count' => 'required|integer|min:1'
+        ]);
+
+        if($request->count > $cart->product->count){
+            \Flasher\Toastr\Prime\toastr('تعداد انتخاب شده بیش از موجودیت است', 'error');
+            return back();
+        }
+
+        $cart->update([
+            'quantity' => $request->count
+        ]);
+
+        \Flasher\Toastr\Prime\toastr('تعداد محصول ویرایش شد', 'success');
+        return back();
+    }
 }

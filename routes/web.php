@@ -36,6 +36,7 @@ Route::prefix('{lang}')->group(function (){
         Route::post('cart/create', 'create')->name('cart.create');
         Route::get('cart/show', 'show')->name('cart.show');
         Route::delete('cart/delete', 'delete')->name('cart.delete');
+        Route::put('cart/update/{cart}', 'update')->name('cart.update');
     });
 
     Route::prefix('Dashboard')
