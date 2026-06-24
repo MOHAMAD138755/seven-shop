@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -19,6 +20,11 @@ class CartController extends Controller
             ]);
 
             $cart = Cart::where('user_id', auth()->id())->where('product_id',$request->product_id)->first();
+
+            if($request->count > Product::where('id',$request->product_id)->value('count')) {
+                \Flasher\Toastr\Prime\toastr('تعداد محصول خواسته شده بیش از موجود است', 'error');
+                return back();
+            }
 
             if($cart) {
 

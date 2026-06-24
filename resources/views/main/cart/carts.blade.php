@@ -35,9 +35,8 @@
 {{--                ✕--}}
 {{--            </button>--}}
         </div>
-        @empty
-            <p>سبد خرید خالی است</p>
-        @endforelse
+
+
 
     </section>
 
@@ -51,9 +50,15 @@
         <a href="{{ route('home.product',['lang' => app()->getLocale(),'product' => $cart->product->slug]) }}">
             <button style="background-color: red;cursor: pointer">اطلاعات بیشتر...</button>
         </a>
+        @empty
+            <p style="text-align: center;margin: 30px;color: red">سبد خرید خالی است</p>
+        @endforelse
+
+        @if($carts->count() > 0)
         <button>
             ادامه خرید
         </button>
+        @endif
     </aside>
 
 <script>
