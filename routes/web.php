@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Main\CartController;
 use App\Http\Controllers\Main\HomeController;
 use App\Http\Controllers\Main\ReactionController;
 use App\Http\Middleware\LoginAdmin;
@@ -29,6 +30,10 @@ Route::prefix('{lang}')->group(function (){
     Route::controller(ReactionController::class)->group(function (){
         Route::post('reaction/create', 'create_reaction')->name('reaction.create');
         Route::delete('reaction/delete', 'delete')->name('reaction.delete');
+    });
+
+    Route::controller(CartController::class)->group(function (){
+        Route::post('cart/create', 'create')->name('cart.create');
     });
 
     Route::prefix('Dashboard')

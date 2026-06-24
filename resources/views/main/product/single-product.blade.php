@@ -93,11 +93,22 @@
                         </form>
                     @endif
                 </div>
+
+
                 <div class="actions">
-                    <button class="buy-btn">
+                    <form action="{{ route('cart.create',['lang' => app()->getLocale()]) }}" method="post">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <label for="count">تعداد: </label>
+                        <input type="number" name="count" id="count">
+                        <br><br>
+                    <button class="buy-btn" type="submit">
                         افزودن به سبد خرید
                     </button>
+                    </form>
+                    @include('Errors.error')
                 </div>
+
 
             </div>
 
@@ -163,7 +174,6 @@
                     {{ $comment->content }}
 
                 </div>
-                @include('Errors.error')
 
 
                 <div class="comment-actions">
@@ -188,7 +198,6 @@
                         </button>
 
                     </form>
-                    @include('Errors.error')
                 </div>
 
                 <!-- Replies -->
