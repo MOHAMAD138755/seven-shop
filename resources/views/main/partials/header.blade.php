@@ -5,8 +5,8 @@
 
         <nav class="nav" id="nav">
             <a href="{{ route('home',['lang' => app()->getLocale()]) }}">خانه</a>
-            <a href="#product">محصولات</a>
-            <a href="#category">دسته‌بندی</a>
+            <a href="{{ url('/'.app()->getLocale().'#product') }}">محصولات</a>
+            <a href="{{ url('/'.app()->getLocale().'#category') }}">دسته‌بندی</a>
 
             @guest
                 <a href="{{ route('user.register',['lang' => app()->getLocale()]) }}">ثبت نام</a>
@@ -19,10 +19,10 @@
                     @csrf
                     <button style="width: 70px;cursor: pointer;border: none;border-radius: 5px;height: 25px;color: white;background-color: red" type="submit">خروج</button>
                 </form>
-                <a href="#">پروفایل شما</a>
+                <a href="{{ route('home.profile',['lang' => app()->getLocale()]) }}">پروفایل شما</a>
             @endauth
 
-            <a href="#footer">درباره ما</a>
+            <a href="{{ url('/'.app()->getLocale().'#footer') }}">درباره ما</a>
 
             @if(auth()->check() &&
                  (auth()->user()->hasRole('administrator') || auth()->user()->hasRole('writer')))

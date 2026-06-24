@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -91,6 +93,44 @@ class HomeController extends Controller
         \Flasher\Toastr\Prime\toastr('پاسخ به کامنت با موفقیت ایجاد شد','success');
         return back();
 
+    }
+
+    public function profile(): View
+    {
+        $user = auth()->user();
+        return view('main.user.profile',compact('user'));
+    }
+
+    public function profile_update(string $lang,Request $request,User $user): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'string|min:4|max:15|regex:/^[A-Za-z\p{Arabic}\s]+$/u|unique:users,name',
+            'email' => 'email',
+            'profile' => 'file|image|mimes:jpeg,png,jpg|max:1024',
+        ]);
+
+        if ($request->hasFile('profile')) {
+
+            $user->update([
+                'profile_path' => Storage::disk('public')->delete($user->profile_path),
+            ]);
+
+            $path = Storage::disk('public')->putFile('profile_images', $request->file('profile'));
+
+            $user->update([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'profile_path' => $path
+            ]);
+        }
+
+        $user->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+        ]);
+
+        \Flasher\Toastr\Prime\toastr('اطلاعات شما با موفقیت ویرایش شد','success');
+        return back();
     }
 
 }

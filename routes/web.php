@@ -22,6 +22,8 @@ Route::prefix('{lang}')->group(function (){
         Route::get('product/{product:slug}', 'product')->name('home.product');
         Route::post('comment/create', 'create_comment')->name('home.comment');
         Route::post('comment/reply', 'reply_comment')->name('home.reply');
+        Route::get('user/profile', 'profile')->name('home.profile');
+        Route::put('user/profile/update{user:name}', 'profile_update')->name('home.profile.update');
     });
 
     Route::prefix('Dashboard')
