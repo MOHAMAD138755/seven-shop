@@ -52,15 +52,28 @@
                     </div>
 
                 </div>
+                <h3>واکنش شما: </h3>
+
+                <div style="display: flex;">
+                <form action="{{ route('reaction.create',['lang' => app()->getLocale()]) }}" method="post">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="is_like" value="1">
+                    <button type="submit" class="fa-solid fa-thumbs-up wishlist" style="margin: 20px;color: green"></button>
+                </form>
+
+                <form action="{{ route('reaction.create',['lang' => app()->getLocale()]) }}" method="post">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="is_like" value="0">
+                    <button type="submit" class="fa-solid fa-thumbs-down wishlist" style="margin: 20px;color: red"></button>
+                </form>
+                </div>
 
                 <div class="actions">
                     <button class="buy-btn">
                         افزودن به سبد خرید
                     </button>
-
-{{--                    <button class="wishlist">--}}
-{{--                        ❤--}}
-{{--                    </button>--}}
                 </div>
 
             </div>

@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Main\HomeController;
+use App\Http\Controllers\Main\ReactionController;
 use App\Http\Middleware\LoginAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,9 @@ Route::prefix('{lang}')->group(function (){
         Route::post('comment/reply', 'reply_comment')->name('home.reply');
         Route::get('user/profile', 'profile')->name('home.profile');
         Route::put('user/profile/update/{user:name}', 'profile_update')->name('home.profile.update');
+    });
+    Route::controller(ReactionController::class)->group(function (){
+        Route::post('reaction/create', 'create_reaction')->name('reaction.create');
     });
 
     Route::prefix('Dashboard')
