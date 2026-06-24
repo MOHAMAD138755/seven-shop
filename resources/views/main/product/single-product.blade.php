@@ -106,7 +106,6 @@
                         افزودن به سبد خرید
                     </button>
                     </form>
-                    @include('Errors.error')
                 </div>
 
 

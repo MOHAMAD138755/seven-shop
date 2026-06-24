@@ -42,7 +42,6 @@
                 <p>محصولی یافت نشد</p>
             @endforelse
         </div>
-        @include('Errors.error')
     </section>
 
 @endsection

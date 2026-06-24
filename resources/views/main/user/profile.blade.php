@@ -60,7 +60,6 @@
 
             <button type="submit">ثبت تغییرات</button>
             </form>
-            @include('Errors.error')
         </div>
 
     </div>
