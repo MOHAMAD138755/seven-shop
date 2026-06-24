@@ -8,15 +8,15 @@
 
         <div>
             <h4>لینک‌ها</h4>
-            <p>{{ $settings['instagram'] }}</p>
-            <p>{{ $settings['telegram'] }}</p>
-            <p>{{ $settings['youtube'] }}</p>
+            <p><i class="fa-brands fa-instagram"></i> {{ $settings['instagram'] }}</p>
+            <p><i class="fa-brands fa-telegram"></i> {{ $settings['telegram'] }}</p>
+            <p><i class="fa-brands fa-youtube"></i> {{ $settings['youtube'] }}</p>
         </div>
 
         <div>
             <h4>پشتیبانی</h4>
-            <p>{{ $settings['phone'] }}</p>
-            <p>{{ $settings['email'] }}</p>
+            <p><i class="fa-solid fa-phone"></i> {{ $settings['phone'] }}</p>
+            <p><i class="fa-solid fa-envelope"></i> {{ $settings['email'] }}</p>
         </div>
 
     </div>
