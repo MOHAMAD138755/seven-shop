@@ -23,6 +23,7 @@
 
         <!-- Main Page Content -->
         <main class="page-body">
+            @include('Errors.error')
             @yield('content')
         </main>
 

@@ -5,7 +5,16 @@
     <h3>{{ $BestSeller->name }}</h3>
     <p style="color: #00ff15">قیمت: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($BestSeller->price / 10) : number_format($BestSeller->price)}}</p>
     <p style="color: blue">تعداد موحود: {{ $BestSeller->count }}</p>
-    <button style="background-color: green;cursor: pointer">افزودن به سبد</button>
+    <form action="{{ route('cart.create',['lang' => app()->getLocale()]) }}" method="post">
+        @csrf
+        <input type="hidden" name="product_id" value="{{ $newProduct->id }}">
+        <label for="count">تعداد: </label>
+        <input type="number" name="count" id="count">
+        <br><br>
+        <button class="buy-btn" type="submit">
+            افزودن به سبد خرید
+        </button>
+    </form>
     <a href="{{ route('home.product',['lang' => app()->getLocale(),'product' => $BestSeller->slug]) }}">
         <button style="background-color: red;cursor: pointer">اطلاعات بیشتر...</button>
     </a>

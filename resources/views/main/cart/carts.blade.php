@@ -26,7 +26,7 @@
                     @csrf @method('PUT')
                     <label>ویرایش تعداد: </label>
                     <input type="number" name="count" value="{{ $cart->quantity }}">
-                    <button type="submit" style="background-color: blueviolet;width: 100%;color: white">ویرایش</button>
+                    <button type="submit" style="background-color: blueviolet;width: 100%;color: white;padding: 5px">ویرایش</button>
                 </form>
             </div>
 

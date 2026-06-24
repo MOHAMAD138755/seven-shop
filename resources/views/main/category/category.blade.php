@@ -22,7 +22,17 @@
                 <p style="color: #00ff15">قیمت: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($item->price / 10) : number_format($item->price)}}</p>
                 <p style="color: blue">تعداد موحود: {{ $item->count }}</p>
                 <div>
-                <button style="background-color: green;cursor: pointer;color: white;margin-top: 20px;width: 100%" class="card button">افزودن به سبد</button>
+                    <form action="{{ route('cart.create',['lang' => app()->getLocale()]) }}" method="post">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $item->id }}">
+                        <label for="count">تعداد: </label>
+                        <input type="number" name="count" id="count">
+                        <br><br>
+                        <button class="buy-btn" style="width: 100%" type="submit">
+                            افزودن به سبد خرید
+                        </button>
+                    </form>
+
                 <a href="{{ route('home.product',['lang' => app()->getLocale(),'product' => $item->slug]) }}">
                     <button style="background-color: red;cursor: pointer;color: white;margin-top: 20px;width: 100%" class="card button">اطلاعات بیشتر...</button>
                 </a>
@@ -32,6 +42,7 @@
                 <p>محصولی یافت نشد</p>
             @endforelse
         </div>
+        @include('Errors.error')
     </section>
 
 @endsection
