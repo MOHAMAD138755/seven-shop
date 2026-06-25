@@ -29,8 +29,8 @@ class ProductController extends Controller
     public function create(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|unique:products,name|min:5|max:25',
-            'description' => 'required|min:5|max:50',
+            'name' => 'required|unique:products,name|min:5|max:70',
+            'description' => 'required|min:5|max:5000',
             'image' => 'required|file|image|mimes:jpeg,png,jpg|max:1024',
             'price' => 'required|numeric|min:1000|regex:/^\d*(\.\d{1,2})?$/',
             'category' => 'required',
