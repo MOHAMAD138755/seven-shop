@@ -73,8 +73,8 @@ class ProductController extends Controller
     public function update(string $lang, Product $product , Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|min:5|max:15',
-            'description' => 'required|min:5|max:50',
+            'name' => 'required|min:5|max:70',
+            'description' => 'required|min:5|max:5000',
             'image' => 'file|image|mimes:jpeg,png,jpg|max:1024',
             'price' => 'required|numeric|min:1000|regex:/^\d*(\.\d{1,2})?$/',
             'category' => 'required',
