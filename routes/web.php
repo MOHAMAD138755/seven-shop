@@ -41,6 +41,7 @@ Route::prefix('{lang}')->group(function (){
     });
     Route::controller(CheckOutController::class)->group(function (){
         Route::get('checkout', 'index')->name('checkout');
+        Route::post('checkout/submit','submit')->name('checkout.submit');
     });
 
     Route::prefix('Dashboard')

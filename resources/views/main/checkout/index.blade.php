@@ -12,8 +12,8 @@
 
             <h2>تسویه حساب</h2>
 
-            <form id="checkoutForm">
-
+            <form id="checkoutForm" action="{{ route('checkout.submit',['lang' => app()->getLocale()]) }}" method="post">
+                @csrf
                 <div class="row">
 
                     <div class="input-group">
@@ -30,6 +30,11 @@
                 <div class="input-group">
                     <label>آدرس کامل</label>
                     <textarea rows="4" name="address"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>توضیحات(اختیاری)</label>
+                    <textarea rows="4" name="description"></textarea>
                 </div>
             <button type="submit" class="buy-btn" style="width: 100%">ثبت سفارش و پرداخت</button>
             </form>
