@@ -20,6 +20,7 @@
                     <button style="width: 70px;cursor: pointer;border: none;border-radius: 5px;height: 25px;color: white;background-color: red" type="submit">خروج<i class="fa-solid fa-right-from-bracket"></i></button>
                 </form>
                 <a href="{{ route('home.profile',['lang' => app()->getLocale()]) }}">پروفایل شما<i class="fa-solid fa-user"></i></a>
+                <a href="{{ route('reaction.show',['lang' => app()->getLocale()]) }}">موارد پسندیده شده<i class="fa-solid fa-heart"></i></a>
             @endauth
 
             <a href="{{ url('/'.app()->getLocale().'#footer') }}">درباره ما<i class="fa-solid fa-circle-info"></i></a>

@@ -32,6 +32,8 @@ Route::prefix('{lang}')->group(function (){
     Route::controller(ReactionController::class)->group(function (){
         Route::post('reaction/create', 'create_reaction')->name('reaction.create');
         Route::delete('reaction/delete', 'delete')->name('reaction.delete');
+        Route::get('reaction/show', 'show')->name('reaction.show');
+        Route::get('reaction/product/delete/{like}', 'delete_product_reaction')->name('reaction.product.delete');
     });
 
     Route::controller(CartController::class)->group(function (){

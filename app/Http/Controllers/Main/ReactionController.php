@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Like;
-use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ReactionController extends Controller
 {
@@ -51,6 +51,29 @@ class ReactionController extends Controller
         Like::where('product_id',$request->product_id)->where('user_id',auth()->id())->delete();
 
         \Flasher\Toastr\Prime\toastr('واکنش شما با موفقیت حذف شد','success');
+        return back();
+    }
+
+    public function show(): View
+    {
+        $products = Like::with('product')
+            ->where('user_id', auth()->id())
+            ->where('is_like', 1)
+            ->get()
+            ->map(function ($like) {
+                $product = $like->product;
+                $product->like_id = $like->id;
+
+                return $product;
+            });
+        return view('main.like.like',compact('products'));
+    }
+
+    public function delete_product_reaction(string $lang,Like $like): RedirectResponse
+    {
+        $like->delete();
+
+        \Flasher\Toastr\Prime\toastr('با موفقیت حذف شد','success');
         return back();
     }
 }
