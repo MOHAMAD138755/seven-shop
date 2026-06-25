@@ -54,7 +54,7 @@ class CheckOutController extends Controller
             ]);
         }
 
-        dd('ok');
+        return redirect()->route('payment.pay',['lang' => app()->getLocale(),'order' => $order->id]);
 
     }
 }

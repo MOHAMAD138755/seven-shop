@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Main\CartController;
 use App\Http\Controllers\Main\CheckOutController;
 use App\Http\Controllers\Main\HomeController;
+use App\Http\Controllers\Main\PaymentController;
 use App\Http\Controllers\Main\ReactionController;
 use App\Http\Middleware\LoginAdmin;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,11 @@ Route::prefix('{lang}')->group(function (){
     Route::controller(CheckOutController::class)->group(function (){
         Route::get('checkout', 'index')->name('checkout');
         Route::post('checkout/submit','submit')->name('checkout.submit');
+    });
+
+    Route::controller(PaymentController::class)->group(function (){
+        Route::get('payment/{order}', 'pay')->name('payment.pay');
+        Route::get('payment/verify', 'verify')->name('payment.verify');
     });
 
     Route::prefix('Dashboard')
