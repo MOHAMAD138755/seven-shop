@@ -8,7 +8,8 @@ class Order extends Model
 {
     protected $fillable = [
         'id','user_id','total_price','status','address',
-        'created_at','phone_number','receiver_name','description'
+        'created_at','phone_number','receiver_name','description',
+        'authority','ref_id'
     ];
 
     public function items()
