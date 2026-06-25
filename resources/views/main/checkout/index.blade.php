@@ -18,45 +18,37 @@
 
                     <div class="input-group">
                         <label>نام و نام خانوادگی</label>
-                        <input type="tel" id="phone">
+                        <input type="tel" name="full_name">
                     </div>
 
                     <div class="input-group">
                         <label>شماره تماس</label>
-                        <input type="tel" id="phone">
+                        <input type="tel" name="phone">
                     </div>
                 </div>
 
                 <div class="input-group">
                     <label>آدرس کامل</label>
-                    <textarea id="address" rows="4"></textarea>
+                    <textarea rows="4" name="address"></textarea>
                 </div>
-
+            <button type="submit" class="buy-btn" style="width: 100%">ثبت سفارش و پرداخت</button>
             </form>
 
         </div>
 
         <div class="summary">
 
-            <h2>خلاصه سفارش</h2>
-
+            <h2>خلاصه سفارش</h2><br>
+            @forelse($carts as $cart)
             <div class="product">
-                <span>محصول شماره ۱</span>
-                <span>500,000 تومان</span>
+                <span>نام محصول: {{ $cart->product->name }}</span>
+                <p style="color: #00ff15">قیمت: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($cart->product->price / 10) : number_format($cart->product->price)}}</p>
             </div>
-
-            <div class="product">
-                <span>محصول شماره ۲</span>
-                <span>300,000 تومان</span>
-            </div>
-
-            <div class="product">
-                <span>هزینه ارسال</span>
-                <span>50,000 تومان</span>
-            </div>
-
+            @empty
+                <p style="text-align: center;margin: 30px;color: red">محصولی وجود ندارد</p>
+            @endforelse
             <div class="total">
-                جمع کل: 850,000 تومان
+                <p style="color: #00ff15">قیمت کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($cart->product->price / 10) : number_format($cart->product->price)}}</p>
             </div>
 
         </div>

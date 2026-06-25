@@ -445,8 +445,8 @@
                     <table class="products-table">
                         <thead>
                         <tr>
-                            <th>شماره سفارش</th>
-                            <th>کاربر</th>
+                            <th>نام گیرنده</th>
+                            <th>توضیحات</th>
                             <th>مبلغ کل</th>
                             <th>آدرس</th>
                             <th>شماره تماس</th>
@@ -458,17 +458,14 @@
                         <tbody>
                         @forelse($orders as $order)
 
-                            <tr>
+                            <tr style="overflow-x: auto">
+
                                 <td>
-                                    <div class="user-info">
-                                        <div>
-                                            <strong>{{ $order->id }}</strong>
-                                        </div>
-                                    </div>
+                                    <span>{{ $order->receiver_name  }}</span>
                                 </td>
 
                                 <td>
-                                    <span>{{ $order->user->name }}</span>
+                                    <span>{{ $order->description }}</span>
                                 </td>
 
                                 <td>{{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($order->total_price / 10) : number_format($order->total_price)}}</td>
@@ -491,9 +488,12 @@
                                             <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : ''}}>تحویل داده شده</option>
                                             <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : ''}}>لغو شده</option>
                                         </select>
-                                        <button type="submit" class="btn btn-primary">تغییر وضعیت</button>
+                                        <br>
+                                        <button type="submit" class="btn btn-primary" style="margin-top: 10px">تغییر وضعیت</button>
                                     </form>
+                                    <br>
                                 </td>
+
                                 <td>
                                    <p>{{ \Morilog\Jalali\Jalalian::fromDateTime($order->created_at)->format('Y-m-d H:i:s') }}</p>
                                 </td>

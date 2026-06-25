@@ -41,12 +41,7 @@
     </section>
 
     <aside class="summary">
-        <h3>جمع سفارش</h3>
 
-        <div>
-            <span>مبلغ کل</span>
-            <strong>1,250,000 تومان</strong>
-        </div>
         <a href="{{ route('home.product',['lang' => app()->getLocale(),'product' => $cart->product->slug]) }}">
             <button style="background-color: red;cursor: pointer">اطلاعات بیشتر...</button>
         </a>
@@ -61,7 +56,7 @@
             <p style="text-align: center;margin: 30px;color: red">سبد خرید خالی است</p>
         @endforelse
 
-        <h3 style="color: blue;text-align: center;margin: 20px">قیمت کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($totalPrice / 10) : number_format($totalPrice)}}</h3>
+        <h3 style="color: blue;text-align: center;margin: 20px">جمع کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($totalPrice / 10) : number_format($totalPrice)}}</h3>
 
         @if($carts->count() > 0)
            <a href="{{ route('checkout',['lang' => app()->getLocale()]) }}">
