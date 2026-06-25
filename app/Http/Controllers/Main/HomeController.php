@@ -25,7 +25,10 @@ class HomeController extends Controller
         $BestSellers = Cache::remember('BestSellers', 86400, function () {
             return Product::getBestSellers();
         });
-        return view('main.home',compact('categories','newProducts','BestSellers'));
+        $BestLikes = Cache::remember('BestLikes', 86400, function () {
+            return Product::getBestLikes();
+        });
+        return view('main.home',compact('categories','newProducts','BestSellers','BestLikes'));
     }
 
     public function logout(): RedirectResponse

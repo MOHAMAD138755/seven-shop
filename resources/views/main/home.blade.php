@@ -71,6 +71,21 @@
         </div>
     </section>
 
+    <!-- PRODUCTS -->
+    <section id="product" class="container">
+        <h2 class="title">🔥 محبوب ترین محصولات</h2>
+
+        <div class="grid">
+
+            @forelse($BestLikes as $BestLike)
+                @include('main.partials.BestLikes',['BestLike' => $BestLike])
+            @empty
+                <p>محصولی وجود ندارد</p>
+            @endforelse
+
+        </div>
+    </section>
+
     <!-- CART -->
     <div class="cart" id="cart">
         <h3>🛒 سبد خرید</h3>

@@ -27,6 +27,18 @@ class Product extends Model
             ->get();
     }
 
+    public static function getBestLikes($limit = 4)
+    {
+        return self::select('products.*')
+            ->join('likes', 'products.id', '=', 'likes.product_id')
+            ->where('likes.is_like', 1)
+            ->groupBy('products.id')
+            ->selectRaw('COUNT(*) as total_likes')
+            ->orderByDesc('total_likes')
+            ->limit($limit)
+            ->get();
+    }
+
     public static function GetLikeOrDislike($product_id)
     {
          return Product::where('id',$product_id)->withCount([
