@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.10.1",
         "morilog/jalali": "3.*",
         "opcodesio/log-viewer": "^3.24",
+        "shetabit/payment": "^6.4",
         "spatie/laravel-permission": "^6.25",
         "yoeunes/toastr": "^3.3"
     },
