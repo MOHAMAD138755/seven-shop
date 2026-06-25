@@ -5,14 +5,8 @@
     <title>404 - پیدا نشد</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: sans-serif;
-        }
 
-        body {
+        .body{
             height: 100vh;
             background: #0f172a;
             display: flex;
@@ -20,8 +14,11 @@
             align-items: center;
             overflow: hidden;
             color: white;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
         }
-
         /* background floating circles */
         .circle {
             position: absolute;
@@ -41,7 +38,7 @@
             z-index: 10;
         }
 
-        h1 {
+        .text-h1{
             font-size: 140px;
             color: #ef4444;
             text-shadow: 0 0 20px rgba(239,68,68,0.5);
@@ -53,17 +50,16 @@
             50% { transform: scale(1.05); }
         }
 
-        h2 {
+        text {
             margin-top: 10px;
             font-size: 28px;
         }
 
-        p {
+        .text-p {
             margin-top: 10px;
             color: #94a3b8;
         }
-
-        button {
+        .btn-home{
             margin-top: 20px;
             padding: 12px 25px;
             border: none;
@@ -81,7 +77,7 @@
     </style>
 </head>
 
-<body>
+<body class="body">
 
 <!-- floating circles -->
 <div class="circle" style="width:80px;height:80px;top:10%;left:20%"></div>
@@ -89,10 +85,10 @@
 <div class="circle" style="width:60px;height:60px;top:50%;left:80%"></div>
 
 <div class="container">
-    <h1>404</h1>
-    <h2>صفحه پیدا نشد 😢</h2>
-    <p>ممکنه لینک اشتباه باشه یا صفحه حذف شده باشه</p>
-    <button onclick="goHome()">برگشت به خانه 🏠</button>
+    <h1 class="text-h1">404</h1>
+    <h2 class="text">صفحه پیدا نشد 😢</h2>
+    <p class="text-p">ممکنه لینک اشتباه باشه یا صفحه حذف شده باشه</p>
+    <button class="btn-home" onclick="goHome()">برگشت به خانه 🏠</button>
 </div>
 
 <script>
