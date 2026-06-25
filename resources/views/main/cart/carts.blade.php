@@ -61,10 +61,14 @@
             <p style="text-align: center;margin: 30px;color: red">سبد خرید خالی است</p>
         @endforelse
 
+        <h3 style="color: blue;text-align: center;margin: 20px">قیمت کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($totalPrice / 10) : number_format($totalPrice)}}</h3>
+
         @if($carts->count() > 0)
+           <a href="{{ route('checkout',['lang' => app()->getLocale()]) }}">
         <button>
-            ادامه خرید
+            تسویه حساب
         </button>
+           </a>
         @endif
     </aside>
 

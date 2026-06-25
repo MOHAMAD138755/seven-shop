@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Main\CartController;
+use App\Http\Controllers\Main\CheckOutController;
 use App\Http\Controllers\Main\HomeController;
 use App\Http\Controllers\Main\ReactionController;
 use App\Http\Middleware\LoginAdmin;
@@ -37,6 +38,9 @@ Route::prefix('{lang}')->group(function (){
         Route::get('cart/show', 'show')->name('cart.show');
         Route::delete('cart/delete', 'delete')->name('cart.delete');
         Route::put('cart/update/{cart}', 'update')->name('cart.update');
+    });
+    Route::controller(CheckOutController::class)->group(function (){
+        Route::get('checkout', 'index')->name('checkout');
     });
 
     Route::prefix('Dashboard')

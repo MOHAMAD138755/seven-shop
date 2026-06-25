@@ -49,7 +49,10 @@ class CartController extends Controller
     public function show(): View
     {
         $carts = Cart::with('product')->where('user_id', auth()->id())->get();
-        return view('main.cart.carts',compact('carts'));
+        $totalPrice = $carts->sum(function ($cart){
+            return $cart->product->price * $cart->quantity;
+        });
+        return view('main.cart.carts',compact('carts','totalPrice'));
     }
 
     public function delete(Request $request): RedirectResponse
