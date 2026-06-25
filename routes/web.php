@@ -139,5 +139,5 @@ Route::prefix('{lang}')->group(function (){
 });
 
 Route::fallback(function () {
-    abort(404);
+    return view('Errors.404');
 });
