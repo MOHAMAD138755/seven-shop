@@ -34,7 +34,7 @@ class ProductController extends Controller
             'image' => 'required|file|image|mimes:jpeg,png,jpg|max:1024',
             'price' => 'required|numeric|min:1000|regex:/^\d*(\.\d{1,2})?$/',
             'category' => 'required',
-            'count' => 'required|numeric|min:1',
+            'count' => 'required|numeric|min:0',
         ]);
 
         $category = Category::where('name',$request['category'])->get('id')->first();
@@ -78,7 +78,7 @@ class ProductController extends Controller
             'image' => 'file|image|mimes:jpeg,png,jpg|max:1024',
             'price' => 'required|numeric|min:1000|regex:/^\d*(\.\d{1,2})?$/',
             'category' => 'required',
-            'count' => 'required|numeric|min:1',
+            'count' => 'required|numeric|min:0',
         ]);
 
         if($request->file('image')){

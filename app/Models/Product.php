@@ -20,6 +20,7 @@ class Product extends Model
     {
         return self::select('products.*')
             ->join('order_items','products.id','=','order_items.product_id')
+            ->where('products.count','!=',0)
             ->selectRaw('sum(order_items.quantity ) as total_sold')
             ->groupBy('products.id')
             ->orderBy('total_sold','desc')
@@ -32,6 +33,7 @@ class Product extends Model
         return self::select('products.*')
             ->join('likes', 'products.id', '=', 'likes.product_id')
             ->where('likes.is_like', 1)
+            ->where('products.count','!=',0)
             ->groupBy('products.id')
             ->selectRaw('COUNT(*) as total_likes')
             ->orderByDesc('total_likes')
