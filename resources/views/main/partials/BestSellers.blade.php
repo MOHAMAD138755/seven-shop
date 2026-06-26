@@ -12,10 +12,10 @@
         <input type="number" name="count" id="count">
         <br><br>
         <button class="buy-btn" type="submit">
-            افزودن به سبد خرید
+            {{__('main.Add To Cart')}}
         </button>
     </form>
     <a href="{{ route('home.product',['lang' => app()->getLocale(),'product' => $BestSeller->slug]) }}">
-        <button style="background-color: red;cursor: pointer">اطلاعات بیشتر...</button>
+        <button style="background-color: red;cursor: pointer"> {{__('main.More Information')}}</button>
     </a>
 </div>
