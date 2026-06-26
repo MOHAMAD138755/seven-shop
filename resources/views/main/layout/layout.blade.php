@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="@yield('description', $settings['meta_description'] ?? '' )">
-    <meta name="keywords" content="سون شاپ,فروشگاه اینترنتی,فروشگاه,seven shop">
+
+    {!! SEO::generate() !!}
+
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     @vite(['resources/css/main.css','resources/js/main.js'])
-    <title>@yield('title',$settings['site_name'] ?? '')</title>
 </head>
 <body>
 
