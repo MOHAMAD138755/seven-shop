@@ -13,6 +13,11 @@
                 <a href="{{ route('user.login',['lang' => app()->getLocale()]) }}">ورود</a>
             @endguest
 
+            <form action="{{ route('home.search',['lang' => app()->getLocale()]) }}" method="get">
+            <input id="search-bar" name="name" placeholder="جستجوی محصول">
+                <button type="submit"></button>
+            </form>
+
             @auth
                 <a href="{{ route('cart.show',['lang' => app()->getLocale()]) }}">سبد خرید<i class="fa-solid fa-cart-shopping"></i></a>
                 <form method="POST" action="{{ route('home.logout',['lang' => app()->getLocale()]) }}">

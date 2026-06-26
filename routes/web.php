@@ -28,6 +28,7 @@ Route::prefix('{lang}')->group(function (){
         Route::post('comment/reply', 'reply_comment')->name('home.reply');
         Route::get('user/profile', 'profile')->name('home.profile');
         Route::put('user/profile/update/{user:name}', 'profile_update')->name('home.profile.update');
+        Route::get('search/product', 'search_product')->name('home.search');
     });
     Route::controller(ReactionController::class)->group(function (){
         Route::post('reaction/create', 'create_reaction')->name('reaction.create');

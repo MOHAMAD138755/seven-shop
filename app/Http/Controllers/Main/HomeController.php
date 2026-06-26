@@ -145,4 +145,15 @@ class HomeController extends Controller
         return back();
     }
 
+    public function search_product(Request $request): View
+    {
+        $products = Product::where('name','like','%'.$request['name'].'%')
+            ->Orwhere('slug','like','%'.$request['name'].'%')
+        ->Orwhere('description','like','%'.$request['name'].'%')
+            ->where('count','!=',0)
+        ->latest()->paginate(5);
+
+        return view('main.product.search',compact('products'));
+    }
+
 }
