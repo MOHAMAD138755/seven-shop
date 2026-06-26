@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\SeoService;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,29 +22,8 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $settings = settings();
 
-        SEOTools::setTitle(($settings['site_name'] ?? 'سون شاپ') . ' | فروشگاه اینترنتی');
-
-        SEOTools::setDescription($settings['meta_description'] ?? '');
-
-        SEOTools::metatags()->setKeywords([
-            'سون شاپ',
-            'فروشگاه اینترنتی',
-            'خرید آنلاین'
-        ]);
-
-        SEOTools::setCanonical(request()->url());
-
-        SEOTools::opengraph()->setUrl(url('/'));
-        SEOTools::opengraph()->setTitle($settings['site_name'] ?? 'سون شاپ');
-        SEOTools::opengraph()->setDescription($settings['meta_description'] ?? '');
-        SEOTools::opengraph()->addImage(asset('images/og-default.jpg'));
-
-        SEOTools::twitter()->setTitle($settings['site_name'] ?? 'سون شاپ');
-
-        SEOTools::jsonLd()->setType('WebSite');
-        SEOTools::jsonLd()->setUrl(url('/'));
+        SeoService::home(settings());
 
         $newProducts = Product::where('count','!=',0)->latest()->take(8)->get();
         $categories = Category::getAllCached(5);
