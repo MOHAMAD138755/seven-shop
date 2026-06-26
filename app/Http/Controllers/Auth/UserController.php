@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -80,7 +81,8 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|string|unique:users,name|min:4|max:15|regex:/^[A-Za-z\p{Arabic}\s]+$/u',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'password'=> 'required|string|min:6|max:10|confirmed',
+            'password'=> ['required','string','min:8','max:15','confirmed',
+                Password::min(6)->letters()->mixedCase()->numbers()->symbols()],
             'img' => 'file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
