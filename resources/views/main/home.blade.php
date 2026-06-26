@@ -86,11 +86,6 @@
         </div>
     </section>
 
-    <!-- CART -->
-    <div class="cart" id="cart">
-        <h3>🛒 سبد خرید</h3>
-        <p id="cartText">سبد خرید خالی است</p>
-    </div>
 
     <button id="backToTop">↑</button>
 

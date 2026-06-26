@@ -314,11 +314,6 @@ body{
     .categories{
         grid-template-columns:repeat(2,1fr);
     }
-
-    #search-bar{
-        display: block;
-       width:0;
-    }
 }
 
 @media(max-width:480px){

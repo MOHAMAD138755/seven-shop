@@ -48,7 +48,13 @@ class CartController extends Controller
 
     public function show(): View
     {
-        $carts = Cart::with('product')->where('user_id', auth()->id())->get();
+        $carts = Cart::with('product')
+            ->where('user_id', auth()->id())
+            ->whereHas('product', function ($query) {
+                $query->where('count', '>', 0);
+            })
+            ->get();
+
         $totalPrice = $carts->sum(function ($cart){
             return $cart->product->price * $cart->quantity;
         });
