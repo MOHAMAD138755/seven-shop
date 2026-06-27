@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -48,6 +49,8 @@ class CartController extends Controller
 
     public function show(): View
     {
+        SEOTools::setTitle('سبد خرید');
+
         $carts = Cart::with('product')
             ->where('user_id', auth()->id())
             ->whereHas('product', function ($query) {

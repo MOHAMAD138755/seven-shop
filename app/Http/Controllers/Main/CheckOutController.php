@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -13,6 +14,8 @@ class CheckOutController extends Controller
 {
     public function index(): View
     {
+        SEOTools::setTitle('تسویه حساب');
+
         $carts = Cart::with('product')->where('user_id',auth()->id())->get();
         $totalPrice = $carts->sum(function ($cart){
             return $cart->product->price * $cart->quantity;

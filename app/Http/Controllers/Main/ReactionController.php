@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Like;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -56,6 +57,8 @@ class ReactionController extends Controller
 
     public function show(): View
     {
+        SEOTools::setTitle('پسندیده شده');
+
         $products = Like::with('product')
             ->where('user_id', auth()->id())
             ->where('is_like', 1)

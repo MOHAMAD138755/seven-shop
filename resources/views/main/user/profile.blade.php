@@ -1,8 +1,6 @@
 @extends('main.layout.layout')
 
-@section('title',$settings['site_name'])
 @vite(['resources/css/profile.css'])
-@section('description',$settings['meta_description'])
 
 @section('content')
 

@@ -48,11 +48,14 @@ class HomeController extends Controller
 
     public function category(string $lang, Category $category): View
     {
+        SeoService::category($category);
         return view('main.category.category',compact('category'));
     }
 
     public function product(string $lang , Product $product): View
     {
+        SeoService::product($product);
+
         $comments = Comment::where('status',1)->where('product_id',$product->id)
             ->whereNull('parent_id')->with(['replies' => function ($query) {
                 $query->where('status',1);
@@ -112,6 +115,8 @@ class HomeController extends Controller
 
     public function profile(): View
     {
+        SEOTools::setTitle('پروفایل');
+
         $user = auth()->user();
         return view('main.user.profile',compact('user'));
     }
@@ -152,6 +157,8 @@ class HomeController extends Controller
 
     public function search_product(Request $request): View
     {
+        SEOTools::setTitle('جستجوی محصول');
+
         $products = Product::where('count', '>', 0)
             ->where(function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->name . '%')

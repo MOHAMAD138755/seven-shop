@@ -1,10 +1,6 @@
 
 @extends('main.layout.layout')
 
-@section('title','محصولات')
-
-@section('description','محصولات این دسته بندی')
-
 @section('content')
     <div id="preloader">
         <div class="loader"></div>
