@@ -33,7 +33,7 @@ class Category extends Model
         $cacheKey = "v{$version}_p{$perPage}_page_{$page}";
 
         return Cache::remember($cacheKey, 86400, function () use ($perPage) {
-            return self::with('products')->paginate($perPage);
+            return self::with('products')->simplePaginate($perPage);
         });
     }
 

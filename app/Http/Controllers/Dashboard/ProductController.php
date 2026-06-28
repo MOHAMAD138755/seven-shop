@@ -102,6 +102,7 @@ class ProductController extends Controller
             'price' => $request['price'],
             'count' => $request['count'],
             'category_id' => $request['category'],
+            'slug' => Str::slug($request['name'])
         ]);
 
         \Flasher\Toastr\Prime\toastr('محصول با موفقیت ویرایش شد','success');
