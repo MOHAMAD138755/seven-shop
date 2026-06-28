@@ -10,7 +10,7 @@ Powerful • Scalable • SEO Optimized • Multi Language
 
 🎥 **Project Demo**
 
-👉 **[Watch Demo Video Here](https://github.com/MOHAMAD138755/seven-shop/demo.mp4)**
+👉 **[Watch Demo Video Here](https://youtu.be/oplCBZkElwE?is=At2HAJp50aQgweQS)**
 
 </div>
 
@@ -121,7 +121,7 @@ The complete project walkthrough is available below:
 
 ### ▶ Demo Video
 
-PASTE_VIDEO_LINK_HERE
+https://youtu.be/oplCBZkElwE?is=At2HAJp50aQgweQS
 
 ---
 
