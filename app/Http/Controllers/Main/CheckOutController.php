@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class CheckOutController extends Controller
@@ -29,7 +30,7 @@ class CheckOutController extends Controller
             'full_name' => 'required|max:80',
             'address' => 'required',
             'description' => 'nullable',
-            'phone' => 'required|regex:/^09[0-9]{9}/',
+            'phone' => 'required|regex:/^09[0-9]{9}$/',
         ]);
 
         $carts = Cart::with('product')->where('user_id', auth()->id())->get();
@@ -38,24 +39,30 @@ class CheckOutController extends Controller
             return $cart->product->price * $cart->quantity;
         });
 
-        $order = Order::create([
-            'user_id' => auth()->id(),
-            'receiver_name' => $request->full_name,
-            'phone_number' => $request->phone,
-            'address' => $request->address,
-            'description' =>  $request->description,
-            'total_price' => $totalPrice,
-            'status' => 'pending'
-        ]);
+        $order = DB::transaction(function () use ($request, $carts, $totalPrice) {
 
-        foreach ($carts as $cart){
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $cart->product->id,
-                'quantity' => $cart->quantity,
-                'price' => $cart->product->price,
+            $order = Order::create([
+                'user_id' => auth()->id(),
+                'receiver_name' => $request->full_name,
+                'phone_number' => $request->phone,
+                'address' => $request->address,
+                'description' =>  $request->description,
+                'total_price' => $totalPrice,
+                'status' => 'pending'
             ]);
-        }
+
+            foreach ($carts as $cart){
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $cart->product->id,
+                    'quantity' => $cart->quantity,
+                    'price' => $cart->product->price,
+                ]);
+            }
+
+            return $order;
+
+        });
 
         return redirect()->route('payment.pay',['lang' => app()->getLocale(),'order' => $order->id]);
 

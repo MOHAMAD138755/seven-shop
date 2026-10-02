@@ -49,8 +49,9 @@ Route::prefix('{lang}')->group(function (){
     });
 
     Route::controller(PaymentController::class)->group(function (){
-        Route::get('payment/{order}', 'pay')->name('payment.pay');
         Route::get('payment/verify', 'verify')->name('payment.verify');
+        Route::get('payment/details', 'details')->name('order.details');
+        Route::get('payment/{order}', 'pay')->name('payment.pay');
     });
 
     Route::prefix('Dashboard')
