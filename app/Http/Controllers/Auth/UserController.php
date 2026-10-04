@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
@@ -19,8 +21,8 @@ class UserController extends Controller
 {
     public function register(): View|RedirectResponse
     {
-        if(Setting::where('enable_register') == 'off'){
-            \Flasher\Toastr\Prime\toastr('این صفحه موقتا در دسترس نمی باشد','error');
+        if (Setting::where('enable_register') == 'off') {
+            \Flasher\Toastr\Prime\toastr('این صفحه موقتا در دسترس نمی باشد', 'error');
             return redirect('/');
         }
         return view('Auth.register');
@@ -28,8 +30,8 @@ class UserController extends Controller
 
     public function login(): View|RedirectResponse
     {
-        if(Setting::where('enable_login') == 'off'){
-            \Flasher\Toastr\Prime\toastr('این صفحه موقتا در دسترس نمی باشد','error');
+        if (Setting::where('enable_login') == 'off') {
+            \Flasher\Toastr\Prime\toastr('این صفحه موقتا در دسترس نمی باشد', 'error');
             return redirect('/');
         }
         return view('Auth.login');
@@ -39,25 +41,25 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:4|max:15|regex:/^[A-Za-z\p{Arabic}\s]+$/u',
-            'password'=> 'required|string|min:6|max:10',
+            'password' => 'required|string|min:6|max:10',
             'g-recaptcha-response' => 'required|captcha',
         ]);
 
         $key = "login-attempts:" . $request->input('name') . '|' . $request->ip();
 
-        if(RateLimiter::tooManyAttempts($key,3)){
+        if (RateLimiter::tooManyAttempts($key, 3)) {
             $second = RateLimiter::availableIn($key);
             return redirect()->back()->withErrors([
-                'massage' => ceil($second / 60)."دقیقه دیگر امتحان کنید"
+                'massage' => ceil($second / 60) . "دقیقه دیگر امتحان کنید"
             ]);
         }
 
         $remember = $request->has('remember');
-        if (Auth::attempt($request->only(['name', 'password']),$remember)) {
+        if (Auth::attempt($request->only(['name', 'password']), $remember)) {
 
             $user = Auth::user();
 
-            if(Hash::needsRehash($user['password'])) {
+            if (Hash::needsRehash($user['password'])) {
                 $user['password'] = Hash::make($request['password']);
                 $user->save();
             }
@@ -65,13 +67,48 @@ class UserController extends Controller
             RateLimiter::clear($key);
             $request->session()->regenerate();
 
-            \Flasher\Toastr\Prime\toastr('ورود موفقیت آمیز بود','success');
-            return to_route('Dashboard.َAdmin',['lang' => app()->getLocale()]);
+            $token = $request->cookie('cart_token');
+            if ($token) {
+
+                DB::transaction(function () use ($token, $user) {
+                    $guestCarts = Cart::with('product')->where('token', $token)
+                        ->whereNull('user_id')->get();
+
+                    foreach ($guestCarts as $guestCart) {
+                        $userCart = Cart::where('user_id', $user->id)
+                            ->where('product_id', $guestCart->product_id)
+                            ->first();
+
+                        if ($userCart) {
+                            $quantity = min($guestCart->quantity + $userCart->quantity, $guestCart->product->count);
+
+                            $userCart->update([
+                                'quantity' => $quantity
+                            ]);
+
+                            $guestCart->delete();
+                        } else {
+                            $quantity = min($guestCart->quantity, $guestCart->product->count);
+
+                            $guestCart->update([
+                                'token' => null,
+                                'user_id' => $user->id,
+                                'quantity' => $quantity
+                            ]);
+                        }
+                    }
+
+                });
+
+            }
+
+            \Flasher\Toastr\Prime\toastr('ورود موفقیت آمیز بود', 'success');
+            return to_route('Dashboard.َAdmin', ['lang' => app()->getLocale()]);
         }
 
-        RateLimiter::hit($key,200);
+        RateLimiter::hit($key, 200);
 
-        \Flasher\Toastr\Prime\toastr('ورود موفقیت آمیز نبود','error');
+        \Flasher\Toastr\Prime\toastr('ورود موفقیت آمیز نبود', 'error');
         return back();
 
     }
@@ -81,7 +118,7 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|string|unique:users,name|min:4|max:15|regex:/^[A-Za-z\p{Arabic}\s]+$/u',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'password'=> ['required','string','min:8','max:15','confirmed',
+            'password' => ['required', 'string', 'min:8', 'max:15', 'confirmed',
                 Password::min(6)->letters()->mixedCase()->numbers()->symbols()],
             'img' => 'file|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -97,11 +134,11 @@ class UserController extends Controller
 
         if ($user) {
             $user->assignRole('user');
-            \Flasher\Toastr\Prime\toastr('ثبت نام موفقیت آمیز بود','success');
-            return to_route('user.login',['lang' => app()->getLocale()]);
+            \Flasher\Toastr\Prime\toastr('ثبت نام موفقیت آمیز بود', 'success');
+            return to_route('user.login', ['lang' => app()->getLocale()]);
         }
 
-        \Flasher\Toastr\Prime\toastr('ثبت نام موفقیت آمیز نبود','success');
+        \Flasher\Toastr\Prime\toastr('ثبت نام موفقیت آمیز نبود', 'success');
         return back();
 
     }
