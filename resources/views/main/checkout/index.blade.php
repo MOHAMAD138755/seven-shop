@@ -49,7 +49,7 @@
                 <p style="text-align: center;margin: 30px;color: red">محصولی وجود ندارد</p>
             @endforelse
             <div class="total">
-                <p style="color: #00ff15">قیمت کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($cart->product->price / 10) : number_format($cart->product->price)}}</p>
+                <p style="color: #00ff15">قیمت کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($totalPrice / 10) : number_format($totalPrice)}}</p>
             </div>
 
         </div>

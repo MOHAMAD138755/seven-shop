@@ -71,7 +71,8 @@ class PaymentController extends Controller
 
     public function details(): View
     {
-        $orders = Order::with('items')->where('user_id', auth()->id())->get();
-        return view('main.order.details',compact('orders'));
+        $order = Order::with('items.product')->where('user_id', auth()->id())
+            ->where('status','paid')->latest()->firstOrFail();
+        return view('main.order.details',compact('order'));
     }
 }

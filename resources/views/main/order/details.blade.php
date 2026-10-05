@@ -38,7 +38,7 @@
                     </span>
 
                     <p class="mt-1 font-bold text-gray-900">
-                        {{ $orders[0]->id }}
+                        {{ $order->id }}
                     </p>
                 </div>
 
@@ -48,7 +48,7 @@
                     </span>
 
                     <p class="mt-1 font-bold text-green-600">
-                        {{ $orders[0]->status }}
+                        {{ $order->status }}
                     </p>
                 </div>
 
@@ -58,7 +58,7 @@
                     </span>
 
                     <p class="mt-1 font-bold text-gray-900">
-                        {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($orders[0]->total_price / 10) : number_format($orders[0]->total_price)}}
+                        {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($order->total_price / 10) : number_format($order->total_price)}}
                     </p>
                 </div>
 
@@ -68,7 +68,7 @@
                     </span>
 
                     <p class="mt-1 font-bold text-gray-900">
-                        {{ $orders[0]->ref_id }}
+                        {{ $order->ref_id ?? '---' }}
                     </p>
                 </div>
 
@@ -85,7 +85,7 @@
 
             <div class="space-y-3">
 
-                @forelse($orders[0]->items as $item)
+                @forelse($order->items as $item)
                 <article class="flex items-center justify-between gap-4 rounded-xl border border-gray-100 p-4">
 
                     <div class="flex min-w-0 items-center gap-3">
@@ -111,7 +111,7 @@
                     </div>
 
                     <span class="shrink-0 text-sm font-bold text-gray-900">
-                        2,500,000 تومان
+                        {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format(($item->price * $item->quantity) / 10) : number_format($item->price * $item->quantity)}}
                     </span>
 
                 </article>
@@ -139,7 +139,7 @@
                     </dt>
 
                     <dd class="font-semibold text-gray-900">
-                        {{ $orders[0]->receiver_name }}
+                        {{ $order->receiver_name }}
                     </dd>
 
                 </div>
@@ -152,7 +152,7 @@
                     </dt>
 
                     <dd class="font-semibold text-gray-900">
-                        {{ $orders[0]->phone_number }}
+                        {{ $order->phone_number }}
                     </dd>
 
                 </div>
@@ -165,7 +165,7 @@
                     </dt>
 
                     <dd class="font-semibold leading-6 text-gray-900 sm:max-w-md sm:text-left">
-                        {{ $orders[0]->address }}
+                        {{ $order->address }}
                     </dd>
 
                 </div>

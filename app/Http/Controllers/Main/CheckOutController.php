@@ -7,21 +7,28 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class CheckOutController extends Controller
 {
-    public function index(): View
+    public function index(): View|RedirectResponse
     {
         SEOTools::setTitle('تسویه حساب');
 
-        $carts = Cart::with('product')->where('user_id',auth()->id())->get();
-        $totalPrice = $carts->sum(function ($cart){
-            return $cart->product->price * $cart->quantity;
-        });
-        return view('main.checkout.index',compact('carts','totalPrice'));
+        if (auth()->check()) {
+
+            $carts = Cart::with('product')->where('user_id', auth()->id())->get();
+            $totalPrice = $carts->sum(function ($cart) {
+                return $cart->product->price * $cart->quantity;
+            });
+            return view('main.checkout.index', compact('carts', 'totalPrice'));
+
+        }
+            \Flasher\Toastr\Prime\toastr('برای تسویه حساب لاگین کنید', 'error');
+            return redirect()->route('cart.show',['lang'=>app()->getLocale()]);
     }
 
     public function submit(Request $request)

@@ -7,7 +7,7 @@
     <p style="color: blue">تعداد موحود: {{ $BestSeller->count }}</p>
     <form action="{{ route('cart.create',['lang' => app()->getLocale()]) }}" method="post">
         @csrf
-        <input type="hidden" name="product_id" value="{{ $newProduct->id }}">
+        <input type="hidden" name="product_id" value="{{ $BestSeller->id }}">
         <label for="count">تعداد: </label>
         <input type="number" name="count" id="count">
         <br><br>
