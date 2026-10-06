@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Coupon;
+use App\Models\CouponUsage;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -17,7 +19,7 @@ class PaymentController extends Controller
     {
         abort_unless($order->user_id === auth()->id(), 403);
 
-        $invoice = (new Invoice())->amount($order->total_price);
+        $invoice = (new Invoice())->amount($order->total_price / 10);
 
         return Payment::purchase($invoice, function ($driver, $transactionId) use ($order) {
 
@@ -33,7 +35,7 @@ class PaymentController extends Controller
         $order = Order::where('authority', request()->input('Authority'))->firstOrFail();
 
         try {
-            $receipt = Payment::amount($order->total_price)->transactionId(request()->input('Authority'))->verify();
+            $receipt = Payment::amount($order->total_price / 10)->transactionId(request()->input('Authority'))->verify();
 
             DB::transaction(function () use ($order, $receipt) {
 
@@ -57,9 +59,28 @@ class PaymentController extends Controller
                     $product->decrement('count', $item->quantity);
                 }
 
+                if ($order->coupon_code) {
+                    $coupon = Coupon::where('code', $order->coupon_code)->lockForUpdate()->firstOrFail();
+                    $check_used = CouponUsage::where('coupon_id', $coupon->id)->where('user_id', $order->user_id)->exists();
+
+                    if ($check_used) {
+                        throw new \Exception('این کد تخفیف قبلاً توسط شما استفاده شده است');
+                    }
+
+                        CouponUsage::create([
+                            'coupon_id' => $coupon->id,
+                            'order_id' => $order->id,
+                            'user_id' => $order->user_id,
+                            'discount_amount' => $order->discount_amount,
+                        ]);
+                        $coupon->increment('used_count');
+
+                }
+
                 Cart::where('user_id', $order->user_id)->delete();
 
             });
+            session()->forget('coupon_code');
             \Flasher\Toastr\Prime\toastr('خرید با موفقیت انجام شد','success');
             return redirect()->route('order.details',['lang'=>app()->getLocale()]);
 

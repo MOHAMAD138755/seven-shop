@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Coupon;
+use App\Models\CouponUsage;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,7 +67,52 @@ class CheckOutController extends Controller
             return $cart->product->price * $cart->quantity;
         });
 
-        $order = DB::transaction(function () use ($request, $carts, $totalPrice) {
+        $discount_amount = 0;
+        $coupon_code = session()->get('coupon_code');
+        $coupon = Coupon::where('code', $coupon_code)
+            ->where('is_active', 1)->where(function ($query) {
+                $query->whereNull('start_at')->orWhere('start_at', '<=', now());
+            })->where(function ($query) {
+                $query->whereNull('expires_at')->orWhere('expires_at', '>', now());
+            })->first();
+
+        if ($coupon){
+            if (CouponUsage::where('user_id', auth()->id())->where('coupon_id', $coupon->id)->exists()) {
+                \Flasher\Toastr\Prime\toastr('کد تخفیف رو قبلا استفاده کرده اید','error');
+                return back();
+            }
+        }
+
+        if ($coupon) {
+            if ($coupon->usage_limit !== null && $coupon->used_count >= $coupon->usage_limit) {
+                $coupon = null;
+            }
+        }
+
+        if ($coupon) {
+            if ($coupon->min_order_amount !== null && $coupon->min_order_amount > $totalPrice) {
+                $coupon = null;
+            }
+        }
+
+        if ($coupon) {
+            if ($coupon->type == 'percent') {
+                $discount_amount = ($totalPrice * $coupon->value) / 100;
+            } else {
+                $discount_amount = $coupon->value;
+            }
+
+            if ($coupon->max_discount_amount !== null && $coupon->max_discount_amount < $discount_amount) {
+                $discount_amount = $coupon->max_discount_amount;
+            }
+
+            $discount_amount = min($discount_amount, $totalPrice);
+            $coupon_code = $coupon->code;
+        }
+
+        $final_total_price = $totalPrice - $discount_amount;
+
+        $order = DB::transaction(function () use ($request, $carts, $totalPrice,$final_total_price, $discount_amount, $coupon_code) {
 
             $order = Order::create([
                 'user_id' => auth()->id(),
@@ -73,7 +120,9 @@ class CheckOutController extends Controller
                 'phone_number' => $request->phone,
                 'address' => $request->address,
                 'description' => $request->description,
-                'total_price' => $totalPrice,
+                'total_price' => $final_total_price,
+                'discount_amount' => $discount_amount,
+                'coupon_code' => $coupon_code,
                 'status' => 'pending'
             ]);
 
