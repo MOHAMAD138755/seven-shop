@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -24,11 +25,29 @@ class CheckOutController extends Controller
             $totalPrice = $carts->sum(function ($cart) {
                 return $cart->product->price * $cart->quantity;
             });
-            return view('main.checkout.index', compact('carts', 'totalPrice'));
+            $discount_amount = 0;
+            $coupon = Coupon::where('code', session()->get('coupon_code'))->first();
+
+            if ($coupon) {
+                if ($coupon->type == 'percent') {
+                    $discount_amount = ($totalPrice * $coupon->value) / 100;
+                } else {
+                    $discount_amount = $coupon->value;
+                }
+
+                if ($coupon->max_discount_amount !== null && $coupon->max_discount_amount < $discount_amount) {
+                    $discount_amount = $coupon->max_discount_amount;
+                }
+
+                $discount_amount = min($discount_amount, $totalPrice);
+            }
+
+            $final_total_price = $totalPrice - $discount_amount;
+            return view('main.checkout.index', compact('carts', 'totalPrice', 'final_total_price'));
 
         }
-            \Flasher\Toastr\Prime\toastr('برای تسویه حساب لاگین کنید', 'error');
-            return redirect()->route('cart.show',['lang'=>app()->getLocale()]);
+        \Flasher\Toastr\Prime\toastr('برای تسویه حساب لاگین کنید', 'error');
+        return redirect()->route('cart.show', ['lang' => app()->getLocale()]);
     }
 
     public function submit(Request $request)
@@ -42,7 +61,7 @@ class CheckOutController extends Controller
 
         $carts = Cart::with('product')->where('user_id', auth()->id())->get();
 
-        $totalPrice = $carts->sum(function ($cart){
+        $totalPrice = $carts->sum(function ($cart) {
             return $cart->product->price * $cart->quantity;
         });
 
@@ -53,12 +72,12 @@ class CheckOutController extends Controller
                 'receiver_name' => $request->full_name,
                 'phone_number' => $request->phone,
                 'address' => $request->address,
-                'description' =>  $request->description,
+                'description' => $request->description,
                 'total_price' => $totalPrice,
                 'status' => 'pending'
             ]);
 
-            foreach ($carts as $cart){
+            foreach ($carts as $cart) {
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $cart->product->id,
@@ -71,7 +90,7 @@ class CheckOutController extends Controller
 
         });
 
-        return redirect()->route('payment.pay',['lang' => app()->getLocale(),'order' => $order->id]);
+        return redirect()->route('payment.pay', ['lang' => app()->getLocale(), 'order' => $order->id]);
 
     }
 }

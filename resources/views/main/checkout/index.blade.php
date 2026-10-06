@@ -49,8 +49,21 @@
                 <p style="text-align: center;margin: 30px;color: red">محصولی وجود ندارد</p>
             @endforelse
             <div class="total">
-                <p style="color: #00ff15">قیمت کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($totalPrice / 10) : number_format($totalPrice)}}</p>
+                <p @style(['color: #00ff15','text-decoration: line-through' => session()->has('coupon_code')])>قیمت کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($totalPrice / 10) : number_format($totalPrice)}}</p>
             </div>
+
+            @if(session()->has('coupon_code'))
+            <div class="total">
+                <p style="color: #00ff15">قیمت تخفیف خورده: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($final_total_price / 10) : number_format($final_total_price)}}</p>
+            </div>
+
+                <a href="{{ route('coupon.check.delete',['lang' => app()->getLocale()]) }}">
+                    <button>
+                        حذف کد تخفیف
+                    </button>
+                </a>
+
+            @endif
 
         </div>
 

@@ -55,11 +55,19 @@
         <h3 style="color: blue;text-align: center;margin: 20px">جمع کل: {{ $settings['currency'] == 'toman' ? 'تومان' : 'ریال' }}{{ $settings['currency'] == 'toman' ? number_format($totalPrice / 10) : number_format($totalPrice)}}</h3>
 
         @if($carts->count() > 0)
+
+            <form action="{{ route('coupon.check',['lang'=>app()->getLocale()]) }}" method="post" style="margin-top: 10px">
+                @csrf
+                <input value="{{ session('coupon_code') }}" type="text" name="coupon_code" placeholder="کد تخفیف را وارد کنید..." required>
+                <button type="submit">بررسی کد تخفیف</button>
+            </form>
+
            <a href="{{ route('checkout',['lang' => app()->getLocale()]) }}">
         <button>
             تسویه حساب
         </button>
            </a>
+
         @endif
     </aside>
 

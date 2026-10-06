@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Main\CartController;
 use App\Http\Controllers\Main\CheckOutController;
+use App\Http\Controllers\Main\CouponController;
 use App\Http\Controllers\Main\HomeController;
 use App\Http\Controllers\Main\PaymentController;
 use App\Http\Controllers\Main\ReactionController;
@@ -52,6 +53,11 @@ Route::prefix('{lang}')->group(function (){
         Route::get('payment/verify', 'verify')->name('payment.verify');
         Route::get('payment/details', 'details')->name('order.details');
         Route::get('payment/{order}', 'pay')->name('payment.pay');
+    });
+
+    Route::controller(CouponController::class)->group(function (){
+        Route::post('coupon/check', 'check')->name('coupon.check');
+        Route::get('coupon/check/delete', 'check_delete')->name('coupon.check.delete');
     });
 
     Route::prefix('Dashboard')
