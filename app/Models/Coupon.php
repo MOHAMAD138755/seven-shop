@@ -10,4 +10,9 @@ class Coupon extends Model
         'code','type','max_discount_amount','min_order_amount',
         'usage_limit','used_count','start_at','expires_at','is_active'
     ];
+
+    public function usages()
+    {
+        return $this->hasMany(CouponUsage::class);
+    }
 }
