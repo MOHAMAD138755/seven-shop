@@ -188,6 +188,11 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    setTimeout(() => {
+        location.href = "{{ route('home',['lang'=>app()->getLocale()]) }}"
+    },10000)
+</script>
 </body>
 </html>
 

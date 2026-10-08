@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Coupon;
+use App\Models\CouponUsage;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -25,8 +26,15 @@ class CouponController extends Controller
             return $item->product->price * $item->quantity;
         });
 
+        $check_used = CouponUsage::where('coupon_id', $coupon->id)->where('user_id', auth()->id())->exists();
+
         if (!$coupon) {
             \Flasher\Toastr\Prime\toastr('کد تخفیف به درستی وارد نشده', 'error');
+            return back()->withInput();
+        }
+
+        if ($check_used) {
+            \Flasher\Toastr\Prime\toastr('این کد تخفیف قبلاً توسط شما استفاده شده است', 'error');
             return back()->withInput();
         }
 
@@ -35,7 +43,7 @@ class CouponController extends Controller
             return back()->withInput();
         }
 
-        if ($coupon->min_order_amount !== null && $coupon->min_order_amount > $total_price) {
+        if ($coupon->min_order_amount !== null && $coupon->min_order_amount >= $total_price) {
             \Flasher\Toastr\Prime\toastr('کد تخفیف شما برای این مبلغ خرید کم است', 'error');
             return back()->withInput();
         }

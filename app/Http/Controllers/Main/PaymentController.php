@@ -19,7 +19,9 @@ class PaymentController extends Controller
     {
         abort_unless($order->user_id === auth()->id(), 403);
 
-        $invoice = (new Invoice())->amount($order->total_price / 10);
+        $amount = (int) ($order->total_price / 10);
+
+        $invoice = (new Invoice())->amount($amount);
 
         return Payment::purchase($invoice, function ($driver, $transactionId) use ($order) {
 
@@ -35,7 +37,9 @@ class PaymentController extends Controller
         $order = Order::where('authority', request()->input('Authority'))->firstOrFail();
 
         try {
-            $receipt = Payment::amount($order->total_price / 10)->transactionId(request()->input('Authority'))->verify();
+            $amount = (int) ($order->total_price / 10);
+            $authority = request()->input('Authority');
+            $receipt = Payment::amount($amount)->transactionId($authority)->verify();
 
             DB::transaction(function () use ($order, $receipt) {
 

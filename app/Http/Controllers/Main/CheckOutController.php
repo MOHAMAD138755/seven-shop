@@ -90,7 +90,7 @@ class CheckOutController extends Controller
         }
 
         if ($coupon) {
-            if ($coupon->min_order_amount !== null && $coupon->min_order_amount > $totalPrice) {
+            if ($coupon->min_order_amount !== null && $coupon->min_order_amount >= $totalPrice) {
                 $coupon = null;
             }
         }
