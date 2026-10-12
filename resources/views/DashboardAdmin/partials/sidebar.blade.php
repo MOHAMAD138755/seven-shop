@@ -1,4 +1,4 @@
-<aside class="sidebar">
+<aside class="sidebar" style="overflow-y: auto">
     <div class="sidebar-logo" style="padding: 1.5rem; font-size: 1.5rem; font-weight: 700; color: var(--primary); text-align: center;">
         ADMIN<span style="color: white;">PRO</span>
     </div>
@@ -37,6 +37,9 @@
         @role('administrator')
         <a href="{{ route('Dashboard.roles',['lang' => app()->getLocale()]) }}" class="nav-link">
             <i class="fas fa-user-shield"></i> Role
+        </a>
+        <a href="{{ route('Dashboard.coupons',['lang' => app()->getLocale()]) }}" class="nav-link">
+            <i class="fa-solid fa-gift"></i> Coupons
         </a>
         @endrole
         <div style="padding: 1rem 1.5rem; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">

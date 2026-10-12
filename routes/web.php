@@ -140,6 +140,11 @@ Route::prefix('{lang}')->group(function (){
                 Route::get('roles/edit/{role}','editForm')->name('Dashboard.EditRole');
                 Route::put('roles/update/{role}','update')->name('Dashboard.UpdateRole');
             });
+
+            Route::middleware(['role:administrator'])
+                ->controller(\App\Http\Controllers\Dashboard\CouponController::class)->group(function (){
+                Route::get('coupons','show')->name('Dashboard.coupons');
+            });
     });
 
     require_once __DIR__ . "/auth.php";
