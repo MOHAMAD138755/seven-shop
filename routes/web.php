@@ -144,6 +144,9 @@ Route::prefix('{lang}')->group(function (){
             Route::middleware(['role:administrator'])
                 ->controller(\App\Http\Controllers\Dashboard\CouponController::class)->group(function (){
                 Route::get('coupons','show')->name('Dashboard.coupons');
+                Route::post('coupons/create','create')->name('Dashboard.AddCoupon');
+                Route::delete('coupons/destroy/{coupon}','destroy')->name('Dashboard.DeleteCoupon');
+                Route::get('coupons/edit/{coupon}','editForm')->name('Dashboard.EditCoupon');
             });
     });
 

@@ -310,6 +310,7 @@
                             <th>زمان شروع</th>
                             <th>زمان انقضا</th>
                             <th>فعال</th>
+                            <th>عملیات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -327,25 +328,25 @@
                                 <td><span>{{ $coupon->type }}</span></td>
                                 <td><span>{{ $coupon->type == 'percent' ? $coupon->value . '%' : $coupon->value . 'ریال' }}</span></td>
                                 <td><span>(ریال){{ $coupon->max_discount_amount ?? 'خالی' }}</span></td>
-                                <td><span>{{ $coupon->min_order_amount }}</span></td>
+                                <td><span>(ریال){{ $coupon->min_order_amount ?? '0' }}</span></td>
                                 <td><span>{{ $coupon->usage_limit }}</span></td>
-                                <td><span>{{ $coupon->used_count }}</span></td>
-                                <td><span>{{ \Morilog\Jalali\Jalalian::fromDateTime($coupon->start_at)->format('Y-m-d') }}</span></td>
-                                <td><span>{{ \Morilog\Jalali\Jalalian::fromDateTime($coupon->expires_at)->format('Y-m-d') }}</span></td>
+                                <td><span>{{ $coupon->used_count ?? '0' }}</span></td>
+                                <td><span>{{ $coupon->start_at ? \Morilog\Jalali\Jalalian::fromDateTime($coupon->start_at)->format('Y-m-d') : 'وجود ندارد' }}</span></td>
+                                <td><span>{{ $coupon->expires_at ? \Morilog\Jalali\Jalalian::fromDateTime($coupon->expires_at)->format('Y-m-d') : 'وجود ندارد' }}</span></td>
                                 <td><span @style(['color:red'=>$coupon->is_active == 0,'color:green'=>$coupon->is_active == 1])>
                                         {{ $coupon->is_active == 0 ? 'فعال نیست' : 'فعال است' }}</span></td>
 
-                                {{--                                <td>--}}
-                                {{--                                    <div class="actions">--}}
-                                {{--                                        <a href="{{ route('Dashboard.EditRole',['coupon' => $coupon->id , 'lang' => app()->getLocale()]) }}">--}}
-                                {{--                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>--}}
-                                {{--                                        </a>--}}
-                                {{--                                        <form action="{{ route('Dashboard.DeleteRole',['coupon' => $coupon->id , 'lang' => app()->getLocale()]) }}" method="post">--}}
-                                {{--                                            @method('DELETE') @csrf--}}
-                                {{--                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>--}}
-                                {{--                                        </form>--}}
-                                {{--                                    </div>--}}
-                                {{--                                </td>--}}
+                                                                <td>
+                                                                    <div class="actions">
+                                                                        <a href="{{ route('Dashboard.EditCoupon',['coupon' => $coupon->id , 'lang' => app()->getLocale()]) }}">
+                                                                            <button class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                                                        </a>
+                                                                        <form action="{{ route('Dashboard.DeleteCoupon',['coupon' => $coupon->id , 'lang' => app()->getLocale()]) }}" method="post">
+                                                                            @method('DELETE') @csrf
+                                                                            <button class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+                                                                        </form>
+                                                                    </div>
+                                                                </td>
 
                             </tr>
                         @empty
@@ -363,29 +364,92 @@
                     {{--                    <span class="form-note">Fill the details below</span>--}}
                 </div>
 
-                {{--                <form action="{{ route('Dashboard.AddRole',['lang' => app()->getLocale()]) }}" method="post">--}}
-                {{--                    @csrf--}}
-                {{--                    <div class="form-group">--}}
-                {{--                        <label>نام نقش</label>--}}
-                {{--                        <input type="text" name="role" placeholder="Enter name">--}}
-                {{--                    </div>--}}
+                                <form action="{{ route('Dashboard.AddCoupon',['lang' => app()->getLocale()]) }}" method="post">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>نام گوپن</label>
+                                        <input type="text" name="code" placeholder="Enter code">
+                                    </div>
 
-                {{--                    <div class="form-group">--}}
-                {{--                        <label>دسترسی این نقش</label>--}}
-                {{--                        @forelse($permissions as $permission)--}}
-                {{--                            <input type="checkbox" value="{{ $permission->name }}" name="permission[]">{{ $permission->name }}--}}
-                {{--                        @empty--}}
-                {{--                            <p style="text-align: center;color: red">دسترسی یافت نشد</p>--}}
-                {{--                        @endforelse--}}
-                {{--                    </div>--}}
+                                    <div class="form-group">
+                                        <label>نوع</label>
+                                        <select name="types" id="coupon_types">
+                                            <option value="percent">percent</option>
+                                            <option value="fixed">fixed</option>
+                                        </select>
+                                    </div>
 
-                {{--                    <div class="form-actions">--}}
-                {{--                        <button type="submit" class="btn btn-primary">ذخیره</button>--}}
-                {{--                        <button type="reset" class="btn btn-secondary">ریست</button>--}}
-                {{--                    </div>--}}
-                {{--                </form>--}}
+                                    <div class="form-group">
+                                        <label id="coupon_value">مقدار</label>
+                                        <input type="number" name="value">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>سقف تخفیف(ریال)</label>
+                                        <input type="number" name="max_discount_amount">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>حداقل مقدار سفارش(ریال)</label>
+                                        <input type="number" name="min_order_amount">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>سقف استفاده</label>
+                                        <input type="number" name="usage_limit">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>زمان شروع</label>
+                                        <input type="datetime-local" name="start_at">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>زمان پایان</label>
+                                        <input type="datetime-local" name="expires_at">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>وضعیت</label>
+                                        <select name="is_active">
+                                            <option value="1">فعال</option>
+                                            <option value="0">غیر فعال</option>
+                                        </select>
+                                    </div>
+
+{{--                                    <div class="form-group">--}}
+{{--                                        <label>دسترسی این نقش</label>--}}
+{{--                                        @forelse($permissions as $permission)--}}
+{{--                                            <input type="checkbox" value="{{ $permission->name }}" name="permission[]">{{ $permission->name }}--}}
+{{--                                        @empty--}}
+{{--                                            <p style="text-align: center;color: red">دسترسی یافت نشد</p>--}}
+{{--                                        @endforelse--}}
+{{--                                    </div>--}}
+
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">ذخیره</button>
+                                        <button type="reset" class="btn btn-secondary">ریست</button>
+                                    </div>
+                                </form>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        let type = document.getElementById('coupon_types')
+        let value = document.getElementById('coupon_value')
+
+        function ChangeStatus() {
+            if (type.value == 'percent'){
+                value.innerHTML = '(مقدار بر اساس درصد)'
+            }else if (type.value == 'fixed') {
+                value.innerHTML = '(مقدار بر اساس ریال)'
+            }
+        }
+
+        type.addEventListener('change',ChangeStatus)
+
+        ChangeStatus()
+
+    </script>
     @include('Errors.error')
 @endsection
