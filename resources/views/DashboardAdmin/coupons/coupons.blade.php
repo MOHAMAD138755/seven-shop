@@ -272,7 +272,7 @@
 </style>
 
 
-@section('title', 'Role Management')
+@section('title', 'Coupon Management')
 
 @section('content')
     <div class="users-page">

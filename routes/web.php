@@ -147,6 +147,7 @@ Route::prefix('{lang}')->group(function (){
                 Route::post('coupons/create','create')->name('Dashboard.AddCoupon');
                 Route::delete('coupons/destroy/{coupon}','destroy')->name('Dashboard.DeleteCoupon');
                 Route::get('coupons/edit/{coupon}','editForm')->name('Dashboard.EditCoupon');
+                Route::put('coupons/update/{coupon}','update')->name('Dashboard.UpdateCoupon');
             });
     });
 
